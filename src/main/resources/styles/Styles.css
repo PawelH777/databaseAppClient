@@ -1,0 +1,33 @@
+
+
+.togButton:hover{
+ -fx-background-color: #99c2ff;
+ -fx-font-weight: bold;
+ -fx-font-size: 15px;
+}
+
+.togButton:selected{
+ -fx-background-color: #99c2ff;
+ -fx-font-weight: bold;
+ -fx-font-size: 15px;
+}
+
+
+.sideMenu{
+-fx-background-color:  #cce0ff;
+}
+
+.mainWindow{
+    -fx-background-color: white;
+ -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
+
+#loginPane{
+ -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 30, 0.5, 0.0, 0.0);
+}
+
+.togButton{
+-fx-background-color:  #cce0ff;
+-fx-border-style: none;
+}
+

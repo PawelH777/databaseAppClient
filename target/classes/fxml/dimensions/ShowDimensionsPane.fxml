@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.ShowDimensionsController">
+   <children>
+      <JFXTextField fx:id="txtSearch" labelFloat="true" layoutX="10.0" layoutY="10.0" prefHeight="20.0" promptText="Szukaj" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXComboBox fx:id="columnsCmbBox" labelFloat="true" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="Wybierz kolumnę" style="-fx-font-size: 14;" AnchorPane.leftAnchor="197.0" AnchorPane.topAnchor="40.0" />
+      <JFXButton fx:id="btnAdd" layoutX="10.0" layoutY="10.0" onMouseClicked="#onBtnAddClicked" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Dodaj" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="200.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnModify" layoutX="10.0" layoutY="10.0" onMouseClicked="#btnModifyClicked" prefWidth="70.0" style="-fx-background-color: #FFEBCC; -fx-border-style: solid;" text="Zmień" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" layoutX="10.0" layoutY="10.0" onMouseClicked="#btnDeleteClicked" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Usuń" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="dimTableView" layoutX="10.0" layoutY="10.0" onMouseClicked="#dimTableClicked" prefHeight="420.0" prefWidth="600.0" style="-fx-font-size: 14;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+         <columns>
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="103.0" text="ID wymiaru" />
+            <TableColumn fx:id="firstDimColumn" editable="false" prefWidth="131.0" text="Pierwsze ramię" />
+            <TableColumn fx:id="secondDimColumn" editable="false" prefWidth="135.0" text="Drugie ramię" />
+            <TableColumn fx:id="thickColumn" editable="false" prefWidth="108.0" text="Grubość" />
+            <TableColumn fx:id="weightColumn" editable="false" prefWidth="98.0" text="Waga" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
