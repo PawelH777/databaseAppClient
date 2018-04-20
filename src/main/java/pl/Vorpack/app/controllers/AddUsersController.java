@@ -1,5 +1,7 @@
 package pl.Vorpack.app.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
@@ -11,15 +13,26 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.User;
+import pl.Vorpack.app.global_variables.userData;
 import pl.Vorpack.app.global_variables.usrVariables;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Paweł on 2018-02-22.
@@ -157,37 +170,59 @@ public class AddUsersController {
         else if(cmbAdminYesNo.getValue() == "Nie")
             booleanValue = false;
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.getTransaction().begin();
+        Client client = ClientBuilder.newClient(clientConfig);
 
-        TypedQuery<User> existedRecord = entityManager.createQuery("SELECT u FROM User u WHERE login = :login", User.class)
-                .setParameter("login", login.textProperty().getValue());
+        String URI = "http://localhost:8080/users/user/login";
 
+        Response response = client
+                .target(URI)
+                .path(login.getText())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
 
-        if(existedRecord.getResultList().size() == 0) {
+        List<User> existedRecord = response.readEntity(new GenericType<ArrayList<User>>(){});
 
-            String pass = DigestUtils.sha1Hex(password.textProperty().getValue());
+        String pass = DigestUtils.sha1Hex(password.textProperty().getValue());
 
-            if (usrVariables.getObject() == null) {
+        if (usrVariables.getObject() == null ) {
+
+            if(existedRecord.size() == 0){
                 User cli = new User(login.textProperty().getValue(), pass, booleanValue);
-                entityManager.persist(cli);
-            } else {
-                object.setLogin(login.textProperty().getValue());
-                object.setPassword(pass);
-                object.setAdmin(booleanValue);
-                entityManager.merge(object);
-            }
 
+                URI = "http://localhost:8080/users/createuser";
+
+                response =  client
+                        .target(URI)
+                        .request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+                endGate = true;
+            }
+            else{
+                endGate = false;
+            }
+        }else if(usrVariables.getObject() != null){
+            object.setLogin(login.textProperty().getValue());
+            object.setPassword(pass);
+            object.setAdmin(booleanValue);
+            URI = "http://localhost:8080/users/user/update";
+            response =  client
+                    .target(URI)
+                    .path(String.valueOf(object.getUser_id()))
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
             endGate = true;
         }
 
-        entityManager.getTransaction().commit();
 
-        entityManager.close();
-        entityManagerFactory.close();
+        client.close();
 
 
         if(endGate) {

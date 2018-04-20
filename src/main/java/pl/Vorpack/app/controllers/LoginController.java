@@ -1,7 +1,7 @@
 package pl.Vorpack.app.controllers;
 
 import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,24 +15,25 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.codec.digest.DigestUtils;
-import pl.Vorpack.app.domain.PersistenceInfo;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.omg.CORBA.portable.ApplicationException;
 import pl.Vorpack.app.domain.User;
 import pl.Vorpack.app.global_variables.userData;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Paweł on 2018-02-01.
@@ -65,6 +66,8 @@ public class LoginController {
     @FXML
     private JFXButton loginButton;
 
+    private Boolean bramkaLogowania = true;
+
     @FXML
     public void initialize(){
 
@@ -78,41 +81,50 @@ public class LoginController {
         String login = loginTextField.getText();
         String haslo = DigestUtils.sha1Hex(passwordTextField.getText());
 
+    //    String haslo = passwordTextField.getText();
 
-        Map<String, String> properties = new HashMap<String, String>();
 
-        properties = PersistenceInfo.putTokens();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("default", properties);
-        EntityManager entityManager = emf.createEntityManager();
+        try{
 
-        entityManager.getTransaction().begin();
-        List<User> result = entityManager.createQuery(
-          "SELECT u FROM User u WHERE Login LIKE :lgn AND Haslo LIKE :pass")
-                .setParameter("lgn", login)
-                .setParameter("pass", haslo)
-                .getResultList();
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(login, haslo)
+                    .build();
 
-        entityManager.getTransaction().commit();
-        if(result.size() != 1 || result.isEmpty()){
-            loginStatus.setText("Login lub hasło jest niepoprawne!");
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
+
+            Client client = ClientBuilder.newClient(clientConfig);
+
+            String URI = "http://localhost:8080/users/user/login";
+
+            Response response = client
+                    .target(URI)
+                    .path(login)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+
+            List<User> users = response.readEntity(new GenericType<ArrayList<User>>(){});
+
+            client.close();
+
+            if(users.size() != 1 ){
+                loginStatus.setText("Istnieje więcej niż jeden login w bazie. Skontaktuj się z administratorem.");
+            }
+            else{
+                User user = users.get(0);
+                    userData.setName(login);
+                    userData.setPassword(haslo);
+                    if(user.isAdmin())
+                        userData.setAccess("Administrator");
+                    else
+                        userData.setAccess("Użytkownik");
+
+                    makeFadeOut();
+            }
+        } catch(Throwable ex){
+            loginStatus.setText("Wpisałeś błędny login lub hasło");
         }
-        else{
-
-            userData.setName(login);
-
-            if(result.get(0).isAdmin())
-                userData.setAccess("Administrator");
-            else
-                userData.setAccess("Użytkownik");
-
-           makeFadeOut();
-        }
-
-        entityManager.close();
-        emf.close();
-
-
-
     }
 
     private void makeFadeOut(){

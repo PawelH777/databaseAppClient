@@ -1,5 +1,10 @@
 package pl.Vorpack.app.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import pl.Vorpack.app.JsonClass.LocalDateDeserializer;
+import pl.Vorpack.app.JsonClass.LocalDateSerializer;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -9,31 +14,18 @@ import java.time.LocalDate;
  * Created by Paweł on 2018-02-03.
  */
 
-@Entity
-@Table(name = "Historia_zamowien")
 public class ordersStory {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_zamowienia")
     private Long order_id;
-    @OneToOne
-    @JoinColumn(name = "Id_wymiaru")
     private Dimiensions dimension;
-    @OneToOne
-    @JoinColumn(name = "Id_klienta")
     private Client client;
-    @Column(name = "Ilosc_metrow", nullable = false)
-    private Double metrs;
-    @Column(name = "Materialy", nullable = false)
-    private Double materials;
-    @Column(name = "Data_przyjecia_zamowienia", nullable = false)
+    private BigDecimal metrs;
+    private BigDecimal materials;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate receive_date;
-    @Column(name = "Data_zamowienia", nullable = false)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate order_date;
-
-    @Column(name = "Uwagi", nullable = true)
     private String Note;
 
     public Dimiensions getDimension() {
@@ -52,19 +44,19 @@ public class ordersStory {
         this.client = client;
     }
 
-    public Double getMetrs() {
+    public BigDecimal getMetrs() {
         return metrs;
     }
 
-    public void setMetrs(Double metrs) {
+    public void setMetrs(BigDecimal metrs) {
         this.metrs = metrs;
     }
 
-    public Double getMaterials() {
+    public BigDecimal getMaterials() {
         return materials;
     }
 
-    public void setMaterials(Double materials) {
+    public void setMaterials(BigDecimal materials) {
         this.materials = materials;
     }
 
@@ -100,7 +92,7 @@ public class ordersStory {
         Note = note;
     }
 
-    public ordersStory(Dimiensions dimension, Client client, Double metrs, Double materials, LocalDate receive_date, LocalDate order_date, String note) {
+    public ordersStory(Dimiensions dimension, Client client, BigDecimal metrs, BigDecimal materials, LocalDate receive_date, LocalDate order_date, String note) {
         this.dimension = dimension;
         this.client = client;
         this.metrs = metrs;

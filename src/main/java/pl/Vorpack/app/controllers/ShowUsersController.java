@@ -18,9 +18,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.User;
+import pl.Vorpack.app.global_variables.userData;
 import pl.Vorpack.app.global_variables.usrVariables;
 import pl.Vorpack.app.optionalclass.records;
 
@@ -28,6 +31,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -310,20 +317,35 @@ public class ShowUsersController {
     }
 
     private void getRecords() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        entityManager.getTransaction().begin();
-        query = entityManager.createQuery("SELECT u FROM User u WHERE login != 'Admin'", User.class);
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().commit();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
+        javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-        result = changingClass(query);
+        String URI = "http://localhost:8080/users";
+
+        Response response = client
+                .target(URI)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        List<User> users = response.readEntity(new GenericType<ArrayList<User>>(){});
+
+        for(Iterator<User> iterator = users.iterator(); iterator.hasNext();){
+            User u = iterator.next();
+            if(u.getLogin().equals("Admin"))
+                iterator.remove();
+        }
+
+
+        result = changingClass(users);
 
         data = FXCollections.observableArrayList(result);
-
-        entityManager.close();
-        entityManagerFactory.close();
         filteredList = new FilteredList<>(data, p -> true);
     }
 
@@ -444,16 +466,23 @@ public class ShowUsersController {
 
         user = changingObjectType(dimTableView.getSelectionModel().getSelectedItem());
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().begin();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.remove(entityManager.contains(user) ? user : entityManager.merge(user));
+        javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        entityManagerFactory.close();
+        String URI = "http://localhost:8080/users/user/delete";
+
+        Response response = client
+                                    .target(URI)
+                                    .path(String.valueOf(user.getUser_id()))
+                                    .request(MediaType.APPLICATION_JSON_TYPE)
+                                    .delete();
 
         getRecordsWithActualConfigure();
 
@@ -487,12 +516,12 @@ public class ShowUsersController {
 
     }
 
-    public List<records> changingClass(TypedQuery<User> query){
+    public List<records> changingClass(List<User> query){
         List<records> result = new ArrayList<records>();;
 
-        if(query.getResultList().size() !=0){
+        if(query.size() !=0){
 
-            for(User u : query.getResultList()){
+            for(User u : query){
                 records record = new records();
                 record.setUser_id(u.getUser_id());
                 record.setLogin(u.getLogin());

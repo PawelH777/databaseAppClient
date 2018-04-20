@@ -13,23 +13,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Client;
-import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.cliVariables;
-import pl.Vorpack.app.global_variables.dimVariables;
-import pl.Vorpack.app.optionalclass.records;
+import pl.Vorpack.app.global_variables.userData;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Paweł on 2018-02-21.
@@ -81,7 +83,7 @@ public class ShowClientsController {
 
 
         idColumn.setCellValueFactory( new PropertyValueFactory<Client,Integer>("client_id"));
-        firmName.setCellValueFactory( new PropertyValueFactory<Client, String>("firm_name"));
+        firmName.setCellValueFactory( new PropertyValueFactory<Client, String>("firmName"));
 
 
         btnModify.disableProperty().bindBidirectional(clientProperty.disableModifyBtnProperty());
@@ -115,7 +117,7 @@ public class ShowClientsController {
 
                         if(String.valueOf(user.getClient_id()).toLowerCase().contains(lowerCaseValue))
                             return true;
-                        else if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                        else if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                             return true;
 
                         return false;
@@ -145,7 +147,7 @@ public class ShowClientsController {
 
                         String lowerCaseValue = newValue.toLowerCase();
 
-                        if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                        if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                             return true;
 
                         return false;
@@ -174,7 +176,7 @@ public class ShowClientsController {
 
                     if(String.valueOf(user.getClient_id()).toLowerCase().contains(lowerCaseValue))
                         return true;
-                    else if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                    else if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -204,7 +206,7 @@ public class ShowClientsController {
 
                     String lowerCaseValue = txtSearch.getText().toLowerCase();
 
-                    if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                    if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -223,18 +225,31 @@ public class ShowClientsController {
     }
 
     private void getRecords() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-        entityManager.getTransaction().begin();
-        query = entityManager.createQuery("SELECT c FROM Client c", Client.class);
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().commit();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        ObservableList<Client> data = FXCollections.observableArrayList(query.getResultList());
 
-        entityManager.close();
-        entityManagerFactory.close();
+        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
+
+        String URI = "http://localhost:8080/clients";
+
+        Response response = clientBulider
+                .target(URI)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get();
+
+        List<Client> query = response.readEntity(new GenericType<ArrayList<Client>>(){});
+
+        clientBulider.close();
+
+        ObservableList<Client> data = FXCollections.observableArrayList(query);
+
         filteredList = new FilteredList<>(data, p -> true);
     }
 
@@ -269,7 +284,7 @@ public class ShowClientsController {
 
                 if(String.valueOf(user.getClient_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -299,7 +314,7 @@ public class ShowClientsController {
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
 
-                if(String.valueOf(user.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(user.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -320,17 +335,25 @@ public class ShowClientsController {
 
         client = dimTableView.getSelectionModel().getSelectedItem();
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().begin();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.remove(entityManager.contains(client) ? client : entityManager.merge(client));
+        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        entityManager.getTransaction().commit();
+        String URI = "http://localhost:8080/clients/client/delete";
 
-        entityManager.close();
-        entityManagerFactory.close();
+        Response response = clientBulider
+                .target(URI)
+                .path(String.valueOf(client.getClient_id()))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .delete();
+
+        clientBulider.close();
 
         getRecordsWithActualConfigure();
 

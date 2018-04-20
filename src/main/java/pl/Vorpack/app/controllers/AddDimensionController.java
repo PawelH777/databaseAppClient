@@ -9,15 +9,22 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.dimVariables;
+import pl.Vorpack.app.global_variables.userData;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -25,14 +32,6 @@ import java.util.regex.Pattern;
  * Created by Paweł on 2018-02-16.
  */
 public class AddDimensionController {
-
-    private Double firstLength;
-
-    private Double secondLength;
-
-    private Double thick;
-
-    private Double weight;
 
     @FXML
     private VBox vBox;
@@ -139,8 +138,8 @@ public class AddDimensionController {
 
         if(dimVariables.getObject() != null){
             object = dimVariables.getObject();
-            textFirstLength.textProperty().setValue(object.getFirst_dimension().toString());
-            textSecondLength.textProperty().setValue(object.getSecond_dimension().toString());
+            textFirstLength.textProperty().setValue(object.getFirstDimension().toString());
+            textSecondLength.textProperty().setValue(object.getSecondDimension().toString());
             textThick.textProperty().setValue(object.getThickness().toString());
             textWeight.textProperty().setValue(object.getWeight().toString());
             btnProceed.setText("Zmień");
@@ -153,47 +152,73 @@ public class AddDimensionController {
 
         boolean endGate = false;
 
-        firstLength = Double.parseDouble(textFirstLength.getText());
+        BigDecimal firstLength = BigDecimal.valueOf(Double.parseDouble(textFirstLength.getText()));
 
-        secondLength = Double.parseDouble(textSecondLength.getText());
+        BigDecimal secondLength = BigDecimal.valueOf(Double.parseDouble(textSecondLength.getText()));
 
-        thick = Double.parseDouble(textThick.getText());
+        BigDecimal thick = BigDecimal.valueOf(Double.parseDouble(textThick.getText()));
 
-        weight = Double.parseDouble(textWeight.getText());
+        BigDecimal weight = BigDecimal.valueOf(Double.parseDouble(textWeight.getText()));
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        Dimiensions dimObj = new Dimiensions();
 
+        dimObj.setFirstDimension(firstLength);
+        dimObj.setSecondDimension(secondLength);
+        dimObj.setThickness(thick);
+        dimObj.setWeight(weight);
 
-        entityManager.getTransaction().begin();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        TypedQuery<Dimiensions> existedRecord = entityManager.createQuery("SELECT d FROM Dimiensions d WHERE " +
-                "first_dimension = :firstDim AND second_dimension = :secDim " +
-                "AND thickness = :thick AND weight = :weight", Dimiensions.class)
-                .setParameter("firstDim", firstLength)
-                .setParameter("secDim", secondLength)
-                .setParameter("thick", thick)
-                .setParameter("weight", weight);
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        if(existedRecord.getResultList().size() == 0) {
-            if (dimVariables.getObject() == null) {
+        Client client = ClientBuilder.newClient(clientConfig);
+
+        String URI = "http://localhost:8080/dims/dim/find";
+
+        Response response = client
+                .target(URI)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(dimObj,MediaType.APPLICATION_JSON_TYPE));
+
+        List<Dimiensions> existingRecords = response.readEntity(new GenericType<List<Dimiensions>>(){});
+
+        if(dimVariables.getObject() == null) {
+            if (existingRecords.size() == 0) {
 
                 Dimiensions dim = new Dimiensions(firstLength, secondLength, thick, weight);
-                entityManager.persist(dim);
-            } else {
-                object.setFirst_dimension(firstLength);
-                object.setSecond_dimension(secondLength);
-                object.setThickness(thick);
-                object.setWeight(weight);
-                entityManager.merge(object);
-            }
+                URI = "http://localhost:8080/dims/createdim";
+
+                response = client
+                        .target(URI)
+                        .request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+                endGate = true;
+            } else
+                 endGate = false;
+
+        } else if(dimVariables.getObject() != null){
+            object.setFirstDimension(firstLength);
+            object.setSecondDimension(secondLength);
+            object.setThickness(thick);
+            object.setWeight(weight);
+
+            URI = "http://localhost:8080/dims/dim/update";
+
+            response = client
+                    .target(URI)
+                    .path(String.valueOf(object.getDimension_id()))
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
             endGate = true;
+
         }
 
-        entityManager.getTransaction().commit();
-
-        entityManager.close();
-        entityManagerFactory.close();
+        client.close();
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
@@ -204,7 +229,7 @@ public class AddDimensionController {
             Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
             infoAlert.setTitle("Uwaga!");
             infoAlert.setHeaderText("Pojawił się błąd");
-            infoAlert.setContentText("Firma z wpisanymi danymi już istnieje");
+            infoAlert.setContentText("Wymiar z wpisanymi danymi już istnieje");
             infoAlert.showAndWait();
         }
     }

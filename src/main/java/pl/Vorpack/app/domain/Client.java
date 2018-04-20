@@ -1,22 +1,14 @@
 package pl.Vorpack.app.domain;
 
-import javax.persistence.*;
-
 /**
  * Created by Paweł on 2018-02-03.
  */
 
-@Entity
-@Table(name = "Klienci")
 public class Client {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id_klienta")
     private long client_id;
 
-    @Column(name = "Nazwa_firmy", nullable = false)
-    private String firm_name;
+    private String firmName;
 
     public long getClient_id() {
         return client_id;
@@ -26,19 +18,18 @@ public class Client {
         this.client_id = client_id;
     }
 
-    public String getFirm_name() {
-        return firm_name;
+    public String getFirmName() {
+        return firmName;
     }
 
-    public void setFirm_name(String firm_name) {
-        this.firm_name = firm_name;
+    public void setFirmName(String firmName) {
+        this.firmName = firmName;
     }
 
+    public Client(String firmName) {
+        this.firmName = firmName;
+    }
 
     public Client() {
-    }
-
-    public Client(String firm_name) {
-        this.firm_name = firm_name;
     }
 }

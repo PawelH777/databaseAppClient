@@ -9,7 +9,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,16 +18,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.dimVariables;
+import pl.Vorpack.app.global_variables.userData;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.io.Console;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Paweł on 2018-02-18.
@@ -95,8 +100,8 @@ public class ShowDimensionsController {
         );
 
         idColumn.setCellValueFactory( new PropertyValueFactory<Dimiensions,Integer>("dimension_id"));
-        firstDimColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("first_dimension"));
-        secondDimColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("second_dimension"));
+        firstDimColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("firstDimension"));
+        secondDimColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("secondDimension"));
         thickColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("thickness"));
         weightColumn.setCellValueFactory(new PropertyValueFactory<Dimiensions, Double>("weight"));
 
@@ -118,9 +123,9 @@ public class ShowDimensionsController {
 
                     if(String.valueOf(dimension.getDimension_id()).toLowerCase().contains(lowerCaseValue))
                         return true;
-                    else if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                    else if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
-                    else if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                    else if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
                     else if(String.valueOf(dimension.getThickness()).toLowerCase().contains(lowerCaseValue))
                         return true;
@@ -156,7 +161,7 @@ public class ShowDimensionsController {
 
                     String lowerCaseValue = newValue.toLowerCase();
 
-                    if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                    if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -171,7 +176,7 @@ public class ShowDimensionsController {
 
                     String lowerCaseValue = newValue.toLowerCase();
 
-                    if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                    if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -228,9 +233,9 @@ public class ShowDimensionsController {
 
                     if(String.valueOf(dimension.getDimension_id()).toLowerCase().contains(lowerCaseValue))
                         return true;
-                    else if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                    else if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
-                    else if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                    else if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
                     else if(String.valueOf(dimension.getThickness()).toLowerCase().contains(lowerCaseValue))
                         return true;
@@ -265,7 +270,7 @@ public class ShowDimensionsController {
                         return true;
 
                     String lowerCaseValue = txtSearch.getText().toLowerCase();
-                    if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                    if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -279,7 +284,7 @@ public class ShowDimensionsController {
                         return true;
 
                     String lowerCaseValue = txtSearch.getText().toLowerCase();
-                    if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                    if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                         return true;
 
                     return false;
@@ -339,17 +344,28 @@ public class ShowDimensionsController {
     }
 
     private void getRecords() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().begin();
-        query = entityManager.createQuery("SELECT d FROM Dimiensions d", Dimiensions.class);
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.getTransaction().commit();
-        ObservableList<Dimiensions> data = FXCollections.observableArrayList(query.getResultList());
+        Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        entityManager.close();
-        entityManagerFactory.close();
+        String URI = "http://localhost:8080/dims";
+
+        javax.ws.rs.core.Response response =  clientBulider
+                                    .target(URI)
+                                    .request(MediaType.APPLICATION_JSON_TYPE)
+                                    .get();
+
+        List<Dimiensions> query = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
+
+        clientBulider.close();
+
+        ObservableList<Dimiensions> data = FXCollections.observableArrayList(query);
 
         filteredList = new FilteredList<>(data, p -> true);
     }
@@ -367,9 +383,9 @@ public class ShowDimensionsController {
 
                 if(String.valueOf(dimension.getDimension_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
                 else if(String.valueOf(dimension.getThickness()).toLowerCase().contains(lowerCaseValue))
                     return true;
@@ -404,7 +420,7 @@ public class ShowDimensionsController {
                     return true;
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(dimension.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(dimension.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -418,7 +434,7 @@ public class ShowDimensionsController {
                     return true;
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(dimension.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(dimension.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -482,17 +498,22 @@ public class ShowDimensionsController {
 
         dim = dimTableView.getSelectionModel().getSelectedItem();
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().begin();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.remove(entityManager.contains(dim) ? dim : entityManager.merge(dim));
+        Client client = ClientBuilder.newClient(clientConfig);
 
-        entityManager.getTransaction().commit();
+        String URI = "http://localhost:8080/dims/dim/delete";
 
-        entityManager.close();
-        entityManagerFactory.close();
+        Response response = client.target(URI).path(String.valueOf(dim.getDimension_id())).request(MediaType.APPLICATION_JSON_TYPE)
+                .delete();
+
+        client.close();
 
         getAllResult();
 

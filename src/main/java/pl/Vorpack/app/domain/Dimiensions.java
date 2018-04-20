@@ -1,32 +1,20 @@
 package pl.Vorpack.app.domain;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by Paweł on 2018-02-03.
  */
 
-@Entity
-@Table(name = "Wymiary")
 public class Dimiensions {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Id_wymiaru")
     private long dimension_id;
 
-    @Column(name="Dlugosc_pierwszego_ramienia", nullable = false)
-    private Double first_dimension;
+    private BigDecimal firstDimension;
+    private BigDecimal secondDimension;
 
-    @Column(name="Dlugosc_drugiego_ramienia", nullable = false)
-    private Double second_dimension;
-
-    @Column(name="Grubosc_ramion", nullable = false)
-    private Double thickness;
-
-    @Column(name="Waga", nullable = false)
-    private Double weight;
+    private BigDecimal thickness;
+    private BigDecimal weight;
 
     public long getDimension_id() {
         return dimension_id;
@@ -36,35 +24,35 @@ public class Dimiensions {
         this.dimension_id = dimension_id;
     }
 
-    public Double getFirst_dimension() {
-        return first_dimension;
+    public BigDecimal getFirstDimension() {
+        return firstDimension;
     }
 
-    public void setFirst_dimension(Double first_dimension) {
-        this.first_dimension = first_dimension;
+    public void setFirstDimension(BigDecimal firstDimension) {
+        this.firstDimension = firstDimension;
     }
 
-    public Double getSecond_dimension() {
-        return second_dimension;
+    public BigDecimal getSecondDimension() {
+        return secondDimension;
     }
 
-    public void setSecond_dimension(Double second_dimension) {
-        this.second_dimension = second_dimension;
+    public void setSecondDimension(BigDecimal secondDimension) {
+        this.secondDimension = secondDimension;
     }
 
-    public Double getThickness() {
+    public BigDecimal getThickness() {
         return thickness;
     }
 
-    public void setThickness(Double thickness) {
+    public void setThickness(BigDecimal thickness) {
         this.thickness = thickness;
     }
 
-    public Double getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(BigDecimal weight) {
         this.weight = weight;
     }
 
@@ -72,9 +60,9 @@ public class Dimiensions {
 
     }
 
-    public Dimiensions(Double a, Double b, Double c, Double d){
-        first_dimension = a;
-        second_dimension = b;
+    public Dimiensions(BigDecimal a, BigDecimal b, BigDecimal c, BigDecimal d){
+        firstDimension = a;
+        secondDimension = b;
         thickness = c;
         weight = d;
     }

@@ -18,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
@@ -25,11 +27,18 @@ import pl.Vorpack.app.domain.Orders;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
+import pl.Vorpack.app.global_variables.userData;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,9 +55,6 @@ public class AddOrderController {
 
     @FXML
     private VBox vBox;
-
-    @FXML
-    private Label labelHeader;
 
     @FXML
     private JFXTextField txtMetrs;
@@ -87,32 +93,27 @@ public class AddOrderController {
     private JFXButton btnSaveExit;
 
     @FXML
-    private Label headerLabel;
-
-    @FXML
     private JFXCheckBox checkBox;
 
-    private Double weight, length, materials, firstDim, secondDim, thick;
-
-    private String firmName, note;
+    private BigDecimal weight, length, materials, firstDim, secondDim, thick;
 
     private LocalDate orderDate, createOrderDate;
 
-    private TypedQuery<Client> c;
+    private List<Client> c = new ArrayList<>();
 
-    private TypedQuery<Dimiensions> d;
+    private List<Dimiensions> d = new ArrayList<>();
 
     private FilteredList<Dimiensions> filteredList;
 
     private Set<String> setFirmNames = new HashSet<>();
 
-    private Set<Double> setFirstDims = new HashSet<>();
+    private Set<BigDecimal> setFirstDims = new HashSet<>();
 
-    private Set<Double> setSecondDims = new HashSet<>();
+    private Set<BigDecimal> setSecondDims = new HashSet<>();
 
-    private Set<Double> setThicks= new HashSet<>();
+    private Set<BigDecimal> setThicks= new HashSet<>();
 
-    private Set<Double> setWeights = new HashSet<>();
+    private Set<BigDecimal> setWeights = new HashSet<>();
     
     private List<Dimiensions> dimsList = new ArrayList<>();
 
@@ -214,44 +215,53 @@ public class AddOrderController {
             }
         });
 
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-        entityManager.getTransaction().begin();
+        String URI = "http://localhost:8080/dims";
 
-        d = entityManager.createQuery("SELECT d FROM Dimiensions d", Dimiensions.class);
+        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-        ObservableList<Dimiensions> data = FXCollections.observableArrayList(d.getResultList());
+        d = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
+
+        ObservableList<Dimiensions> data = FXCollections.observableArrayList(d);
 
         filteredList = new FilteredList<>(data, p -> true);
 
         fromObjectToList(filteredList);
 
-        c = entityManager.createQuery("SELECT c FROM Client c", Client.class);
+        URI = "http://localhost:8080/clients";
 
-        for(Client cli : c.getResultList()){
-            setFirmNames.add(cli.getFirm_name());
+        response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        c = response.readEntity(new GenericType<List<Client>>(){});
+
+        clientBuilder.close();
+
+        for(Client cli : c){
+            setFirmNames.add(cli.getFirmName());
         }
-
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        entityManagerFactory.close();
 
         SuggestionProvider<String> prov_firmsName = SuggestionProvider.create(setFirmNames);
         new AutoCompletionTextFieldBinding<>(txtFirmName, prov_firmsName);
 
-        SuggestionProvider<Double> prov_FirstDims = SuggestionProvider.create(setFirstDims);
+        SuggestionProvider<BigDecimal> prov_FirstDims = SuggestionProvider.create(setFirstDims);
         new AutoCompletionTextFieldBinding<>(txtFirstDim, prov_FirstDims);
 
-        SuggestionProvider<Double> prov_SecondDims = SuggestionProvider.create(setSecondDims);
+        SuggestionProvider<BigDecimal> prov_SecondDims = SuggestionProvider.create(setSecondDims);
         new AutoCompletionTextFieldBinding<>(txtSecondDim, prov_SecondDims);
 
-        SuggestionProvider<Double> prov_Thick = SuggestionProvider.create(setThicks);
+        SuggestionProvider<BigDecimal> prov_Thick = SuggestionProvider.create(setThicks);
         new AutoCompletionTextFieldBinding<>(txtThick, prov_Thick);
 
-        SuggestionProvider<Double> prov_Weights = SuggestionProvider.create(setWeights);
+        SuggestionProvider<BigDecimal> prov_Weights = SuggestionProvider.create(setWeights);
         new AutoCompletionTextFieldBinding<>(txtWeight, prov_Weights);
 
 
@@ -280,18 +290,18 @@ public class AddOrderController {
         txtMetrs.textProperty().addListener((ObservableValue<? extends String> obs, String oldValue, String newValue) -> {
 
             try{
-                weight = Double.valueOf(txtWeight.textProperty().getValue());
+                weight = BigDecimal.valueOf(Double.valueOf(txtWeight.textProperty().getValue()));
             }catch(Exception e){
-                weight = 0.0;
+                weight = BigDecimal.ZERO;
             }
 
             try{
-                length = Double.valueOf(newValue);
+                length = BigDecimal.valueOf(Double.valueOf(newValue));
             }catch(Exception e){
-                length = 0.0;
+                length = BigDecimal.ZERO;
             }
 
-            materials = weight * length;
+            materials = weight.multiply(length);
             txtMaterials.textProperty().setValue("" + materials);
 
             if(dateOrder.valueProperty().getValue() != null && dateCreateOrder.valueProperty().getValue() != null
@@ -310,24 +320,18 @@ public class AddOrderController {
         txtWeight.textProperty().addListener((obs, oldValue, newValue) -> {
 
             try{
-                weight = Double.valueOf(newValue);
+                weight = BigDecimal.valueOf(Double.valueOf(newValue));
             }catch(Exception e){
-                weight = 0.0;
+                weight = BigDecimal.ZERO;
             }
 
             try{
-                length = Double.valueOf(txtMetrs.textProperty().getValue());
+                length = BigDecimal.valueOf(Double.valueOf(txtMetrs.textProperty().getValue()));
             }catch(Exception e){
-                length = 0.0;
+                length = BigDecimal.ZERO;
             }
 
-            materials = weight * length;
-
-
-            long factor = (long) Math.pow(10, 2);
-            materials = materials * factor;
-            long tmp = Math.round(materials);
-            materials = (double) tmp/factor;
+            materials = weight.multiply(length);
 
             txtMaterials.textProperty().setValue("" + materials);
 
@@ -489,9 +493,9 @@ public class AddOrderController {
             txtMaterials.setText(ordVariables.getObject().getMaterials().toString());
             dateOrder.setValue(ordVariables.getObject().getOrder_date());
             dateCreateOrder.setValue(ordVariables.getObject().getReceive_date());
-            txtFirmName.setText(cliVariables.getObject().getFirm_name());
-            txtFirstDim.setText(dimVariables.getObject().getFirst_dimension().toString());
-            txtSecondDim.setText(dimVariables.getObject().getSecond_dimension().toString());
+            txtFirmName.setText(cliVariables.getObject().getFirmName());
+            txtFirstDim.setText(dimVariables.getObject().getFirstDimension().toString());
+            txtSecondDim.setText(dimVariables.getObject().getSecondDimension().toString());
             txtThick.setText(dimVariables.getObject().getThickness().toString());
             txtWeight.setText(dimVariables.getObject().getWeight().toString());
             txtNote.setText(ordVariables.getObject().getNote());
@@ -499,7 +503,7 @@ public class AddOrderController {
         }
     }
 
-    private void refreshingSuggestions(SuggestionProvider<Double> prov_FirstDims, SuggestionProvider<Double> prov_SecondDims, SuggestionProvider<Double> prov_Thick, SuggestionProvider<Double> prov_Weights) {
+    private void refreshingSuggestions(SuggestionProvider<BigDecimal> prov_FirstDims, SuggestionProvider<BigDecimal> prov_SecondDims, SuggestionProvider<BigDecimal> prov_Thick, SuggestionProvider<BigDecimal> prov_Weights) {
         if(setSecondDims.size() > 1 || setFirstDims.size() > 1 || setWeights.size() >  1 || setThicks.size() > 1){
 
             prov_FirstDims.clearSuggestions();
@@ -517,34 +521,34 @@ public class AddOrderController {
         }
     }
 
-    private void filteringDimsTextFields(SuggestionProvider<Double> prov_FirstDims, SuggestionProvider<Double> prov_SecondDims, SuggestionProvider<Double> prov_Thick, SuggestionProvider<Double> prov_Weights, 
+    private void filteringDimsTextFields(SuggestionProvider<BigDecimal> prov_FirstDims, SuggestionProvider<BigDecimal> prov_SecondDims, SuggestionProvider<BigDecimal> prov_Thick, SuggestionProvider<BigDecimal> prov_Weights,
                                          String newValue, String value_1, String value_2, String value_3,int gate) {
 
 
         filteredList.setPredicate(obj -> {
             if(gate == 1){
-                objValue = String.valueOf(obj.getFirst_dimension());
-                objValue_1 = String.valueOf(obj.getSecond_dimension());
+                objValue = String.valueOf(obj.getFirstDimension());
+                objValue_1 = String.valueOf(obj.getSecondDimension());
                 objValue_2 = String.valueOf(obj.getThickness());
                 objValue_3 = String.valueOf(obj.getWeight());
 
             }
             else if(gate == 2){
-                objValue = String.valueOf(obj.getSecond_dimension());
-                objValue_1 = String.valueOf(obj.getFirst_dimension());
+                objValue = String.valueOf(obj.getSecondDimension());
+                objValue_1 = String.valueOf(obj.getFirstDimension());
                 objValue_2 = String.valueOf(obj.getThickness());
                 objValue_3 = String.valueOf(obj.getWeight());
             }
             else if(gate == 3){
                 objValue = String.valueOf(obj.getThickness());
-                objValue_1 = String.valueOf(obj.getFirst_dimension());
-                objValue_2 = String.valueOf(obj.getSecond_dimension());
+                objValue_1 = String.valueOf(obj.getFirstDimension());
+                objValue_2 = String.valueOf(obj.getSecondDimension());
                 objValue_3 = String.valueOf(obj.getWeight());
             }
             else if(gate == 4){
                 objValue = String.valueOf(obj.getWeight());
-                objValue_1 = String.valueOf(obj.getFirst_dimension());
-                objValue_2 = String.valueOf(obj.getSecond_dimension());
+                objValue_1 = String.valueOf(obj.getFirstDimension());
+                objValue_2 = String.valueOf(obj.getSecondDimension());
                 objValue_3 = String.valueOf(obj.getThickness());
             }
 
@@ -594,8 +598,8 @@ public class AddOrderController {
 
         if(filteredList.size() == 1 && !blockAutoFill){
 
-            String firstDim_temp = String.valueOf(filteredList.get(0).getFirst_dimension());
-            String secDim_temp = String.valueOf(filteredList.get(0).getSecond_dimension());
+            String firstDim_temp = String.valueOf(filteredList.get(0).getFirstDimension());
+            String secDim_temp = String.valueOf(filteredList.get(0).getSecondDimension());
             String thick_temp = String.valueOf(filteredList.get(0).getThickness());
             String weight_temp = String.valueOf(filteredList.get(0).getWeight());
 
@@ -620,8 +624,8 @@ public class AddOrderController {
 
 
         for(Dimiensions dims : dimiensionsList){
-            setFirstDims.add(dims.getFirst_dimension());
-            setSecondDims.add(dims.getSecond_dimension());
+            setFirstDims.add(dims.getFirstDimension());
+            setSecondDims.add(dims.getSecondDimension());
             setThicks.add(dims.getThickness());
             setWeights.add(dims.getWeight());
         }
@@ -666,12 +670,15 @@ public class AddOrderController {
     }
 
     public void persistRecord(){
-        firstDim = Double.parseDouble(txtFirstDim.textProperty().getValue());
-        secondDim =  Double.parseDouble(txtSecondDim.textProperty().getValue());
-        thick = Double.parseDouble(txtThick.textProperty().getValue());
+        List<Dimiensions> dimsList = new ArrayList<>();
+        List<Client> cliList = new ArrayList<>();
 
-        weight  = Double.parseDouble(txtWeight.textProperty().getValue());
-        length = Double.parseDouble(txtMetrs.textProperty().getValue());
+        firstDim = BigDecimal.valueOf(Double.parseDouble(txtFirstDim.textProperty().getValue()));
+        secondDim =  BigDecimal.valueOf(Double.parseDouble(txtSecondDim.textProperty().getValue()));
+        thick = BigDecimal.valueOf(Double.parseDouble(txtThick.textProperty().getValue()));
+
+        weight  = BigDecimal.valueOf(Double.parseDouble(txtWeight.textProperty().getValue()));
+        length = BigDecimal.valueOf(Double.parseDouble(txtMetrs.textProperty().getValue()));
 
         //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
         orderDate = dateOrder.getValue().plusDays(1);
@@ -679,40 +686,59 @@ public class AddOrderController {
         //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
         createOrderDate = dateCreateOrder.getValue().plusDays(1);
 
-        firmName = txtFirmName.textProperty().getValue();
+        String firmName = txtFirmName.textProperty().getValue();
 
-        note = txtNote.textProperty().getValue();
+        String note = txtNote.textProperty().getValue();
 
         Orders ord = new Orders();
+        dim = new Dimiensions();
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        dim.setFirstDimension(firstDim);
+        dim.setSecondDimension(secondDim);
+        dim.setThickness(thick);
+        dim.setWeight(weight);
 
-        entityManager.getTransaction().begin();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        d = entityManager.createQuery("SELECT d FROM Dimiensions d WHERE first_dimension = :firstDim " +
-                "AND second_dimension = :secondDim AND thickness = :thick AND weight = :weight", Dimiensions.class)
-                .setParameter("firstDim", firstDim)
-                .setParameter("secondDim", secondDim)
-                .setParameter("thick", thick)
-                .setParameter("weight", weight);
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        if(d.getResultList().size() != 0){
+        javax.ws.rs.client.Client clientBuilder  = ClientBuilder.newClient(clientConfig);
+
+        String URI = "http://localhost:8080/dims/dim/find";
+
+        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+        dimsList = response.readEntity(new GenericType<List<Dimiensions>>(){});
+
+        if(dimsList.size() != 0){
             findDim = true;
 
-            for(Dimiensions item : d.getResultList()){
+            for(Dimiensions item : dimsList){
                 dim = item;
                 break;
             }
         }
 
-        c = entityManager.createQuery("SELECT c FROM Client c WHERE firm_name = :firmName ", Client.class)
-                .setParameter("firmName", firmName);
+        cli = new Client();
 
-        if(c.getResultList().size() != 0){
+        cli.setFirmName(firmName);
+
+        URI = "http://localhost:8080/clients/client/firmname";
+
+        response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+
+        cliList = response.readEntity(new GenericType<List<Client>>(){});
+
+        if(cliList.size() != 0){
             findClient = true;
 
-            for(Client item : c.getResultList()){
+            for(Client item : cliList){
                 cli = item;
                 break;
             }
@@ -721,22 +747,39 @@ public class AddOrderController {
         if(!findDim){
 
             dim = new Dimiensions(firstDim, secondDim, thick, weight);
-            entityManager.persist(dim);
+            URI  = "http://localhost:8080/dims/createdim";
 
-            d = entityManager.createQuery("SELECT d FROM Dimiensions d WHERE first_dimension = :firstDim " +
-                    "AND second_dimension = :secondDim AND thickness = :thick AND weight = :weight", Dimiensions.class)
-                    .setParameter("firstDim", firstDim)
-                    .setParameter("secondDim", secondDim)
-                    .setParameter("thick", thick)
-                    .setParameter("weight", weight);
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+
+            URI = "http://localhost:8080/dims/dim/find";
+
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+            dimsList = response.readEntity(new GenericType<List<Dimiensions>>(){});
+
+            dim = dimsList.get(0);
+
         }
 
         if(!findClient){
 
             cli = new Client(firmName);
-            entityManager.persist(cli);
-            c = entityManager.createQuery("SELECT c FROM Client c WHERE firm_name = :firmName ", Client.class)
-                    .setParameter("firmName", firmName);
+            URI  = "http://localhost:8080/clients/createclient";
+
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+
+            URI = "http://localhost:8080/clients/client/firmname";
+
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+
+            cliList = response.readEntity(new GenericType<List<Client>>(){});
+
+            cli = cliList.get(0);
         }
 
         if(ordVariables.getObject() != null && cliVariables.getObject() != null
@@ -749,20 +792,24 @@ public class AddOrderController {
             ord.setNote(note);
             ord.setOrder_date(orderDate);
             ord.setReceive_date(createOrderDate);
-            entityManager.merge(ord);
+
+            String ord_id = String.valueOf(ordVariables.getObject().getOrder_id());
+
+            URI  = "http://localhost:8080/orders/order/update";
+
+            response = clientBuilder.target(URI).path(ord_id).request(MediaType.APPLICATION_JSON_TYPE)
+                    .put(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
         }else{
 
             ord = new Orders(dim, cli, length, materials, createOrderDate, orderDate, note);
 
-            entityManager.persist(ord);
+            URI  = "http://localhost:8080/orders/createorder";
 
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
         }
-        entityManager.getTransaction().commit();
 
-        entityManager.close();
-        entityManagerFactory.close();
-
-
+        clientBuilder.close();
     }
 
     public void onKeyPressed(KeyEvent keyEvent) {

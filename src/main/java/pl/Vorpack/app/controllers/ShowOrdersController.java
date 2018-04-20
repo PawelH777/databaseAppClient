@@ -18,10 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pl.Vorpack.app.Properties.mainPaneProperty;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.Orders;
@@ -34,9 +34,13 @@ import pl.Vorpack.app.global_variables.userData;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -110,9 +114,14 @@ public class ShowOrdersController {
     @FXML
     private Label labelNoteValue;
 
+    private Dimiensions dimObject;
 
+    private Client cliObject;
 
-    private List<Object[]> results;
+    private Orders ordObject;
+
+    private List<Orders> results;
+    private List<Object[]> objectsList = new ArrayList<>();
 
     private List<Orders> ord = new ArrayList<>();
 
@@ -203,13 +212,13 @@ public class ShowOrdersController {
                 Client c = (Client) sortedData.get(index)[2];
 
                 labelIdValue.setText(String.valueOf(o.getOrder_id()));
-                labelNameValue.setText(String.valueOf(c.getFirm_name()));
+                labelNameValue.setText(String.valueOf(c.getFirmName()));
                 labelOrderDateValue.setText(String.valueOf(o.getOrder_date()));
                 labelReceiverDateValue.setText(String.valueOf(o.getReceive_date()));
                 labelMetrsValue.setText(String.valueOf(o.getMetrs()));
                 labelMaterialsValue.setText(String.valueOf(o.getMaterials()));
-                labelFirstDimValue.setText(String.valueOf(d.getFirst_dimension()));
-                labelSecDimValue.setText(String.valueOf(d.getSecond_dimension()));
+                labelFirstDimValue.setText(String.valueOf(d.getFirstDimension()));
+                labelSecDimValue.setText(String.valueOf(d.getSecondDimension()));
                 labelThickValue.setText(String.valueOf(d.getThickness()));
                 labelWeightValue.setText(String.valueOf(d.getWeight()));
                 labelNoteValue.setText(String.valueOf(o.getNote()));
@@ -310,8 +319,8 @@ public class ShowOrdersController {
             Client clientObject = (Client)o1[2];
             Client clientObject_2 = (Client)o2[2];
 
-            String name_1 = clientObject.getFirm_name();
-            String name_2 = clientObject_2.getFirm_name();
+            String name_1 = clientObject.getFirmName();
+            String name_2 = clientObject_2.getFirmName();
 
 
             return name_1.compareTo(name_2);
@@ -323,36 +332,36 @@ public class ShowOrdersController {
             Dimiensions dimiensionObject = (Dimiensions) o1[1];
             Dimiensions dimiensionObject_2 = (Dimiensions) o2[1];
 
-            Double firstDim_1 = dimiensionObject.getFirst_dimension();
-            Double firstDim_2 = dimiensionObject_2.getFirst_dimension();
+            BigDecimal firstDim_1 = dimiensionObject.getFirstDimension();
+            BigDecimal firstDim_2 = dimiensionObject_2.getFirstDimension();
 
-            Double secondDim_1 = dimiensionObject.getSecond_dimension();
-            Double secondDim_2 = dimiensionObject_2.getSecond_dimension();
+            BigDecimal secondDim_1 = dimiensionObject.getSecondDimension();
+            BigDecimal secondDim_2 = dimiensionObject_2.getSecondDimension();
 
-            Double thick_1 = dimiensionObject.getThickness();
-            Double thick_2 = dimiensionObject_2.getThickness();
+            BigDecimal thick_1 = dimiensionObject.getThickness();
+            BigDecimal thick_2 = dimiensionObject_2.getThickness();
 
-            Double weight_1 = dimiensionObject.getWeight();
-            Double weight_2 = dimiensionObject_2.getWeight();
+            BigDecimal weight_1 = dimiensionObject.getWeight();
+            BigDecimal weight_2 = dimiensionObject_2.getWeight();
 
-            if(firstDim_1 < firstDim_2)
+            if(firstDim_1.compareTo(firstDim_2) < 0)
                 return -1;
-            else if(firstDim_1 > firstDim_2)
+            else if(firstDim_1.compareTo(firstDim_2) > 0)
                 return 1;
 
-            if(secondDim_1 <secondDim_2)
+            if(secondDim_1.compareTo(secondDim_2) < 0)
                 return -1;
-            else if(secondDim_1 > secondDim_2)
+            else if(secondDim_1.compareTo(secondDim_2) > 0)
                 return 1;
 
-            if(thick_1 < thick_2)
+            if(thick_1.compareTo(thick_2) < 0)
                 return -1;
-            else if(thick_1 > thick_2)
+            else if(thick_1.compareTo(thick_2) > 0)
                 return 1;
 
-            if(weight_1 < weight_2)
+            if(weight_1.compareTo(weight_2) < 0)
                 return -1;
-            else if(weight_1 > weight_2)
+            else if(weight_1.compareTo(weight_2) > 0)
                 return 1;
 
             return 0;
@@ -408,10 +417,10 @@ public class ShowOrdersController {
                 date = String.valueOf(ordersObj.getReceive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(cliObj.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(cliObj.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(cliObj.getFirm_name()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(cliObj.getFirmName()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -438,10 +447,10 @@ public class ShowOrdersController {
                 date = String.valueOf(ordersObj.getReceive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(dimObj.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(dimObj.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(dimObj.getFirst_dimension()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(dimObj.getFirstDimension()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -469,10 +478,10 @@ public class ShowOrdersController {
                 date = String.valueOf(ordersObj.getReceive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(dimObj.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(dimObj.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(dimObj.getSecond_dimension()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(dimObj.getSecondDimension()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -657,15 +666,15 @@ public class ShowOrdersController {
                     return true;
                 else if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(dimiensionsObj.getFirst_dimension()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(dimiensionsObj.getFirstDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(dimiensionsObj.getSecond_dimension()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(dimiensionsObj.getSecondDimension()).toLowerCase().contains(lowerCaseValue))
                     return true;
                 else if(String.valueOf(dimiensionsObj.getThickness()).toLowerCase().contains(lowerCaseValue))
                     return true;
                 else if(String.valueOf(dimiensionsObj.getWeight()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(clientObj.getFirm_name()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(clientObj.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
                 if(String.valueOf(ordersObj.getOrder_id()).toLowerCase().contains(lowerCaseValue)
@@ -677,10 +686,10 @@ public class ShowOrdersController {
                 else if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
-                else if(String.valueOf(dimiensionsObj.getFirst_dimension()).toLowerCase().contains(lowerCaseValue)
+                else if(String.valueOf(dimiensionsObj.getFirstDimension()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
-                else if(String.valueOf(dimiensionsObj.getSecond_dimension()).toLowerCase().contains(lowerCaseValue)
+                else if(String.valueOf(dimiensionsObj.getSecondDimension()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
                 else if(String.valueOf(dimiensionsObj.getThickness()).toLowerCase().contains(lowerCaseValue)
@@ -689,7 +698,7 @@ public class ShowOrdersController {
                 else if(String.valueOf(dimiensionsObj.getWeight()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
-                else if(String.valueOf(clientObj.getFirm_name()).toLowerCase().contains(lowerCaseValue)
+                else if(String.valueOf(clientObj.getFirmName()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
             }
@@ -699,23 +708,38 @@ public class ShowOrdersController {
     }
 
 
-    public void getAllRecords(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+    private void getAllRecords(){
+        objectsList = new ArrayList<>();
 
-        entityManager.getTransaction().begin();
-        results = entityManager.createQuery("SELECT o, d, c FROM Orders as o, Dimiensions as d, Client as c WHERE " +
-                "o.dimension = d.dimension_id AND o.client = c.client_id")
-                .getResultList();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        entityManagerFactory.close();
-        ObservableList<Object []> data = FXCollections.observableArrayList(results);
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
+
+        javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+
+        String URI  = "http://localhost:8080/orders";
+
+        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+
+        results = response.readEntity(new GenericType<List<Orders>>(){});
+
+        clientBuilder.close();
+
+        for(Orders o  : results){
+            dimObject = o.getDimension();
+            cliObject = o.getClient();
+            Object[] obj = new Object[]{o, dimObject, cliObject};
+            objectsList.add(obj);
+        }
+        ObservableList<Object[]> data = FXCollections.observableArrayList(objectsList);
         filteredList = new FilteredList<>(data, p -> true);
     }
 
-    public List<String> fetchToList(List<Object[]> obs){
+    private List<String> fetchToList(List<Object[]> obs){
 
         List<String> temp_records = new ArrayList<>();
         ord.clear();
@@ -728,9 +752,9 @@ public class ShowOrdersController {
             dim.add(dimensionObject);
             Client clientObject = (Client) o[2];
             cli.add(clientObject);
-            item = "Firma:  " + clientObject.getFirm_name() + System.lineSeparator() +
+            item = "Firma:  " + clientObject.getFirmName() + System.lineSeparator() +
                     "Data zamówienia:  " + orderObject.getOrder_date() + System.lineSeparator() +
-                    "Wymiary:  " + dimensionObject.getFirst_dimension() + "x" + dimensionObject.getSecond_dimension() +
+                    "Wymiary:  " + dimensionObject.getFirstDimension() + "x" + dimensionObject.getSecondDimension() +
                     "x" + dimensionObject.getThickness() + System.lineSeparator() +
                     "Waga:  " + dimensionObject.getWeight();
             temp_records.add(item);
@@ -799,6 +823,12 @@ public class ShowOrdersController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_ORDERS_PANE_FXML));
         VBox vBox = null;
 
+        ordVariables.setObject(null);
+
+        dimVariables.setObject(null);
+
+        cliVariables.setObject(null);
+
         try {
             vBox = fxmlLoader.load();
         } catch (IOException e) {
@@ -855,20 +885,25 @@ public class ShowOrdersController {
         ordersStory storyObject = new ordersStory(orderObject.getDimension(), orderObject.getClient(), orderObject.getMetrs(), orderObject.getMaterials(),
                 orderObject.getReceive_date().plusDays(1), orderObject.getOrder_date().plusDays(1), orderObject.getNote());
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                .nonPreemptive()
+                .credentials(userData.getName(), userData.getPassword())
+                .build();
 
-        entityManager.getTransaction().begin();
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.register(feature);
 
-        entityManager.remove(entityManager.contains(orderObject) ? orderObject : entityManager.merge(orderObject));
+        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        entityManager.persist(storyObject);
+        String URI = "http://localhost:8080/orderstory/createorder";
 
-        entityManager.getTransaction().commit();
+        Response response = clientBulider.target(URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(storyObject,MediaType.APPLICATION_JSON_TYPE));
 
+        URI = "http://localhost:8080/orders/order/delete";
 
-        entityManager.close();
-        entityManagerFactory.close();
+        response = clientBulider.target(URI).path(String.valueOf(orderObject.getOrder_id())).request(MediaType.APPLICATION_JSON_TYPE).delete();
+
+        clientBulider.close();
 
         getAllRecords();
 

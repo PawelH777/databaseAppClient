@@ -10,15 +10,9 @@ import javax.persistence.*;
 @Table(name = "Uzytkownicy")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_usera")
     private long user_id;
-    @Column(name = "Login", nullable = false)
     private String login;
-    @Column(name = "Haslo", columnDefinition = "VARCHAR(255) NOT NULL")
     private String password;
-    @Column(name = "Upowaznienie_administratora", nullable = false)
     private boolean admin;
 
     public long getUser_id() {
