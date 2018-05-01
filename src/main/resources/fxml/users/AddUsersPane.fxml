@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.AddUsersController">
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.AddUsersController">
    <children>
       <Label fx:id="mainLabel" style="-fx-text-fill: #3f5aa8;" text="EKRAN UŻYTKOWNIKA">
          <font>
@@ -94,5 +94,10 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
+      <Label fx:id="statusLabel" textFill="RED">
+         <VBox.margin>
+            <Insets left="230.0" top="10.0" />
+         </VBox.margin>
+      </Label>
    </children>
 </VBox>

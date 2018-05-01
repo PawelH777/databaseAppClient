@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.AddClientController">
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.AddClientController">
    <children>
       <Label fx:id="mainLabel" style="-fx-text-fill: #3f5aa8;" text="EKRAN KLIENTA">
          <font>
@@ -45,5 +45,10 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
+      <Label fx:id="statusLabel" textFill="RED">
+         <VBox.margin>
+            <Insets left="140.0" top="10.0" />
+         </VBox.margin>
+      </Label>
    </children>
 </VBox>

@@ -30,6 +30,7 @@ import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -67,6 +68,9 @@ public class ShowOrdersController {
     private JFXButton btnAdd;
 
     @FXML
+    private JFXButton btnRefresh;
+
+    @FXML
     private JFXTextField txtSearch;
 
     @FXML
@@ -77,9 +81,6 @@ public class ShowOrdersController {
 
     @FXML
     private JFXComboBox datesCmbBox;
-
-    @FXML
-    private AnchorPane rightPane;
 
     @FXML
     private Label labelIdValue;
@@ -117,8 +118,6 @@ public class ShowOrdersController {
     private Dimiensions dimObject;
 
     private Client cliObject;
-
-    private Orders ordObject;
 
     private List<Orders> results;
     private List<Object[]> objectsList = new ArrayList<>();
@@ -319,8 +318,8 @@ public class ShowOrdersController {
             Client clientObject = (Client)o1[2];
             Client clientObject_2 = (Client)o2[2];
 
-            String name_1 = clientObject.getFirmName();
-            String name_2 = clientObject_2.getFirmName();
+            String name_1 = clientObject.getFirmName().toLowerCase();
+            String name_2 = clientObject_2.getFirmName().toLowerCase();
 
 
             return name_1.compareTo(name_2);
@@ -711,32 +710,40 @@ public class ShowOrdersController {
     private void getAllRecords(){
         objectsList = new ArrayList<>();
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
 
-        javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        String URI  = "http://localhost:8080/orders";
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-        results = response.readEntity(new GenericType<List<Orders>>(){});
+            String URI  = "http://localhost:8080/orders";
 
-        clientBuilder.close();
+            Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-        for(Orders o  : results){
-            dimObject = o.getDimension();
-            cliObject = o.getClient();
-            Object[] obj = new Object[]{o, dimObject, cliObject};
-            objectsList.add(obj);
+            results = response.readEntity(new GenericType<List<Orders>>(){});
+
+            clientBuilder.close();
+
+            for(Orders o  : results){
+                dimObject = o.getDimension();
+                cliObject = o.getClient();
+                Object[] obj = new Object[]{o, dimObject, cliObject};
+                objectsList.add(obj);
+            }
+            ObservableList<Object[]> data = FXCollections.observableArrayList(objectsList);
+            filteredList = new FilteredList<>(data, p -> true);
         }
-        ObservableList<Object[]> data = FXCollections.observableArrayList(objectsList);
-        filteredList = new FilteredList<>(data, p -> true);
+        catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
     }
 
     private List<String> fetchToList(List<Object[]> obs){
@@ -885,29 +892,44 @@ public class ShowOrdersController {
         ordersStory storyObject = new ordersStory(orderObject.getDimension(), orderObject.getClient(), orderObject.getMetrs(), orderObject.getMaterials(),
                 orderObject.getReceive_date().plusDays(1), orderObject.getOrder_date().plusDays(1), orderObject.getNote());
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/orderstory/createorder";
+            String URI = "http://localhost:8080/orderstory/createorder";
 
-        Response response = clientBulider.target(URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(storyObject,MediaType.APPLICATION_JSON_TYPE));
+            Response response = clientBulider.target(URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(storyObject,MediaType.APPLICATION_JSON_TYPE));
 
-        URI = "http://localhost:8080/orders/order/delete";
+            URI = "http://localhost:8080/orders/order/delete";
 
-        response = clientBulider.target(URI).path(String.valueOf(orderObject.getOrder_id())).request(MediaType.APPLICATION_JSON_TYPE).delete();
+            response = clientBulider.target(URI).path(String.valueOf(orderObject.getOrder_id())).request(MediaType.APPLICATION_JSON_TYPE).delete();
 
-        clientBulider.close();
+            clientBulider.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
+
 
         getAllRecords();
 
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
 
+    }
+
+    public void btnRefreshClicked() throws IOException{
+
+        getAllRecords();
+
+        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
+        btnDelete.disableProperty().setValue(true);
+        btnModify.disableProperty().setValue(true);
     }
 }

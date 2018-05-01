@@ -2,6 +2,7 @@ package pl.Vorpack.app.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -15,6 +16,7 @@ import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -64,14 +66,23 @@ public class AddDimensionController {
     };
 
     @FXML
+    private
     JFXButton btnProceed;
 
+    @FXML
+    private Label statusLabel;
 
-    mainPaneProperty dimProperty = new mainPaneProperty();
+    private Boolean isModify = false;
+
+    private mainPaneProperty dimProperty = new mainPaneProperty();
 
     Boolean a = false, b = false, c = false, d = false;
 
-    Dimiensions object = new Dimiensions();
+    private Dimiensions object;
+
+    public AddDimensionController() {
+        object = new Dimiensions();
+    }
 
     @FXML
     public void initialize(){
@@ -143,6 +154,8 @@ public class AddDimensionController {
             textThick.textProperty().setValue(object.getThickness().toString());
             textWeight.textProperty().setValue(object.getWeight().toString());
             btnProceed.setText("Zmień");
+
+            isModify = true;
         }
 
     }
@@ -167,70 +180,75 @@ public class AddDimensionController {
         dimObj.setThickness(thick);
         dimObj.setWeight(weight);
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        Client client = ClientBuilder.newClient(clientConfig);
+            Client client = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/dims/dim/find";
+            String URI = "http://localhost:8080/dims/dim/find";
 
-        Response response = client
-                .target(URI)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(dimObj,MediaType.APPLICATION_JSON_TYPE));
+            Response response = client
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(dimObj,MediaType.APPLICATION_JSON_TYPE));
 
-        List<Dimiensions> existingRecords = response.readEntity(new GenericType<List<Dimiensions>>(){});
+            List<Dimiensions> existingRecords = response.readEntity(new GenericType<List<Dimiensions>>(){});
 
-        if(dimVariables.getObject() == null) {
-            if (existingRecords.size() == 0) {
+            if(dimVariables.getObject() == null) {
+                if (existingRecords.size() == 0) {
 
-                Dimiensions dim = new Dimiensions(firstLength, secondLength, thick, weight);
-                URI = "http://localhost:8080/dims/createdim";
+                    Dimiensions dim = new Dimiensions(firstLength, secondLength, thick, weight);
+                    URI = "http://localhost:8080/dims/createdim";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+                    endGate = true;
+                } else
+                    endGate = false;
+
+            } else if(dimVariables.getObject() != null){
+                object.setFirstDimension(firstLength);
+                object.setSecondDimension(secondLength);
+                object.setThickness(thick);
+                object.setWeight(weight);
+
+                URI = "http://localhost:8080/dims/dim/update";
 
                 response = client
                         .target(URI)
+                        .path(String.valueOf(object.getDimension_id()))
                         .request(MediaType.APPLICATION_JSON_TYPE)
-                        .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
-
+                        .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
                 endGate = true;
-            } else
-                 endGate = false;
 
-        } else if(dimVariables.getObject() != null){
-            object.setFirstDimension(firstLength);
-            object.setSecondDimension(secondLength);
-            object.setThickness(thick);
-            object.setWeight(weight);
+            }
 
-            URI = "http://localhost:8080/dims/dim/update";
-
-            response = client
-                    .target(URI)
-                    .path(String.valueOf(object.getDimension_id()))
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
-            endGate = true;
-
+            client.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
         }
 
-        client.close();
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-
+            if (isModify)
+                infoAlerts.addRecord("zmieniony");
+            else if(!isModify)
+                infoAlerts.addRecord("dodany");
             thisStage.close();
         }
         else if(!endGate){
-            Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-            infoAlert.setTitle("Uwaga!");
-            infoAlert.setHeaderText("Pojawił się błąd");
-            infoAlert.setContentText("Wymiar z wpisanymi danymi już istnieje");
-            infoAlert.showAndWait();
+            statusLabel.setText("Wymiar z wpisanymi danymi już istnieje");
         }
     }
 

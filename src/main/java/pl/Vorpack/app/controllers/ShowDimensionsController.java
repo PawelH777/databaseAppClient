@@ -22,12 +22,15 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
+import pl.Vorpack.app.domain.Orders;
+import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
-import javax.persistence.TypedQuery;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -57,6 +60,9 @@ public class ShowDimensionsController {
     private JFXButton btnDelete;
 
     @FXML
+    private JFXButton btnRefresh;
+
+    @FXML
     private JFXTextField txtSearch;
 
     @FXML
@@ -78,7 +84,6 @@ public class ShowDimensionsController {
     private TableColumn<Dimiensions, Double> weightColumn;
 
     private mainPaneProperty dimProperty = new mainPaneProperty();
-    private TypedQuery<Dimiensions> query;
 
     private SortedList<Dimiensions> sortedData;
     private FilteredList<Dimiensions> filteredList;
@@ -344,30 +349,36 @@ public class ShowDimensionsController {
     }
 
     private void getRecords() {
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        Client clientBulider = ClientBuilder.newClient(clientConfig);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        String URI = "http://localhost:8080/dims";
+            Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        javax.ws.rs.core.Response response =  clientBulider
-                                    .target(URI)
-                                    .request(MediaType.APPLICATION_JSON_TYPE)
-                                    .get();
+            String URI = "http://localhost:8080/dims";
 
-        List<Dimiensions> query = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
+            javax.ws.rs.core.Response response =  clientBulider
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .get();
 
-        clientBulider.close();
+            List<Dimiensions> query = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
 
-        ObservableList<Dimiensions> data = FXCollections.observableArrayList(query);
+            clientBulider.close();
 
-        filteredList = new FilteredList<>(data, p -> true);
+            ObservableList<Dimiensions> data = FXCollections.observableArrayList(query);
+
+            filteredList = new FilteredList<>(data, p -> true);
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
     }
 
     private void getAllResult() {
@@ -495,25 +506,106 @@ public class ShowDimensionsController {
     }
 
     public void btnDeleteClicked(){
+        Boolean isDelete = true;
 
-        dim = dimTableView.getSelectionModel().getSelectedItem();
+        try{
+            dim = dimTableView.getSelectionModel().getSelectedItem();
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        Client client = ClientBuilder.newClient(clientConfig);
+            Client client = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/dims/dim/delete";
+            String URI = "http://localhost:8080/orders/dims";
 
-        Response response = client.target(URI).path(String.valueOf(dim.getDimension_id())).request(MediaType.APPLICATION_JSON_TYPE)
-                .delete();
+            Response response = client
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
 
-        client.close();
+            List<Orders> ordersWithDim = response.readEntity(new GenericType<List<Orders>>(){});
+
+            URI = "http://localhost:8080/orderstory/dims";
+
+            response = client
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+            List<ordersStory> storyOrdersWithDim = response.readEntity(new GenericType<List<ordersStory>>(){});
+
+            if(ordersWithDim.size() != 0 && storyOrdersWithDim.size() == 0){
+
+                isDelete = infoAlerts.deleteRecord("ZAMÓWIENIA", null);
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orders/delete/dim";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+                }
+
+            }
+            else if(ordersWithDim.size() == 0 && storyOrdersWithDim.size() != 0){
+                isDelete = infoAlerts.deleteRecord("HISTORIA ZAMÓWIEŃ", null);
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orderstory/delete/dim";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+                }
+            }
+            else if(ordersWithDim.size() != 0 && storyOrdersWithDim.size() != 0){
+                isDelete = infoAlerts.deleteRecord("ZAMÓWIENIA", "HISTORIA ZAMÓWIEŃ");
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orders/delete/dim";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+                    URI = "http://localhost:8080/orderstory/delete/dim";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+                }
+            }
+
+            if(isDelete){
+
+
+                URI = "http://localhost:8080/dims/dim/delete";
+
+                response = client
+                        .target(URI)
+                        .path(String.valueOf(dim.getDimension_id()))
+                        .request(MediaType.APPLICATION_JSON_TYPE)
+                        .delete();
+            }
+
+            client.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
 
         getAllResult();
 
@@ -537,6 +629,12 @@ public class ShowDimensionsController {
 
         getAllResult();
 
+        btnDelete.disableProperty().setValue(true);
+        btnModify.disableProperty().setValue(true);
+    }
+
+    public void btnRefreshClicked() throws IOException{
+        getAllResult();
         btnDelete.disableProperty().setValue(true);
         btnModify.disableProperty().setValue(true);
     }

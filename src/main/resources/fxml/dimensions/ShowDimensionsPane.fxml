@@ -50,5 +50,13 @@
             <TableColumn fx:id="weightColumn" editable="false" prefWidth="98.0" text="Waga" />
          </columns>
       </TableView>
+      <JFXButton fx:id="btnRefresh" layoutX="20.0" layoutY="20.0" onMouseClicked="#btnRefreshClicked" prefHeight="32.0" prefWidth="80.0" style="-fx-background-color: #FFEBCC; -fx-border-style: solid;" text="Odśwież" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

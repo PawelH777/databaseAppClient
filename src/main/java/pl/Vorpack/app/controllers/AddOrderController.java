@@ -28,6 +28,7 @@ import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -95,9 +96,14 @@ public class AddOrderController {
     @FXML
     private JFXCheckBox checkBox;
 
-    private BigDecimal weight, length, materials, firstDim, secondDim, thick;
+    @FXML
+    private Label statusLabel;
 
-    private LocalDate orderDate, createOrderDate;
+    private BigDecimal weight;
+    private BigDecimal length;
+    private BigDecimal materials;
+
+    private LocalDate createOrderDate;
 
     private List<Client> c = new ArrayList<>();
 
@@ -114,8 +120,6 @@ public class AddOrderController {
     private Set<BigDecimal> setThicks= new HashSet<>();
 
     private Set<BigDecimal> setWeights = new HashSet<>();
-    
-    private List<Dimiensions> dimsList = new ArrayList<>();
 
     private Dimiensions dim;
 
@@ -134,7 +138,9 @@ public class AddOrderController {
     private String objValue_2 = null;
     private String objValue_3 = null;
 
-    SuggestionProvider<String> prov_firmsName;
+    private ObservableList<Dimiensions> data;
+
+    private Boolean isModify = false;
 
     @FXML
     public void initialize(){
@@ -215,35 +221,42 @@ public class AddOrderController {
             }
         });
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        String URI = "http://localhost:8080/dims";
+            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+            String URI = "http://localhost:8080/dims";
 
-        d = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
+            Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-        ObservableList<Dimiensions> data = FXCollections.observableArrayList(d);
+            d = response.readEntity(new GenericType<ArrayList<Dimiensions>>(){});
 
-        filteredList = new FilteredList<>(data, p -> true);
+            data = FXCollections.observableArrayList(d);
 
-        fromObjectToList(filteredList);
+            filteredList = new FilteredList<>(data, p -> true);
 
-        URI = "http://localhost:8080/clients";
+            fromObjectToList(filteredList);
 
-        response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
+            URI = "http://localhost:8080/clients";
 
-        c = response.readEntity(new GenericType<List<Client>>(){});
+            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
-        clientBuilder.close();
+            c = response.readEntity(new GenericType<List<Client>>(){});
+
+            clientBuilder.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
+
 
         for(Client cli : c){
             setFirmNames.add(cli.getFirmName());
@@ -301,7 +314,11 @@ public class AddOrderController {
                 length = BigDecimal.ZERO;
             }
 
-            materials = weight.multiply(length);
+            materials = weight.multiply(length).stripTrailingZeros();
+
+            if (materials.scale()<0)
+                materials= materials.setScale(0);
+
             txtMaterials.textProperty().setValue("" + materials);
 
             if(dateOrder.valueProperty().getValue() != null && dateCreateOrder.valueProperty().getValue() != null
@@ -331,7 +348,10 @@ public class AddOrderController {
                 length = BigDecimal.ZERO;
             }
 
-            materials = weight.multiply(length);
+            materials = weight.multiply(length).stripTrailingZeros();
+
+            if (materials.scale()<0)
+                materials= materials.setScale(0);
 
             txtMaterials.textProperty().setValue("" + materials);
 
@@ -349,7 +369,6 @@ public class AddOrderController {
             }
 
 
-            String value = newValue;
             String value_1 = txtFirstDim.getText();
             String value_2 = txtSecondDim.getText();
             String value_3 = txtThick.getText();
@@ -358,7 +377,7 @@ public class AddOrderController {
             if(!newValue.isEmpty() && !blockFiltering) {
 
 
-                filteringDimsTextFields(prov_FirstDims, prov_SecondDims, prov_Thick, prov_Weights, value, value_1, value_2, value_3, 4);
+                filteringDimsTextFields(prov_FirstDims, prov_SecondDims, prov_Thick, prov_Weights, newValue, value_1, value_2, value_3, 4);
 
                 fromObjectToList(filteredList);
 
@@ -467,7 +486,6 @@ public class AddOrderController {
                 ordProperty.setDisableBtnProocedandExit(true);
             }
 
-            String value = newValue;
             String value_1 = txtFirstDim.getText();
             String value_2 = txtSecondDim.getText();
             String value_3 = txtWeight.getText();
@@ -475,7 +493,7 @@ public class AddOrderController {
 
             if(!newValue.isEmpty()  && !blockFiltering) {
 
-                filteringDimsTextFields(prov_FirstDims, prov_SecondDims, prov_Thick, prov_Weights, value, value_1, value_2, value_3, 3);
+                filteringDimsTextFields(prov_FirstDims, prov_SecondDims, prov_Thick, prov_Weights, newValue, value_1, value_2, value_3, 3);
 
                 fromObjectToList(filteredList);
 
@@ -500,6 +518,7 @@ public class AddOrderController {
             txtWeight.setText(dimVariables.getObject().getWeight().toString());
             txtNote.setText(ordVariables.getObject().getNote());
 
+            isModify = true;
         }
     }
 
@@ -633,19 +652,23 @@ public class AddOrderController {
 
     public void btnSaveClicked(MouseEvent mouseEvent) {
         persistRecord();
-
+        statusLabel.setText("Rekord został dodany");
     }
 
     public void btnSaveExitClicked(MouseEvent mouseEvent) {
         persistRecord();
 
+        if (isModify)
+            infoAlerts.addRecord("zmieniony");
+        else if(!isModify)
+            infoAlerts.addRecord("dodany");
         Stage thisStage = (Stage) vBox.getScene().getWindow();
 
         thisStage.close();
 
     }
 
-    public Callback<DatePicker, DateCell> restrainDatePicker(LocalDate lcldate){
+    private Callback<DatePicker, DateCell> restrainDatePicker(LocalDate lcldate){
 
         final Callback<DatePicker, DateCell> dayCellFactory =
                 new Callback<DatePicker, DateCell>() {
@@ -673,18 +696,18 @@ public class AddOrderController {
         List<Dimiensions> dimsList = new ArrayList<>();
         List<Client> cliList = new ArrayList<>();
 
-        firstDim = BigDecimal.valueOf(Double.parseDouble(txtFirstDim.textProperty().getValue()));
-        secondDim =  BigDecimal.valueOf(Double.parseDouble(txtSecondDim.textProperty().getValue()));
-        thick = BigDecimal.valueOf(Double.parseDouble(txtThick.textProperty().getValue()));
+        BigDecimal firstDim = BigDecimal.valueOf(Double.parseDouble(txtFirstDim.textProperty().getValue()));
+        BigDecimal secondDim = BigDecimal.valueOf(Double.parseDouble(txtSecondDim.textProperty().getValue()));
+        BigDecimal thick = BigDecimal.valueOf(Double.parseDouble(txtThick.textProperty().getValue()));
 
         weight  = BigDecimal.valueOf(Double.parseDouble(txtWeight.textProperty().getValue()));
         length = BigDecimal.valueOf(Double.parseDouble(txtMetrs.textProperty().getValue()));
 
-        //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
-        orderDate = dateOrder.getValue().plusDays(1);
+            //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
+        LocalDate orderDate = dateOrder.getValue();
 
-        //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
-        createOrderDate = dateCreateOrder.getValue().plusDays(1);
+            //trzeba dodac dzien, bo w bazie zapisuje sie data z dniem do tyłu
+            createOrderDate = dateCreateOrder.getValue();
 
         String firmName = txtFirmName.textProperty().getValue();
 
@@ -698,79 +721,35 @@ public class AddOrderController {
         dim.setThickness(thick);
         dim.setWeight(weight);
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        javax.ws.rs.client.Client clientBuilder  = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder  = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/dims/dim/find";
+            String URI = "http://localhost:8080/dims/dim/find";
 
-        Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
-
-        dimsList = response.readEntity(new GenericType<List<Dimiensions>>(){});
-
-        if(dimsList.size() != 0){
-            findDim = true;
-
-            for(Dimiensions item : dimsList){
-                dim = item;
-                break;
-            }
-        }
-
-        cli = new Client();
-
-        cli.setFirmName(firmName);
-
-        URI = "http://localhost:8080/clients/client/firmname";
-
-        response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
-
-        cliList = response.readEntity(new GenericType<List<Client>>(){});
-
-        if(cliList.size() != 0){
-            findClient = true;
-
-            for(Client item : cliList){
-                cli = item;
-                break;
-            }
-        }
-
-        if(!findDim){
-
-            dim = new Dimiensions(firstDim, secondDim, thick, weight);
-            URI  = "http://localhost:8080/dims/createdim";
-
-            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
-                    .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
-
-
-            URI = "http://localhost:8080/dims/dim/find";
-
-            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+            Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                     .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
 
             dimsList = response.readEntity(new GenericType<List<Dimiensions>>(){});
+            if(dimsList.size() != 0){
+                findDim = true;
 
-            dim = dimsList.get(0);
+                for(Dimiensions item : dimsList){
+                    dim = item;
+                    break;
+                }
+            }
 
-        }
+            cli = new Client();
 
-        if(!findClient){
-
-            cli = new Client(firmName);
-            URI  = "http://localhost:8080/clients/createclient";
-
-            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
-                    .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+            cli.setFirmName(firmName);
 
             URI = "http://localhost:8080/clients/client/firmname";
 
@@ -779,37 +758,86 @@ public class AddOrderController {
 
             cliList = response.readEntity(new GenericType<List<Client>>(){});
 
-            cli = cliList.get(0);
+            if(cliList.size() != 0){
+                findClient = true;
+
+                for(Client item : cliList){
+                    cli = item;
+                    break;
+                }
+            }
+
+            if(!findDim){
+
+                dim = new Dimiensions(firstDim, secondDim, thick, weight);
+                URI  = "http://localhost:8080/dims/createdim";
+
+                response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+
+                URI = "http://localhost:8080/dims/dim/find";
+
+                response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
+
+                dimsList = response.readEntity(new GenericType<List<Dimiensions>>(){});
+
+                dim = dimsList.get(0);
+
+            }
+
+            if(!findClient){
+
+                cli = new Client(firmName);
+                URI  = "http://localhost:8080/clients/createclient";
+
+                response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+
+                URI = "http://localhost:8080/clients/client/firmname";
+
+                response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+
+                cliList = response.readEntity(new GenericType<List<Client>>(){});
+
+                cli = cliList.get(0);
+            }
+
+            if(ordVariables.getObject() != null && cliVariables.getObject() != null
+                    && dimVariables.getObject() != null){
+                ord.setOrder_id(ordVariables.getObject().getOrder_id());
+                ord.setClient(cli);
+                ord.setDimension(dim);
+                ord.setMaterials(materials);
+                ord.setMetrs(length);
+                ord.setNote(note);
+                ord.setOrder_date(orderDate);
+                ord.setReceive_date(createOrderDate);
+
+                String ord_id = String.valueOf(ordVariables.getObject().getOrder_id());
+
+                URI  = "http://localhost:8080/orders/order/update";
+
+                response = clientBuilder.target(URI).path(ord_id).request(MediaType.APPLICATION_JSON_TYPE)
+                        .put(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
+            }else{
+
+                ord = new Orders(dim, cli, length, materials, createOrderDate, orderDate, note);
+
+                URI  = "http://localhost:8080/orders/createorder";
+
+                response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
+                        .post(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
+            }
+
+            clientBuilder.close();
+        }catch(Exception e){
+           e.printStackTrace();
+           infoAlerts.generalAlert();
         }
 
-        if(ordVariables.getObject() != null && cliVariables.getObject() != null
-                && dimVariables.getObject() != null){
-            ord.setOrder_id(ordVariables.getObject().getOrder_id());
-            ord.setClient(cli);
-            ord.setDimension(dim);
-            ord.setMaterials(materials);
-            ord.setMetrs(length);
-            ord.setNote(note);
-            ord.setOrder_date(orderDate);
-            ord.setReceive_date(createOrderDate);
-
-            String ord_id = String.valueOf(ordVariables.getObject().getOrder_id());
-
-            URI  = "http://localhost:8080/orders/order/update";
-
-            response = clientBuilder.target(URI).path(ord_id).request(MediaType.APPLICATION_JSON_TYPE)
-                    .put(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
-        }else{
-
-            ord = new Orders(dim, cli, length, materials, createOrderDate, orderDate, note);
-
-            URI  = "http://localhost:8080/orders/createorder";
-
-            response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
-                    .post(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
-        }
-
-        clientBuilder.close();
     }
 
     public void onKeyPressed(KeyEvent keyEvent) {

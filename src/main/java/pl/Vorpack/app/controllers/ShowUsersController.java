@@ -25,6 +25,7 @@ import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.User;
 import pl.Vorpack.app.global_variables.userData;
 import pl.Vorpack.app.global_variables.usrVariables;
+import pl.Vorpack.app.infoAlerts;
 import pl.Vorpack.app.optionalclass.records;
 
 import javax.persistence.EntityManager;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Paweł on 2018-02-22.
@@ -56,6 +58,9 @@ public class ShowUsersController {
 
     @FXML
     private JFXButton btnDelete;
+
+    @FXML
+    private JFXButton btnRefresh;
 
     @FXML
     private JFXTextField txtSearch;
@@ -318,35 +323,38 @@ public class ShowUsersController {
 
     private void getRecords() {
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
-        javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        String URI = "http://localhost:8080/users";
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
+            javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-        Response response = client
-                .target(URI)
-                .request(MediaType.APPLICATION_JSON)
-                .get();
+            String URI = "http://localhost:8080/users";
 
-        List<User> users = response.readEntity(new GenericType<ArrayList<User>>(){});
+            Response response = client
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
 
-        for(Iterator<User> iterator = users.iterator(); iterator.hasNext();){
-            User u = iterator.next();
-            if(u.getLogin().equals("Admin"))
-                iterator.remove();
+            List<User> users = response.readEntity(new GenericType<ArrayList<User>>(){});
+
+            users.removeIf(u -> u.getLogin().equals("Admin"));
+
+            client.close();
+
+            result = changingClass(users);
+
+            data = FXCollections.observableArrayList(result);
+            filteredList = new FilteredList<>(data, p -> true);
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
         }
-
-
-        result = changingClass(users);
-
-        data = FXCollections.observableArrayList(result);
-        filteredList = new FilteredList<>(data, p -> true);
     }
 
     private void getRecordsWithActualConfigure() {
@@ -466,23 +474,32 @@ public class ShowUsersController {
 
         user = changingObjectType(dimTableView.getSelectionModel().getSelectedItem());
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        String URI = "http://localhost:8080/users/user/delete";
+            javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-        Response response = client
-                                    .target(URI)
-                                    .path(String.valueOf(user.getUser_id()))
-                                    .request(MediaType.APPLICATION_JSON_TYPE)
-                                    .delete();
+            String URI = "http://localhost:8080/users/user/delete";
+
+            Response response = client
+                    .target(URI)
+                    .path(String.valueOf(user.getUser_id()))
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .delete();
+
+            client.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
 
         getRecordsWithActualConfigure();
 
@@ -516,7 +533,7 @@ public class ShowUsersController {
 
     }
 
-    public List<records> changingClass(List<User> query){
+    private List<records> changingClass(List<User> query){
         List<records> result = new ArrayList<records>();;
 
         if(query.size() !=0){
@@ -542,20 +559,27 @@ public class ShowUsersController {
         return result;
     }
 
-    public User changingObjectType(records rec){
+    private User changingObjectType(records rec){
         User usr = new User();
 
         usr.setUser_id(rec.getUser_id());
         usr.setLogin(rec.getLogin());
         usr.setPassword(rec.getPassword());
 
-        if(rec.getAdmin() == "Tak")
+        if(Objects.equals(rec.getAdmin(), "Tak"))
             usr.setAdmin(true);
-        else if(rec.getAdmin() == "Nie")
+        else if(Objects.equals(rec.getAdmin(), "Nie"))
             usr.setAdmin(false);
 
 
         return usr;
+    }
+
+    public void btnRefreshClicked(){
+        getRecordsWithActualConfigure();
+
+        btnDelete.disableProperty().setValue(true);
+        btnModify.disableProperty().setValue(true);
     }
 
 }

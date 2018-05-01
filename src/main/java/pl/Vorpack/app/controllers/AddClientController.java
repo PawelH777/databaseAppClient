@@ -14,6 +14,7 @@ import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -43,10 +44,16 @@ public class AddClientController {
     private
     JFXButton btnProceed;
 
+    @FXML
+    private
+    Label statusLabel;
+
 
     private mainPaneProperty cliProperty = new mainPaneProperty();
 
     private Client object = new Client();
+
+    private Boolean isModify = false;
 
     @FXML
     public void initialize(){
@@ -65,6 +72,7 @@ public class AddClientController {
             object = cliVariables.getObject();
             textFirmName.textProperty().setValue(object.getFirmName());
             btnProceed.setText("Zmień");
+            isModify = true;
         }
     }
 
@@ -72,67 +80,74 @@ public class AddClientController {
 
         boolean endGate = false;
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/clients/client/firmname";
+            String URI = "http://localhost:8080/clients/client/firmname";
 
-        Client cli = new Client();
+            Client cli = new Client();
 
-        cli.setFirmName(textFirmName.getText());
+            cli.setFirmName(textFirmName.getText());
 
-        Response response = client
-                .target(URI)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+            Response response = client
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
 
-        List<Client> existedRecord = response.readEntity(new GenericType<ArrayList<Client>>(){});
+            List<Client> existedRecord = response.readEntity(new GenericType<ArrayList<Client>>(){});
 
-        if(cliVariables.getObject() == null) {
-            if(existedRecord.size() == 0){
-                URI = "http://localhost:8080/clients/createclient";
+
+
+
+            if(cliVariables.getObject() == null) {
+                if(existedRecord.size() == 0){
+                    URI = "http://localhost:8080/clients/createclient";
+
+                    response = client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+                    endGate = true;
+                }else
+                    endGate = false;
+            } else if(cliVariables.getObject() != null){
+
+                object.setFirmName(textFirmName.getText());
+                URI = "http://localhost:8080/clients/client/update";
 
                 response = client
                         .target(URI)
+                        .path(String.valueOf(object.getClient_id()))
                         .request(MediaType.APPLICATION_JSON_TYPE)
-                        .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+                        .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
                 endGate = true;
-            }else
-                endGate = false;
-        } else if(cliVariables.getObject() != null){
+            }
 
-            object.setFirmName(textFirmName.getText());
-            URI = "http://localhost:8080/clients/client/update";
-
-            response = client
-                    .target(URI)
-                    .path(String.valueOf(object.getClient_id()))
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
-            endGate = true;
+            client.close();
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
         }
-
-        client.close();
 
         if(endGate){
 
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-
+            if (isModify)
+                infoAlerts.addRecord("zmieniony");
+            else if(!isModify)
+                infoAlerts.addRecord("dodany");
             thisStage.close();
         }
         else if(!endGate){
-            Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-            infoAlert.setTitle("Uwaga!");
-            infoAlert.setHeaderText("Pojawił się błąd");
-            infoAlert.setContentText("Firma z wpisanymi danymi już istnieje");
-            infoAlert.showAndWait();
+            statusLabel.setText("Firma z wpisanymi danymi już istnieje");
         }
 
     }

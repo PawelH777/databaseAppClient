@@ -19,6 +19,7 @@ import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.User;
 import pl.Vorpack.app.global_variables.userData;
 import pl.Vorpack.app.global_variables.usrVariables;
+import pl.Vorpack.app.infoAlerts;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -40,9 +41,6 @@ import java.util.List;
 public class AddUsersController {
     @FXML
     private VBox vBox;
-
-    @FXML
-    private Label mainLabel;
 
     @FXML
     private Label errorStatus;
@@ -69,14 +67,19 @@ public class AddUsersController {
     private JFXComboBox cmbAdminYesNo = new JFXComboBox();
 
     @FXML
+    private
     JFXButton btnProceed;
 
+    @FXML
+    private Label statusLabel;
 
-    mainPaneProperty usrProperty = new mainPaneProperty();
+    private mainPaneProperty usrProperty = new mainPaneProperty();
 
-    User object = new User();
+    private User object = new User();
 
     private Boolean booleanValue;
+
+    private Boolean isModify = false;
 
     @FXML
     public void initialize(){
@@ -158,6 +161,8 @@ public class AddUsersController {
                 cmbAdminYesNo.setValue("Nie");
 
             btnProceed.setText("Zmień");
+
+            isModify = true;
         }
     }
 
@@ -170,72 +175,78 @@ public class AddUsersController {
         else if(cmbAdminYesNo.getValue() == "Nie")
             booleanValue = false;
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+        try{
 
-        Client client = ClientBuilder.newClient(clientConfig);
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        String URI = "http://localhost:8080/users/user/login";
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        Response response = client
-                .target(URI)
-                .path(login.getText())
-                .request(MediaType.APPLICATION_JSON)
-                .get();
+            Client client = ClientBuilder.newClient(clientConfig);
 
-        List<User> existedRecord = response.readEntity(new GenericType<ArrayList<User>>(){});
+            String URI = "http://localhost:8080/users/user/login";
 
-        String pass = DigestUtils.sha1Hex(password.textProperty().getValue());
+            Response response = client
+                    .target(URI)
+                    .path(login.getText())
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
 
-        if (usrVariables.getObject() == null ) {
+            List<User> existedRecord = response.readEntity(new GenericType<ArrayList<User>>(){});
 
-            if(existedRecord.size() == 0){
-                User cli = new User(login.textProperty().getValue(), pass, booleanValue);
+            String pass = DigestUtils.sha1Hex(password.textProperty().getValue());
 
-                URI = "http://localhost:8080/users/createuser";
+            if (usrVariables.getObject() == null ) {
 
+                if(existedRecord.size() == 0){
+                    User cli = new User(login.textProperty().getValue(), pass, booleanValue);
+
+                    URI = "http://localhost:8080/users/createuser";
+
+                    response =  client
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+                    endGate = true;
+                }
+                else{
+                    endGate = false;
+                }
+            }else if(usrVariables.getObject() != null){
+                object.setLogin(login.textProperty().getValue());
+                object.setPassword(pass);
+                object.setAdmin(booleanValue);
+                URI = "http://localhost:8080/users/user/update";
                 response =  client
                         .target(URI)
+                        .path(String.valueOf(object.getUser_id()))
                         .request(MediaType.APPLICATION_JSON_TYPE)
-                        .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
+                        .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
                 endGate = true;
             }
-            else{
-                endGate = false;
-            }
-        }else if(usrVariables.getObject() != null){
-            object.setLogin(login.textProperty().getValue());
-            object.setPassword(pass);
-            object.setAdmin(booleanValue);
-            URI = "http://localhost:8080/users/user/update";
-            response =  client
-                    .target(URI)
-                    .path(String.valueOf(object.getUser_id()))
-                    .request(MediaType.APPLICATION_JSON_TYPE)
-                    .put(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
-            endGate = true;
+
+
+            client.close();
+        } catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
         }
-
-
-        client.close();
 
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-
+            if (isModify)
+                infoAlerts.addRecord("zmieniony");
+            else if(!isModify)
+                infoAlerts.addRecord("dodany");
             thisStage.close();
         }
         else if(!endGate){
-            Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-            infoAlert.setTitle("Uwaga!");
-            infoAlert.setHeaderText("Pojawił się błąd");
-            infoAlert.setContentText("User z tym loginem już istnieje");
-            infoAlert.showAndWait();
+            statusLabel.setText("User z tym loginem już istnieje");
         }
     }
 }

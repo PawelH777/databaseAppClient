@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
 import java.io.IOException;
 
@@ -26,17 +27,15 @@ import java.io.IOException;
  */
 public class MainController {
 
-    public static final String STORY_PANE_FXML = "/fxml/story/ShowStoryPane.fxml";
-    public static final String USERS_PANE_FXML = "/fxml/users/ShowUsersPane.fxml";
-    public static final String CLIENTS_PANE_FXML = "/fxml/clients/ShowClientsPane.fxml";
-    public static final String DIMENSIONS_PANE_FXML = "/fxml/dimensions/ShowDimensionsPane.fxml";
-    public static final String LOGIN_PANE_FXML = "/fxml/main/LogInPane.fxml";
-    public static final String ORDERS_FXML = "/fxml/orders/ShowOrdersPane.fxml";
+    private static final String STORY_PANE_FXML = "/fxml/story/ShowStoryPane.fxml";
+    private static final String USERS_PANE_FXML = "/fxml/users/ShowUsersPane.fxml";
+    private static final String CLIENTS_PANE_FXML = "/fxml/clients/ShowClientsPane.fxml";
+    private static final String DIMENSIONS_PANE_FXML = "/fxml/dimensions/ShowDimensionsPane.fxml";
+
+    private static final String LOGIN_PANE_FXML = "/fxml/main/LogInPane.fxml";
+    private static final String ORDERS_FXML = "/fxml/orders/ShowOrdersPane.fxml";
     @FXML
     private BorderPane borderPane;
-
-    @FXML
-    private ToggleButton btnLogout;
 
     @FXML
     private ToggleButton btnDims;
@@ -49,6 +48,7 @@ public class MainController {
 
     @FXML
     private Label userLabel;
+
 
     @FXML
     private void initialize(){
@@ -63,38 +63,39 @@ public class MainController {
         }
     }
 
-    public void setCenter(String fxmlPath){
+    private void setCenter(String fxmlPath, String zakladka){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
         Parent parent = null;
         try {
             parent = fxmlLoader.load();
+            borderPane.setCenter(parent);
         } catch (IOException e) {
             e.printStackTrace();
+            infoAlerts.generalAlert();
         }
-        borderPane.setCenter(parent);
     }
 
 
 
     public void tabOrderClicked(MouseEvent mouseEvent) {
 
-        setCenter(ORDERS_FXML);
+        setCenter(ORDERS_FXML, "ZAMÓWIENIA");
     }
 
     public void tabStoryClicked(MouseEvent mouseEvent) {
-        setCenter(STORY_PANE_FXML);
+        setCenter(STORY_PANE_FXML, "HISTORIA ZAMÓWIEŃ");
     }
 
     public void tabUsersClicked(MouseEvent mouseEvent) {
-        setCenter(USERS_PANE_FXML);
+        setCenter(USERS_PANE_FXML, "UŻYTKOWNICY");
     }
 
     public void tabClientsClicked(MouseEvent mouseEvent) {
-        setCenter(CLIENTS_PANE_FXML);
+        setCenter(CLIENTS_PANE_FXML, "KLIENCI");
     }
 
     public void tabDimensionsClicked(MouseEvent mouseEvent) {
-        setCenter(DIMENSIONS_PANE_FXML);
+        setCenter(DIMENSIONS_PANE_FXML, "WYMIARY");
     }
 
     public void tabLogoutClicked(MouseEvent mouseEvent) {
@@ -134,12 +135,7 @@ public class MainController {
             curStage.setScene(mainScene);
         } catch (IOException e) {
 
-            Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-            infoAlert.setTitle("Uwaga!");
-            infoAlert.setHeaderText("Pojawił się błąd");
-            infoAlert.setContentText("Niestety, pojawiła się usterka blokująca wyświetlanie menu głównego. Proszę skontaktować się z " +
-                    "autorem programu.");
-            infoAlert.showAndWait();
+            infoAlerts.generalAlert();
         }
     }
 }

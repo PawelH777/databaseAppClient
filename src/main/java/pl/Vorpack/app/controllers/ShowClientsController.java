@@ -21,24 +21,28 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Client;
+import pl.Vorpack.app.domain.Orders;
+import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.infoAlerts;
 
-import javax.persistence.TypedQuery;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Paweł on 2018-02-21.
  */
 public class ShowClientsController {
 
-    public static final String ADD_CLIENTS_PANE_FXML = "/fxml/clients/AddClientsPane.fxml";
+    private static final String ADD_CLIENTS_PANE_FXML = "/fxml/clients/AddClientsPane.fxml";
     @FXML
     private AnchorPane anchorPane;
 
@@ -52,6 +56,9 @@ public class ShowClientsController {
     private JFXButton btnDelete;
 
     @FXML
+    private JFXButton btnRefresh;
+
+    @FXML
     private JFXTextField txtSearch;
 
     @FXML
@@ -62,14 +69,12 @@ public class ShowClientsController {
 
     @FXML
     private TableColumn<Client, String> firmName;
-    private TypedQuery<Client> query;
 
     private mainPaneProperty clientProperty = new mainPaneProperty();
 
-    private Client client = new Client();
-
     private SortedList<Client> sortedData;
     private FilteredList<Client> filteredList;
+
 
     @FXML
     public void initialize(){
@@ -107,7 +112,7 @@ public class ShowClientsController {
         txtSearch.textProperty().addListener((obs, oldValue, newValue) -> {
 
 
-                if(columnsCmbBox.getValue().toString() == "Wszystkie"){
+                if(Objects.equals(columnsCmbBox.getValue().toString(), "Wszystkie")){
                     filteredList.setPredicate(user -> {
 
                         if(newValue == null || newValue.isEmpty())
@@ -124,7 +129,7 @@ public class ShowClientsController {
 
                     });
                 }
-                else if(columnsCmbBox.getValue().toString() == "Identyfikator"){
+                else if(Objects.equals(columnsCmbBox.getValue().toString(), "Identyfikator")){
                     filteredList.setPredicate(user -> {
 
                         if(newValue == null || newValue.isEmpty())
@@ -139,7 +144,7 @@ public class ShowClientsController {
 
                     });
                 }
-                else if(columnsCmbBox.getValue().toString() == "Nazwa firmy"){
+                else if(Objects.equals(columnsCmbBox.getValue().toString(), "Nazwa firmy")){
                     filteredList.setPredicate(user -> {
 
                         if(newValue == null || newValue.isEmpty())
@@ -226,31 +231,38 @@ public class ShowClientsController {
 
     private void getRecords() {
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
 
-        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        String URI = "http://localhost:8080/clients";
+            String URI = "http://localhost:8080/clients";
 
-        Response response = clientBulider
-                .target(URI)
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .get();
+            Response response = clientBulider
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .get();
 
-        List<Client> query = response.readEntity(new GenericType<ArrayList<Client>>(){});
+            List<Client> query = response.readEntity(new GenericType<ArrayList<Client>>(){});
 
-        clientBulider.close();
+            clientBulider.close();
 
-        ObservableList<Client> data = FXCollections.observableArrayList(query);
 
-        filteredList = new FilteredList<>(data, p -> true);
+            ObservableList<Client> data = FXCollections.observableArrayList(query);
+
+            filteredList = new FilteredList<>(data, p -> true);
+
+        }catch(Exception e){
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
     }
 
 
@@ -333,27 +345,108 @@ public class ShowClientsController {
 
     public void btnDeleteClicked(){
 
-        client = dimTableView.getSelectionModel().getSelectedItem();
+        Boolean isDelete = true;
 
-        HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                .nonPreemptive()
-                .credentials(userData.getName(), userData.getPassword())
-                .build();
+        try{
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.register(feature);
+            Client client = dimTableView.getSelectionModel().getSelectedItem();
 
-        javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
+            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
+                    .nonPreemptive()
+                    .credentials(userData.getName(), userData.getPassword())
+                    .build();
 
-        String URI = "http://localhost:8080/clients/client/delete";
+            ClientConfig clientConfig = new ClientConfig();
+            clientConfig.register(feature);
 
-        Response response = clientBulider
-                .target(URI)
-                .path(String.valueOf(client.getClient_id()))
-                .request(MediaType.APPLICATION_JSON_TYPE)
-                .delete();
+            javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-        clientBulider.close();
+            String URI = "http://localhost:8080/orders/clients";
+
+            Response response = clientBulider
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+
+            List<Orders> ordersWithClient = response.readEntity(new GenericType<List<Orders>>(){});
+
+            URI = "http://localhost:8080/orderstory/clients";
+
+            response = clientBulider
+                    .target(URI)
+                    .request(MediaType.APPLICATION_JSON_TYPE)
+                    .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+
+            List<ordersStory> storyOrdersWithClient = response.readEntity(new GenericType<List<ordersStory>>(){});
+
+            if(ordersWithClient.size() != 0 && storyOrdersWithClient.size() == 0){
+
+                isDelete = infoAlerts.deleteRecord("ZAMÓWIENIA", null);
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orders/delete/client";
+
+                    response = clientBulider
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+                }
+
+            }
+            else if(ordersWithClient.size() == 0 && storyOrdersWithClient.size() != 0){
+                isDelete = infoAlerts.deleteRecord("HISTORIA ZAMÓWIEŃ", null);
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orderstory/delete/client";
+
+                    response = clientBulider
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+                }
+            }
+            else if(ordersWithClient.size() != 0 && storyOrdersWithClient.size() != 0){
+                isDelete = infoAlerts.deleteRecord("ZAMÓWIENIA", "HISTORIA ZAMÓWIEŃ");
+
+                if(isDelete){
+
+                    URI = "http://localhost:8080/orders/delete/client";
+
+                    response = clientBulider
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+
+                    URI = "http://localhost:8080/orderstory/delete/client";
+
+                    response = clientBulider
+                            .target(URI)
+                            .request(MediaType.APPLICATION_JSON_TYPE)
+                            .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
+                }
+            }
+
+            if(isDelete){
+
+
+                URI = "http://localhost:8080/clients/client/delete";
+
+                response = clientBulider
+                        .target(URI)
+                        .path(String.valueOf(client.getClient_id()))
+                        .request(MediaType.APPLICATION_JSON_TYPE)
+                        .delete();
+            }
+
+            clientBulider.close();
+
+        } catch(Exception e){
+
+            e.printStackTrace();
+            infoAlerts.generalAlert();
+        }
 
         getRecordsWithActualConfigure();
 
@@ -379,6 +472,13 @@ public class ShowClientsController {
         btnDelete.disableProperty().setValue(true);
         btnModify.disableProperty().setValue(true);
 
+    }
+
+    public void btnRefreshClicked() throws IOException{
+        getRecordsWithActualConfigure();
+
+        btnDelete.disableProperty().setValue(true);
+        btnModify.disableProperty().setValue(true);
     }
 
     public void dimTableClicked(){

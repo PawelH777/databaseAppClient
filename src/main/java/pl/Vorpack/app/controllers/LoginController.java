@@ -46,9 +46,6 @@ public class LoginController {
     private BorderPane borderPane;
 
     @FXML
-    private Label textLabel;
-
-    @FXML
     private JFXTextField loginTextField;
 
     @FXML
@@ -56,17 +53,6 @@ public class LoginController {
 
     @FXML
     private JFXPasswordField passwordTextField;
-
-    @FXML
-    private Label passwordStatus;
-
-    @FXML
-    private JFXCheckBox memoryCheckBox;
-
-    @FXML
-    private JFXButton loginButton;
-
-    private Boolean bramkaLogowania = true;
 
     @FXML
     public void initialize(){
@@ -109,7 +95,7 @@ public class LoginController {
             client.close();
 
             if(users.size() != 1 ){
-                loginStatus.setText("Istnieje więcej niż jeden login w bazie. Skontaktuj się z administratorem.");
+                loginStatus.setText("Istnieje więcej użytkowników o tym loginie");
             }
             else{
                 User user = users.get(0);

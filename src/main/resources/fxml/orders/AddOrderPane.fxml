@@ -179,7 +179,7 @@
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox prefHeight="40.0" prefWidth="200.0">
          <children>
             <JFXButton fx:id="btnSave" onMouseClicked="#btnSaveClicked" prefWidth="70.0" text="Zapisz">
                <font>
@@ -208,5 +208,10 @@
             <Insets />
          </VBox.margin>
       </HBox>
+      <Label fx:id="statusLabel" textFill="RED">
+         <VBox.margin>
+            <Insets left="40.0" />
+         </VBox.margin>
+      </Label>
    </children>
 </VBox>
