@@ -21,19 +21,16 @@ import javafx.util.Callback;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.Orders;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -140,10 +137,12 @@ public class AddOrderController {
 
     private ObservableList<Dimiensions> data;
 
-    private Boolean isModify = false;
+    private TextAnimations textAnimations;
 
     @FXML
     public void initialize(){
+        textAnimations = new TextAnimations(statusLabel);
+
         Pattern pattern = Pattern.compile("\\d*|\\d+\\.\\d*");
         TextFormatter formatter = new TextFormatter((UnaryOperator<TextFormatter.Change>) change -> {
             return pattern.matcher(change.getControlNewText()).matches() ? change : null;
@@ -225,7 +224,7 @@ public class AddOrderController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -233,7 +232,7 @@ public class AddOrderController {
 
             javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/dims";
+            String URI = GlobalVariables.getSite_name() + "/dims";
 
             Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
@@ -245,7 +244,7 @@ public class AddOrderController {
 
             fromObjectToList(filteredList);
 
-            URI = "http://localhost:8080/clients";
+            URI = GlobalVariables.getSite_name() + "/clients";
 
             response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
@@ -518,7 +517,7 @@ public class AddOrderController {
             txtWeight.setText(dimVariables.getObject().getWeight().toString());
             txtNote.setText(ordVariables.getObject().getNote());
 
-            isModify = true;
+            Boolean isModify = true;
         }
     }
 
@@ -653,17 +652,14 @@ public class AddOrderController {
     public void btnSaveClicked(MouseEvent mouseEvent) {
         persistRecord();
         statusLabel.setText("Rekord został dodany");
+        textAnimations.startLabelsPulsing();
     }
 
     public void btnSaveExitClicked(MouseEvent mouseEvent) {
         persistRecord();
-
-        if (isModify)
-            infoAlerts.addRecord("zmieniony");
-        else if(!isModify)
-            infoAlerts.addRecord("dodany");
         Stage thisStage = (Stage) vBox.getScene().getWindow();
 
+        GlobalVariables.setIsActionCompleted(true);
         thisStage.close();
 
     }
@@ -724,7 +720,7 @@ public class AddOrderController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -732,7 +728,7 @@ public class AddOrderController {
 
             javax.ws.rs.client.Client clientBuilder  = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/dims/dim/find";
+            String URI = GlobalVariables.getSite_name() + "/dims/dim/find";
 
             Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                     .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
@@ -751,7 +747,7 @@ public class AddOrderController {
 
             cli.setFirmName(firmName);
 
-            URI = "http://localhost:8080/clients/client/firmname";
+            URI = GlobalVariables.getSite_name() + "/clients/client/firmname";
 
             response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                     .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
@@ -770,13 +766,13 @@ public class AddOrderController {
             if(!findDim){
 
                 dim = new Dimiensions(firstDim, secondDim, thick, weight);
-                URI  = "http://localhost:8080/dims/createdim";
+                URI  = GlobalVariables.getSite_name() + "/dims/createdim";
 
                 response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                         .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
 
 
-                URI = "http://localhost:8080/dims/dim/find";
+                URI = GlobalVariables.getSite_name() + "/dims/dim/find";
 
                 response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                         .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
@@ -790,12 +786,12 @@ public class AddOrderController {
             if(!findClient){
 
                 cli = new Client(firmName);
-                URI  = "http://localhost:8080/clients/createclient";
+                URI  = GlobalVariables.getSite_name() + "/clients/createclient";
 
                 response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                         .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
 
-                URI = "http://localhost:8080/clients/client/firmname";
+                URI = GlobalVariables.getSite_name() + "/clients/client/firmname";
 
                 response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                         .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
@@ -818,7 +814,7 @@ public class AddOrderController {
 
                 String ord_id = String.valueOf(ordVariables.getObject().getOrder_id());
 
-                URI  = "http://localhost:8080/orders/order/update";
+                URI  = GlobalVariables.getSite_name() + "/orders/order/update";
 
                 response = clientBuilder.target(URI).path(ord_id).request(MediaType.APPLICATION_JSON_TYPE)
                         .put(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));
@@ -826,7 +822,7 @@ public class AddOrderController {
 
                 ord = new Orders(dim, cli, length, materials, createOrderDate, orderDate, note);
 
-                URI  = "http://localhost:8080/orders/createorder";
+                URI  = GlobalVariables.getSite_name() + "/orders/createorder";
 
                 response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                         .post(Entity.entity(ord, MediaType.APPLICATION_JSON_TYPE));

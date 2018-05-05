@@ -10,6 +10,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,11 +22,12 @@ import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.Orders;
 import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.dimVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.Client;
@@ -43,12 +45,15 @@ import java.util.List;
  */
 public class ShowDimensionsController {
 
-    public static final String ADD_DIMENSION_PANE_FXML = "/fxml/dimensions/AddDimensionPane.fxml";
+    private static final String ADD_DIMENSION_PANE_FXML = "/fxml/dimensions/AddDimensionPane.fxml";
 
     Dimiensions dim;
 
     @FXML
     private AnchorPane anchorPane;
+
+    @FXML
+    private Label StatusViewer;
 
     @FXML
     private JFXComboBox columnsCmbBox;
@@ -88,10 +93,13 @@ public class ShowDimensionsController {
     private SortedList<Dimiensions> sortedData;
     private FilteredList<Dimiensions> filteredList;
 
-
+    private TextAnimations textAnimations;
 
     @FXML
     void initialize(){
+        StatusViewer.setOpacity(0);
+
+        textAnimations = new TextAnimations(StatusViewer);
 
         txtSearch.disableProperty().setValue(true);
 
@@ -353,7 +361,7 @@ public class ShowDimensionsController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -361,7 +369,7 @@ public class ShowDimensionsController {
 
             Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/dims";
+            String URI = GlobalVariables.getSite_name() +  "/dims";
 
             javax.ws.rs.core.Response response =  clientBulider
                     .target(URI)
@@ -488,23 +496,6 @@ public class ShowDimensionsController {
         dimTableView.setItems(sortedData);
     }
 
-    public void onBtnAddClicked() throws IOException {
-
-        dimVariables.setObject(null);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_DIMENSION_PANE_FXML));
-        VBox vBox = fxmlLoader.load();
-        Scene scene = new Scene(vBox);
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(anchorPane.getScene().getWindow());
-        stage.setScene(scene);
-        stage.showAndWait();
-
-        getAllResult();
-
-    }
-
     public void btnDeleteClicked(){
         Boolean isDelete = true;
 
@@ -513,7 +504,7 @@ public class ShowDimensionsController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -521,7 +512,7 @@ public class ShowDimensionsController {
 
             Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/orders/dims";
+            String URI =GlobalVariables.getSite_name() + "/orders/dims";
 
             Response response = client
                     .target(URI)
@@ -530,7 +521,7 @@ public class ShowDimensionsController {
 
             List<Orders> ordersWithDim = response.readEntity(new GenericType<List<Orders>>(){});
 
-            URI = "http://localhost:8080/orderstory/dims";
+            URI = GlobalVariables.getSite_name() + "/orderstory/dims";
 
             response = client
                     .target(URI)
@@ -545,7 +536,7 @@ public class ShowDimensionsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orders/delete/dim";
+                    URI = GlobalVariables.getSite_name() + "/orders/delete/dim";
 
                     response = client
                             .target(URI)
@@ -559,7 +550,7 @@ public class ShowDimensionsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orderstory/delete/dim";
+                    URI = GlobalVariables.getSite_name() + "/orderstory/delete/dim";
 
                     response = client
                             .target(URI)
@@ -572,14 +563,14 @@ public class ShowDimensionsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orders/delete/dim";
+                    URI = GlobalVariables.getSite_name() + "/orders/delete/dim";
 
                     response = client
                             .target(URI)
                             .request(MediaType.APPLICATION_JSON_TYPE)
                             .post(Entity.entity(dim, MediaType.APPLICATION_JSON_TYPE));
 
-                    URI = "http://localhost:8080/orderstory/delete/dim";
+                    URI = GlobalVariables.getSite_name() + "/orderstory/delete/dim";
 
                     response = client
                             .target(URI)
@@ -591,7 +582,7 @@ public class ShowDimensionsController {
             if(isDelete){
 
 
-                URI = "http://localhost:8080/dims/dim/delete";
+                URI = GlobalVariables.getSite_name() + "/dims/dim/delete";
 
                 response = client
                         .target(URI)
@@ -614,8 +605,32 @@ public class ShowDimensionsController {
 
     }
 
+    public void onBtnAddClicked() throws IOException {
+        GlobalVariables.setIsActionCompleted(false);
+        dimVariables.setObject(null);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_DIMENSION_PANE_FXML));
+        VBox vBox = fxmlLoader.load();
+        Scene scene = new Scene(vBox);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(anchorPane.getScene().getWindow());
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        getAllResult();
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordAdded());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotAdded());
+
+        textAnimations.startLabelsPulsing();
+    }
+
     public void btnModifyClicked(MouseEvent mouseEvent) throws IOException {
 
+        GlobalVariables.setIsActionCompleted(false);
         dimVariables.setObject(dimTableView.getSelectionModel().getSelectedItem());
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_DIMENSION_PANE_FXML));
@@ -631,6 +646,12 @@ public class ShowDimensionsController {
 
         btnDelete.disableProperty().setValue(true);
         btnModify.disableProperty().setValue(true);
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordChanged());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotChanged());
+
+        textAnimations.startLabelsPulsing();
     }
 
     public void btnRefreshClicked() throws IOException{

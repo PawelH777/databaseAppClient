@@ -10,10 +10,10 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -21,16 +21,13 @@ import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
-import pl.Vorpack.app.domain.Client;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.User;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.global_variables.usrVariables;
 import pl.Vorpack.app.infoAlerts;
 import pl.Vorpack.app.optionalclass.records;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
@@ -38,7 +35,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,12 +42,15 @@ import java.util.Objects;
  * Created by Paweł on 2018-02-22.
  */
 public class ShowUsersController {
-    public static final String ADD_USERS_PANE_FXML = "/fxml/users/AddUsersPane.fxml";
+    private static final String ADD_USERS_PANE_FXML = "/fxml/users/AddUsersPane.fxml";
     @FXML
     private AnchorPane anchorPane;
 
     @FXML
     private JFXComboBox columnsCmbBox;
+
+    @FXML
+    private Label StatusViewer;
 
     @FXML
     private JFXButton btnModify;
@@ -87,17 +86,17 @@ public class ShowUsersController {
 
     private records rec = new records();
 
-    private List<records> result = new ArrayList<records>();;
-
-    private ObservableList<records> data = null;
-
     private SortedList<records> sortedData;
     private FilteredList<records> filteredList;
+
+    private TextAnimations textAnimations;
 
     @FXML
     public void initialize(){
         txtSearch.disableProperty().setValue(true);
 
+        StatusViewer.setOpacity(0);
+        textAnimations = new TextAnimations(StatusViewer);
         columnsCmbBox.getItems().addAll(
                 "Wszystkie",
                 "Identyfikator",
@@ -327,14 +326,14 @@ public class ShowUsersController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
             clientConfig.register(feature);
             javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/users";
+            String URI = GlobalVariables.getSite_name() + "/users";
 
             Response response = client
                     .target(URI)
@@ -347,9 +346,9 @@ public class ShowUsersController {
 
             client.close();
 
-            result = changingClass(users);
+            List<records> result = changingClass(users);
 
-            data = FXCollections.observableArrayList(result);
+            ObservableList<records> data = FXCollections.observableArrayList(result);
             filteredList = new FilteredList<>(data, p -> true);
         }catch(Exception e){
             e.printStackTrace();
@@ -452,22 +451,6 @@ public class ShowUsersController {
 
         dimTableView.setItems(sortedData);
     }
-    public void onBtnAddClicked() throws IOException {
-
-        usrVariables.setObject(null);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_USERS_PANE_FXML));
-        VBox vBox = fxmlLoader.load();
-        Scene scene = new Scene(vBox);
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(anchorPane.getScene().getWindow());
-        stage.setScene(scene);
-        stage.showAndWait();
-
-        getRecordsWithActualConfigure();
-
-    }
 
     public void btnDeleteClicked(){
 
@@ -478,7 +461,7 @@ public class ShowUsersController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -486,7 +469,7 @@ public class ShowUsersController {
 
             javax.ws.rs.client.Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/users/user/delete";
+            String URI = GlobalVariables.getSite_name() + "/users/user/delete";
 
             Response response = client
                     .target(URI)
@@ -507,8 +490,33 @@ public class ShowUsersController {
         btnModify.disableProperty().setValue(true);
     }
 
+    public void onBtnAddClicked() throws IOException {
+
+        GlobalVariables.setIsActionCompleted(false);
+        usrVariables.setObject(null);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_USERS_PANE_FXML));
+        VBox vBox = fxmlLoader.load();
+        Scene scene = new Scene(vBox);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(anchorPane.getScene().getWindow());
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        getRecordsWithActualConfigure();
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordAdded());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotAdded());
+
+        textAnimations.startLabelsPulsing();
+    }
+
     public void btnModifyClicked() throws IOException {
 
+        GlobalVariables.setIsActionCompleted(false);
         user = changingObjectType(dimTableView.getSelectionModel().getSelectedItem());
 
         usrVariables.setObject(user);
@@ -526,7 +534,12 @@ public class ShowUsersController {
 
         btnDelete.disableProperty().setValue(true);
         btnModify.disableProperty().setValue(true);
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordChanged());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotChanged());
 
+        textAnimations.startLabelsPulsing();
     }
 
     public void dimTableClicked(){

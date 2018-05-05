@@ -10,6 +10,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,11 +21,12 @@ import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Orders;
 import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.cliVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.ClientBuilder;
@@ -45,6 +47,9 @@ public class ShowClientsController {
     private static final String ADD_CLIENTS_PANE_FXML = "/fxml/clients/AddClientsPane.fxml";
     @FXML
     private AnchorPane anchorPane;
+
+    @FXML
+    private Label StatusViewer;
 
     @FXML
     private JFXComboBox columnsCmbBox;
@@ -75,11 +80,15 @@ public class ShowClientsController {
     private SortedList<Client> sortedData;
     private FilteredList<Client> filteredList;
 
+    private TextAnimations textAnimations;
+
 
     @FXML
     public void initialize(){
         txtSearch.disableProperty().setValue(true);
+        StatusViewer.setOpacity(0);
 
+        textAnimations = new TextAnimations(StatusViewer);
         columnsCmbBox.getItems().addAll(
                 "Wszystkie",
                 "Identyfikator",
@@ -234,7 +243,7 @@ public class ShowClientsController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -243,7 +252,7 @@ public class ShowClientsController {
 
             javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/clients";
+            String URI = GlobalVariables.getSite_name() + "/clients";
 
             Response response = clientBulider
                     .target(URI)
@@ -266,22 +275,6 @@ public class ShowClientsController {
     }
 
 
-    public void onBtnAddClicked() throws IOException {
-
-        cliVariables.setObject(null);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_CLIENTS_PANE_FXML));
-        VBox vBox = fxmlLoader.load();
-        Scene scene = new Scene(vBox);
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(anchorPane.getScene().getWindow());
-        stage.setScene(scene);
-        stage.showAndWait();
-
-        getRecordsWithActualConfigure();
-
-    }
 
     private void getRecordsWithActualConfigure() {
         getRecords();
@@ -353,7 +346,7 @@ public class ShowClientsController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -361,7 +354,7 @@ public class ShowClientsController {
 
             javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/orders/clients";
+            String URI = GlobalVariables.getSite_name() + "/orders/clients";
 
             Response response = clientBulider
                     .target(URI)
@@ -370,7 +363,7 @@ public class ShowClientsController {
 
             List<Orders> ordersWithClient = response.readEntity(new GenericType<List<Orders>>(){});
 
-            URI = "http://localhost:8080/orderstory/clients";
+            URI = GlobalVariables.getSite_name() + "/orderstory/clients";
 
             response = clientBulider
                     .target(URI)
@@ -385,7 +378,7 @@ public class ShowClientsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orders/delete/client";
+                    URI = GlobalVariables.getSite_name() + "/orders/delete/client";
 
                     response = clientBulider
                             .target(URI)
@@ -399,7 +392,7 @@ public class ShowClientsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orderstory/delete/client";
+                    URI = GlobalVariables.getSite_name() + "/orderstory/delete/client";
 
                     response = clientBulider
                             .target(URI)
@@ -412,14 +405,14 @@ public class ShowClientsController {
 
                 if(isDelete){
 
-                    URI = "http://localhost:8080/orders/delete/client";
+                    URI = GlobalVariables.getSite_name() + "/orders/delete/client";
 
                     response = clientBulider
                             .target(URI)
                             .request(MediaType.APPLICATION_JSON_TYPE)
                             .post(Entity.entity(client, MediaType.APPLICATION_JSON_TYPE));
 
-                    URI = "http://localhost:8080/orderstory/delete/client";
+                    URI = GlobalVariables.getSite_name() + "/orderstory/delete/client";
 
                     response = clientBulider
                             .target(URI)
@@ -431,7 +424,7 @@ public class ShowClientsController {
             if(isDelete){
 
 
-                URI = "http://localhost:8080/clients/client/delete";
+                URI = GlobalVariables.getSite_name() + "/clients/client/delete";
 
                 response = clientBulider
                         .target(URI)
@@ -454,10 +447,35 @@ public class ShowClientsController {
         btnModify.disableProperty().setValue(true);
     }
 
+
+    public void onBtnAddClicked() throws IOException {
+        GlobalVariables.setIsActionCompleted(false);
+        cliVariables.setObject(null);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_CLIENTS_PANE_FXML));
+        VBox vBox = fxmlLoader.load();
+        Scene scene = new Scene(vBox);
+        Stage stage = new Stage();
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(anchorPane.getScene().getWindow());
+        stage.setScene(scene);
+        stage.showAndWait();
+
+        getRecordsWithActualConfigure();
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordAdded());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotAdded());
+
+        textAnimations.startLabelsPulsing();
+    }
+
     public void btnModifyClicked() throws IOException {
 
-        cliVariables.setObject(dimTableView.getSelectionModel().getSelectedItem());
+        GlobalVariables.setIsActionCompleted(false);
 
+        cliVariables.setObject(dimTableView.getSelectionModel().getSelectedItem());
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_CLIENTS_PANE_FXML));
         VBox vBox = fxmlLoader.load();
         Scene scene = new Scene(vBox);
@@ -472,6 +490,12 @@ public class ShowClientsController {
         btnDelete.disableProperty().setValue(true);
         btnModify.disableProperty().setValue(true);
 
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordChanged());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotChanged());
+
+        textAnimations.startLabelsPulsing();
     }
 
     public void btnRefreshClicked() throws IOException{

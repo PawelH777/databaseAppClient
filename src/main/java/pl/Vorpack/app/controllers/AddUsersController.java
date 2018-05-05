@@ -1,13 +1,10 @@
 package pl.Vorpack.app.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -17,14 +14,10 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.User;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.global_variables.usrVariables;
 import pl.Vorpack.app.infoAlerts;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -180,7 +173,7 @@ public class AddUsersController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -188,7 +181,7 @@ public class AddUsersController {
 
             Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/users/user/login";
+            String URI = GlobalVariables.getSite_name() + "/users/user/login";
 
             Response response = client
                     .target(URI)
@@ -205,7 +198,7 @@ public class AddUsersController {
                 if(existedRecord.size() == 0){
                     User cli = new User(login.textProperty().getValue(), pass, booleanValue);
 
-                    URI = "http://localhost:8080/users/createuser";
+                    URI = GlobalVariables.getSite_name() + "/users/createuser";
 
                     response =  client
                             .target(URI)
@@ -220,7 +213,7 @@ public class AddUsersController {
                 object.setLogin(login.textProperty().getValue());
                 object.setPassword(pass);
                 object.setAdmin(booleanValue);
-                URI = "http://localhost:8080/users/user/update";
+                URI = GlobalVariables.getSite_name() + "/users/user/update";
                 response =  client
                         .target(URI)
                         .path(String.valueOf(object.getUser_id()))
@@ -239,10 +232,7 @@ public class AddUsersController {
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-            if (isModify)
-                infoAlerts.addRecord("zmieniony");
-            else if(!isModify)
-                infoAlerts.addRecord("dodany");
+            GlobalVariables.setIsActionCompleted(true);
             thisStage.close();
         }
         else if(!endGate){

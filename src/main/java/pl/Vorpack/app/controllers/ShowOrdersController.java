@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,13 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.Orders;
@@ -29,12 +30,9 @@ import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -57,6 +55,9 @@ public class ShowOrdersController {
 
     @FXML
     private JFXComboBox columnsCmbBox;
+
+    @FXML
+    private Label StatusViewer;
 
     @FXML
     private JFXButton btnModify;
@@ -138,11 +139,14 @@ public class ShowOrdersController {
 
     private int gate, dateGate;
 
+    private TextAnimations textAnimations;
+
 
     @FXML
     private void initialize(){
         labelNoteValue.setWrapText(true);
-
+        StatusViewer.setOpacity(0);
+        textAnimations = new TextAnimations(StatusViewer);
 
         gate = 1;
 
@@ -152,7 +156,7 @@ public class ShowOrdersController {
 
         cliVariables.setObject(null);
 
-        if(userData.getAccess().equals("Użytkownik")){
+        if(GlobalVariables.getAccess().equals("Użytkownik")){
             btnAdd.setDisable(true);
         }
 
@@ -202,7 +206,7 @@ public class ShowOrdersController {
 
                 btnDelete.disableProperty().setValue(false);
 
-                if(!userData.getAccess().equals("Użytkownik"))
+                if(!GlobalVariables.getAccess().equals("Użytkownik"))
                     btnModify.disableProperty().setValue(false);
 
 
@@ -715,7 +719,7 @@ public class ShowOrdersController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -723,7 +727,7 @@ public class ShowOrdersController {
 
             javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-            String URI  = "http://localhost:8080/orders";
+            String URI  = GlobalVariables.getSite_name() +  "/orders";
 
             Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE).get();
 
@@ -827,6 +831,7 @@ public class ShowOrdersController {
 
     public void onBtnAddClicked(MouseEvent mouseEvent) {
 
+        GlobalVariables.setIsActionCompleted(false);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_ORDERS_PANE_FXML));
         VBox vBox = null;
 
@@ -852,9 +857,18 @@ public class ShowOrdersController {
         getAllRecords();
 
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordAdded());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotAdded());
+
+        textAnimations.startLabelsPulsing();
     }
 
     public void onBtnModifyClicked(MouseEvent mouseEvent) {
+
+        GlobalVariables.setIsActionCompleted(false);
         int position = lstOrders.getSelectionModel().getSelectedIndex();
 
         ordVariables.setObject(ord.get(position));
@@ -882,6 +896,13 @@ public class ShowOrdersController {
         getAllRecords();
 
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordChanged());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotChanged());
+
+        textAnimations.startLabelsPulsing();
     }
 
     public void onBtnDeleteClicked(MouseEvent mouseEvent) {
@@ -895,7 +916,7 @@ public class ShowOrdersController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -903,11 +924,11 @@ public class ShowOrdersController {
 
             javax.ws.rs.client.Client clientBulider = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/orderstory/createorder";
+            String URI = GlobalVariables.getSite_name() +  "/orderstory/createorder";
 
             Response response = clientBulider.target(URI).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(storyObject,MediaType.APPLICATION_JSON_TYPE));
 
-            URI = "http://localhost:8080/orders/order/delete";
+            URI = GlobalVariables.getSite_name() + "/orders/order/delete";
 
             response = clientBulider.target(URI).path(String.valueOf(orderObject.getOrder_id())).request(MediaType.APPLICATION_JSON_TYPE).delete();
 

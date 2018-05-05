@@ -1,23 +1,17 @@
 package pl.Vorpack.app.controllers;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import java.io.IOException;
@@ -52,11 +46,11 @@ public class MainController {
 
     @FXML
     private void initialize(){
-        userLabel.setText(userData.getName() + System.lineSeparator() + userData.getAccess());
+        userLabel.setText(GlobalVariables.getName() + System.lineSeparator() + GlobalVariables.getAccess());
         borderPane.setOpacity(0);
         makeFadeInTransition();
 
-        if(userData.getAccess().equals("Użytkownik")){
+        if(GlobalVariables.getAccess().equals("Użytkownik")){
             btnDims.setDisable(true);
             btnClients.setDisable(true);
             btnUsers.setDisable(true);

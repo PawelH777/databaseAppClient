@@ -2,9 +2,7 @@ package pl.Vorpack.app.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
@@ -15,7 +13,7 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.dimVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.Client;
@@ -183,7 +181,7 @@ public class AddDimensionController {
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -191,7 +189,7 @@ public class AddDimensionController {
 
             Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/dims/dim/find";
+            String URI = GlobalVariables.getSite_name() + "/dims/dim/find";
 
             Response response = client
                     .target(URI)
@@ -204,7 +202,7 @@ public class AddDimensionController {
                 if (existingRecords.size() == 0) {
 
                     Dimiensions dim = new Dimiensions(firstLength, secondLength, thick, weight);
-                    URI = "http://localhost:8080/dims/createdim";
+                    URI = GlobalVariables.getSite_name() + "/dims/createdim";
 
                     response = client
                             .target(URI)
@@ -221,7 +219,7 @@ public class AddDimensionController {
                 object.setThickness(thick);
                 object.setWeight(weight);
 
-                URI = "http://localhost:8080/dims/dim/update";
+                URI = GlobalVariables.getSite_name() +  "/dims/dim/update";
 
                 response = client
                         .target(URI)
@@ -241,10 +239,7 @@ public class AddDimensionController {
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-            if (isModify)
-                infoAlerts.addRecord("zmieniony");
-            else if(!isModify)
-                infoAlerts.addRecord("dodany");
+            GlobalVariables.setIsActionCompleted(true);
             thisStage.close();
         }
         else if(!endGate){

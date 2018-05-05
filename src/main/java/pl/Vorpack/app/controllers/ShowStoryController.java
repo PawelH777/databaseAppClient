@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.Orders;
@@ -22,7 +23,7 @@ import pl.Vorpack.app.domain.ordersStory;
 import pl.Vorpack.app.global_variables.cliVariables;
 import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.ClientBuilder;
@@ -44,13 +45,13 @@ public class ShowStoryController {
     private JFXComboBox columnsCmbBox;
 
     @FXML
+    private Label StatusViewer;
+
+    @FXML
     private JFXButton btnRecover;
 
     @FXML
     private JFXButton btnDelete;
-
-    @FXML
-    private JFXButton btnRefresh;
 
     @FXML
     private JFXTextField txtSearch;
@@ -118,9 +119,13 @@ public class ShowStoryController {
 
     private int gate, dateGate;
 
+    private TextAnimations textAnimations = new TextAnimations(StatusViewer);
+
     @FXML
     private void initialize(){
 
+        StatusViewer.setOpacity(0);
+        textAnimations = new TextAnimations(StatusViewer);
         ordVariables.setObject(null);
 
         dimVariables.setObject(null);
@@ -175,7 +180,7 @@ public class ShowStoryController {
 
                 index = lstOrders.getSelectionModel().getSelectedIndex();
 
-                if(!userData.getAccess().equals("Użytkownik"))
+                if(!GlobalVariables.getAccess().equals("Użytkownik"))
                     btnDelete.disableProperty().setValue(false);
 
                 btnRecover.disableProperty().setValue(false);
@@ -690,7 +695,7 @@ public class ShowStoryController {
 
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -698,7 +703,7 @@ public class ShowStoryController {
 
             javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/orderstory";
+            String URI = GlobalVariables.getSite_name() + "/orderstory";
 
             Response response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                     .get();
@@ -805,6 +810,7 @@ public class ShowStoryController {
 
     public void onBtnModifyClicked(MouseEvent mouseEvent) {
 
+        GlobalVariables.setIsActionCompleted(false);
         int position = lstOrders.getSelectionModel().getSelectedIndex();
         ordersStory storyObject = ord.get(position);
         Orders orderObject = new Orders();
@@ -816,13 +822,13 @@ public class ShowStoryController {
 
         String storyOrd_id = String.valueOf(storyObject.getOrder_id());
 
-        String URI = "http://localhost:8080/dims/dim/id/";
+        String URI = GlobalVariables.getSite_name() + "/dims/dim/id/";
 
 
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();
@@ -835,7 +841,7 @@ public class ShowStoryController {
 
             Dimiensions dim = response.readEntity(Dimiensions.class);
 
-            URI = "http://localhost:8080/clients/client/id";
+            URI = GlobalVariables.getSite_name() + "/clients/client/id";
 
             response = clientBuilder.target(URI).path(cli_id).request(MediaType.APPLICATION_JSON_TYPE)
                     .get();
@@ -858,17 +864,18 @@ public class ShowStoryController {
 
             orderObject.setOrder_id(null);
 
-            URI = "http://localhost:8080/orders/createorder";
+            URI = GlobalVariables.getSite_name() + "/orders/createorder";
 
             response = clientBuilder.target(URI).request(MediaType.APPLICATION_JSON_TYPE)
                     .post(Entity.entity(orderObject, MediaType.APPLICATION_JSON_TYPE));
 
-            URI = "http://localhost:8080/orderstory/order/delete";
+            URI = GlobalVariables.getSite_name() + "/orderstory/order/delete";
 
             response = clientBuilder.target(URI).path(storyOrd_id).request(MediaType.APPLICATION_JSON_TYPE)
                     .delete();
 
             clientBuilder.close();
+            GlobalVariables.setIsActionCompleted(true);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -877,6 +884,13 @@ public class ShowStoryController {
 
         getAllRecords();
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
+
+        if(GlobalVariables.getIsActionCompleted())
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsRecovered());
+        else
+            StatusViewer.setText(infoAlerts.getStatusWhileRecordIsNotRecovered());
+
+        textAnimations.startLabelsPulsing();
     }
 
     public void onBtnDeleteClicked(MouseEvent mouseEvent) {
@@ -888,13 +902,13 @@ public class ShowStoryController {
 
         String storyOrd_id = String.valueOf(orderObject.getOrder_id());
 
-        String URI = "http://localhost:8080/orderstory/order/delete";
+        String URI = GlobalVariables.getSite_name() + "/orderstory/order/delete";
 
 
         try{
             HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
                     .nonPreemptive()
-                    .credentials(userData.getName(), userData.getPassword())
+                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
                     .build();
 
             ClientConfig clientConfig = new ClientConfig();

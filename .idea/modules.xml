@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/vorApp_ver30.iml" filepath="$PROJECT_DIR$/vorApp_ver30.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vorApp_ver.3.0.iml" filepath="$PROJECT_DIR$/vorApp_ver.3.0.iml" />
     </modules>
   </component>
 </project>

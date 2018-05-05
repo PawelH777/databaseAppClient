@@ -2,12 +2,8 @@ package pl.Vorpack.app.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
@@ -24,16 +20,14 @@ import javafx.util.Duration;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.omg.CORBA.portable.ApplicationException;
+import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.User;
-import pl.Vorpack.app.global_variables.userData;
+import pl.Vorpack.app.global_variables.GlobalVariables;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 
 /**
  * Created by Paweł on 2018-02-01.
@@ -54,9 +48,12 @@ public class LoginController {
     @FXML
     private JFXPasswordField passwordTextField;
 
+    private TextAnimations textAnimations;
+
     @FXML
     public void initialize(){
-
+        textAnimations = new TextAnimations(loginStatus);
+        loginStatus.setOpacity(0);
         borderPane.setOpacity(0);
         makeFadeIn();
     }
@@ -82,8 +79,7 @@ public class LoginController {
 
             Client client = ClientBuilder.newClient(clientConfig);
 
-            String URI = "http://localhost:8080/users/user/login";
-
+            String URI = GlobalVariables.getSite_name() + "/users/user/login";
             Response response = client
                     .target(URI)
                     .path(login)
@@ -96,20 +92,22 @@ public class LoginController {
 
             if(users.size() != 1 ){
                 loginStatus.setText("Istnieje więcej użytkowników o tym loginie");
+                textAnimations.startLabelsPulsing();
             }
             else{
                 User user = users.get(0);
-                    userData.setName(login);
-                    userData.setPassword(haslo);
+                    GlobalVariables.setName(login);
+                    GlobalVariables.setPassword(haslo);
                     if(user.isAdmin())
-                        userData.setAccess("Administrator");
+                        GlobalVariables.setAccess("Administrator");
                     else
-                        userData.setAccess("Użytkownik");
+                        GlobalVariables.setAccess("Użytkownik");
 
                     makeFadeOut();
             }
         } catch(Throwable ex){
             loginStatus.setText("Wpisałeś błędny login lub hasło");
+            textAnimations.startLabelsPulsing();
         }
     }
 

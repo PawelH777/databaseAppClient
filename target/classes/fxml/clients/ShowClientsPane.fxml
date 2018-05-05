@@ -4,12 +4,13 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.ShowClientsController">
+<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.ShowClientsController">
    <children>
       <JFXTextField fx:id="txtSearch" labelFloat="true" layoutX="10.0" layoutY="10.0" prefHeight="20.0" promptText="Szukaj" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -55,5 +56,9 @@
             <TableColumn fx:id="firmName" editable="false" prefWidth="111.0" text="Nazwa firmy" />
          </columns>
       </TableView>
+      <Label fx:id="StatusViewer" textFill="RED" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="47.0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>

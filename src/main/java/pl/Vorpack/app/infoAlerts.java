@@ -8,6 +8,42 @@ import javafx.scene.control.ButtonType;
  */
 public class infoAlerts {
 
+    private static final String StatusWhileRecordChanged = "Rekord został zmieniony";
+
+    private static final String StatusWhileRecordAdded = "Rekord został dodany";
+
+    private static final String StatusWhileRecordIsNotChanged = "Rekord nie został zmieniony!";
+
+    private static final String StatusWhileRecordIsNotAdded= "Rekord nie został dodany!";
+
+    private static final String StatusWhileRecordIsRecovered = "Rekord został przywrócony";
+
+    private static final String StatusWhileRecordIsNotRecovered = "Rekord nie został przywrócony!";
+
+    public static String getStatusWhileRecordChanged() {
+        return StatusWhileRecordChanged;
+    }
+
+    public static String getStatusWhileRecordAdded() {
+        return StatusWhileRecordAdded;
+    }
+
+    public static String getStatusWhileRecordIsNotChanged() {
+        return StatusWhileRecordIsNotChanged;
+    }
+
+    public static String getStatusWhileRecordIsNotAdded() {
+        return StatusWhileRecordIsNotAdded;
+    }
+
+    public static String getStatusWhileRecordIsRecovered() {
+        return StatusWhileRecordIsRecovered;
+    }
+
+    public static String getStatusWhileRecordIsNotRecovered() {
+        return StatusWhileRecordIsNotRecovered;
+    }
+
     public static void generalAlert(){
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.setTitle("Uwaga!");
