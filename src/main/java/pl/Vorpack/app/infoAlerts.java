@@ -2,6 +2,7 @@ package pl.Vorpack.app;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 
 /**
  * Created by Paweł on 2018-04-21.
@@ -86,6 +87,15 @@ public class infoAlerts {
         infoAlert.setTitle("Informacja");
         infoAlert.setHeaderText("Przeprowadzono operację");
         infoAlert.setContentText("Rekord został " + addmodify + ".");
+        infoAlert.showAndWait();
+    }
+
+    public static void viewError(Throwable ex){
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+        infoAlert.getDialogPane().minHeight(Region.USE_PREF_SIZE);
+        infoAlert.setTitle("Uwaga!");
+        infoAlert.setHeaderText("Pojawił się błąd");
+        infoAlert.setContentText(ex.toString());
         infoAlert.showAndWait();
     }
 }

@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.DatabaseAccess;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
@@ -30,8 +31,6 @@ import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
 import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
-
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -222,15 +221,8 @@ public class AddOrderController {
 
 
         try{
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                    .nonPreemptive()
-                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
-                    .build();
-
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.register(feature);
-
-            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder =
+                    DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             String URI = GlobalVariables.getSite_name() + "/dims";
 
@@ -718,15 +710,8 @@ public class AddOrderController {
         dim.setWeight(weight);
 
         try{
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                    .nonPreemptive()
-                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
-                    .build();
 
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.register(feature);
-
-            javax.ws.rs.client.Client clientBuilder  = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder  = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             String URI = GlobalVariables.getSite_name() + "/dims/dim/find";
 

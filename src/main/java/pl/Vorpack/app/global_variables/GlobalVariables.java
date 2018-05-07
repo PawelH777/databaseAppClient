@@ -7,7 +7,7 @@ public class GlobalVariables {
     private static String name;
     private static String password;
     private static String access;
-    private static final String site_name = "https://blooming-peak-56674.herokuapp.com";
+    private static final String site_name = "https://blooming-peak-56674.herokuapp.com/";
     private static Boolean isActionCompleted = false;
 
     public static Boolean getIsActionCompleted() {

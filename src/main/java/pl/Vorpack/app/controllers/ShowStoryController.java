@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.DatabaseAccess;
 import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.Client;
 import pl.Vorpack.app.domain.Dimiensions;
@@ -25,8 +26,6 @@ import pl.Vorpack.app.global_variables.dimVariables;
 import pl.Vorpack.app.global_variables.ordVariables;
 import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
-
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -693,15 +692,8 @@ public class ShowStoryController {
 
         try{
 
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                    .nonPreemptive()
-                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
-                    .build();
-
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.register(feature);
-
-            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder =
+                    DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             String URI = GlobalVariables.getSite_name() + "/orderstory";
 
@@ -834,7 +826,8 @@ public class ShowStoryController {
             ClientConfig clientConfig = new ClientConfig();
             clientConfig.register(feature);
 
-            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder =
+                    DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             Response response = clientBuilder.target(URI).path(dim_id).request(MediaType.APPLICATION_JSON_TYPE)
                     .get();
@@ -914,7 +907,8 @@ public class ShowStoryController {
             ClientConfig clientConfig = new ClientConfig();
             clientConfig.register(feature);
 
-            javax.ws.rs.client.Client clientBuilder = ClientBuilder.newClient(clientConfig);
+            javax.ws.rs.client.Client clientBuilder =
+                    DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             Response response = clientBuilder.target(URI).path(storyOrd_id).request(MediaType.APPLICATION_JSON_TYPE)
                     .delete();

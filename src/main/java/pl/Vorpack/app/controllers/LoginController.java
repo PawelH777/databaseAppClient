@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
@@ -20,9 +21,12 @@ import javafx.util.Duration;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.DatabaseAccess;
 import pl.Vorpack.app.TextAnimations;
 import pl.Vorpack.app.domain.User;
 import pl.Vorpack.app.global_variables.GlobalVariables;
+import pl.Vorpack.app.infoAlerts;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
@@ -69,22 +73,18 @@ public class LoginController {
 
         try{
 
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                    .nonPreemptive()
-                    .credentials(login, haslo)
-                    .build();
+            Client client = DatabaseAccess.accessToDatabase(login, haslo);
 
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.register(feature);
 
-            Client client = ClientBuilder.newClient(clientConfig);
-
+            System.out.print("asfas");
             String URI = GlobalVariables.getSite_name() + "/users/user/login";
             Response response = client
                     .target(URI)
                     .path(login)
                     .request(MediaType.APPLICATION_JSON)
                     .get();
+
+            System.out.print("asfas");
 
             List<User> users = response.readEntity(new GenericType<ArrayList<User>>(){});
 
@@ -108,6 +108,8 @@ public class LoginController {
         } catch(Throwable ex){
             loginStatus.setText("Wpisałeś błędny login lub hasło");
             textAnimations.startLabelsPulsing();
+            infoAlerts.viewError(ex);
+            System.out.print("asfas");
         }
     }
 

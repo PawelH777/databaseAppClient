@@ -135,6 +135,12 @@
             <artifactId>jackson-core</artifactId>
             <version>2.9.5</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.owlike/genson -->
+        <dependency>
+            <groupId>com.owlike</groupId>
+            <artifactId>genson</artifactId>
+            <version>1.4</version>
+        </dependency>
     </dependencies>
 
 </project>

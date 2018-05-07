@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import pl.Vorpack.app.DatabaseAccess;
 import pl.Vorpack.app.Properties.mainPaneProperty;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.global_variables.dimVariables;
@@ -17,7 +18,6 @@ import pl.Vorpack.app.global_variables.GlobalVariables;
 import pl.Vorpack.app.infoAlerts;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -179,15 +179,7 @@ public class AddDimensionController {
         dimObj.setWeight(weight);
 
         try{
-            HttpAuthenticationFeature feature = HttpAuthenticationFeature.basicBuilder()
-                    .nonPreemptive()
-                    .credentials(GlobalVariables.getName(), GlobalVariables.getPassword())
-                    .build();
-
-            ClientConfig clientConfig = new ClientConfig();
-            clientConfig.register(feature);
-
-            Client client = ClientBuilder.newClient(clientConfig);
+            Client client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
 
             String URI = GlobalVariables.getSite_name() + "/dims/dim/find";
 

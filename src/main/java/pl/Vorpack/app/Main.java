@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.glassfish.jersey.jackson.JacksonFeature;
 import pl.Vorpack.app.domain.Dimiensions;
 import pl.Vorpack.app.domain.User;
 
@@ -14,7 +15,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Paweł on 2018-02-01.
