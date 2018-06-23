@@ -4,192 +4,75 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="570.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.controllers.ShowOrdersController">
-   <right>
-      <AnchorPane fx:id="rightPane" maxHeight="1.7976931348623157E308" maxWidth="350.0" prefHeight="600.0" prefWidth="300.0" styleClass="sideMenu" stylesheets="@../../styles/Styles.css" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="labelId" layoutX="95.0" layoutY="104.0" text="ID zamówienia:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelName" layoutX="55.0" layoutY="83.0" text="Nazwa klienta:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="75.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelOrderDate" layoutX="41.0" layoutY="138.0" text="Data wykonania:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="130.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelReceiverDate" layoutX="83.0" layoutY="184.0" text="Data przyjęcia:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="165.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelMetrs" layoutX="81.0" layoutY="273.0" text="Ilość metrów:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelMaterials" layoutX="55.0" layoutY="361.0" text="Ilość materiałów:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="235.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelFirstDim" layoutX="55.0" layoutY="402.0" text="Długość 1-szego boku:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="270.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelWeight" layoutX="55.0" layoutY="461.0" text="Waga:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="375.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelSecDim" layoutX="197.0" layoutY="361.0" text="Długość 2-go boku:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="305.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelThick" layoutX="197.0" layoutY="428.0" text="Grubość:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="340.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelNote" layoutX="225.0" layoutY="510.0" text="Uwagi:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="410.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelIdValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="40.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelNameValue" maxWidth="130.0" prefWidth="130.0" wrapText="true" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="75.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelOrderDateValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="130.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelReceiverDateValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="165.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelMetrsValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="200.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelMaterialsValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="235.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelFirstDimValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="270.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelSecDimValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="305.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelThickValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="340.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelWeightValue" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="375.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelNoteValue" maxWidth="240.0" prefWidth="240.0" AnchorPane.leftAnchor="90.0" AnchorPane.topAnchor="410.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </AnchorPane>
-   </right>
-   <center>
-      <AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" BorderPane.alignment="CENTER">
-         <children>
-            <JFXComboBox fx:id="columnsCmbBox" labelFloat="true" prefHeight="30.0" prefWidth="160.0" promptText="Wybierz kolumnę" style="-fx-font-size: 14;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-            <JFXComboBox fx:id="datesCmbBox" prefWidth="160.0" promptText="Data" style="-fx-font-size: 14;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-            <JFXTextField fx:id="txtSearch" labelFloat="true" prefHeight="20.0" prefWidth="160.0" promptText="Szukaj" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="65.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </JFXTextField>
-            <DatePicker fx:id="orderDatePicker" prefHeight="30.0" prefWidth="160.0" promptText="Wybierz dzień" style="-fx-font-size: 14;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
-            <Label text="Sortuj według:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="107.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <JFXButton fx:id="btnFirmName" onMouseClicked="#btnFirmNameClicked" text="Nazwy firmy" underline="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="105.0" />
-            <JFXButton fx:id="btnDimensions" onMouseClicked="#btnDimensionsClicked" text="Wymiaru" underline="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="105.0" />
-            <JFXButton fx:id="btnOrderReceiveDate" onMouseClicked="#btnOrderReceiveDateClicked" text="Daty przyjęcia zamówienia" underline="true" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="105.0" />
-            <JFXButton fx:id="btnOrderDate" onMouseClicked="#btnOrderDateClicked" text="Daty zamówienia" underline="true" AnchorPane.leftAnchor="492.0" AnchorPane.topAnchor="105.0" />
-            <JFXListView fx:id="lstOrders" prefHeight="370.0" prefWidth="660.0" style="-fx-font-size: 16;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="140.0" />
-            <JFXButton fx:id="btnAdd" onMouseClicked="#onBtnAddClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Dodaj" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="200.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="btnModify" onMouseClicked="#onBtnModifyClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Zmień" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="btnDelete" onMouseClicked="#onBtnDeleteClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Usuń" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </JFXButton>
-            <JFXButton fx:id="btnRefresh" layoutX="10.0" layoutY="10.0" onMouseClicked="#btnRefreshClicked" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Odśwież" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </JFXButton>
-            <Label fx:id="StatusViewer" layoutX="116.0" layoutY="526.0" textFill="RED" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="130.0">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-         </children>
-      </AnchorPane>
-   </center>
-</BorderPane>
+<AnchorPane fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.ShowOrdersController">
+   <children>
+      <JFXComboBox fx:id="columnsCmbBox" labelFloat="true" layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="160.0" promptText="Wybierz kolumnę" style="-fx-font-size: 14;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <JFXComboBox fx:id="datesCmbBox" layoutX="520.0" layoutY="20.0" prefWidth="160.0" promptText="Data" style="-fx-font-size: 14;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <JFXTextField fx:id="txtSearch" labelFloat="true" layoutX="20.0" layoutY="65.0" prefHeight="20.0" prefWidth="160.0" promptText="Szukaj" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="65.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <DatePicker fx:id="orderDatePicker" layoutX="520.0" layoutY="65.0" prefHeight="30.0" prefWidth="160.0" promptText="Wybierz dzień" style="-fx-font-size: 14;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0" />
+      <Label layoutX="20.0" layoutY="107.0" text="Sortuj według:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="107.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnFirmName" layoutX="130.0" layoutY="105.0" onMouseClicked="#btnFirmNameClicked" text="Nazwy firmy" underline="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="105.0" />
+      <JFXButton fx:id="btnOrderReceiveDate" layoutX="238.0" layoutY="105.0" onMouseClicked="#btnOrderReceiveDateClicked" text="Daty przyjęcia zamówienia" underline="true" AnchorPane.leftAnchor="230.0" AnchorPane.topAnchor="105.0" />
+      <JFXButton fx:id="btnOrderDate" layoutX="412.0" layoutY="105.0" onMouseClicked="#btnOrderDateClicked" text="Daty zamówienia" underline="true" AnchorPane.leftAnchor="410.0" AnchorPane.topAnchor="105.0" />
+      <JFXListView fx:id="lstOrders" layoutX="20.0" layoutY="140.0" prefHeight="370.0" prefWidth="660.0" style="-fx-font-size: 16;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="140.0" />
+      <JFXButton fx:id="btnAdd" layoutX="437.0" layoutY="518.0" onMouseClicked="#onBtnAddClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Dodaj" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="200.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnModify" layoutX="520.0" layoutY="518.0" onMouseClicked="#onBtnModifyClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Zmień" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" layoutX="610.0" layoutY="518.0" onMouseClicked="#onBtnDeleteClicked" prefHeight="20.0" prefWidth="70.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Usuń" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnRefresh" layoutX="20.0" layoutY="518.0" onMouseClicked="#btnRefreshClicked" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Odśwież" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <Label fx:id="StatusViewer" layoutX="206.0" layoutY="25.0" prefHeight="20.0" prefWidth="250.0" textFill="RED" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnEnd" layoutX="130.0" layoutY="518.0" onMouseClicked="#onEndButtonClicked" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Zakończ zamówienie" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="130.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
