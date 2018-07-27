@@ -1,7 +1,6 @@
 package pl.Vorpack.app.Controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.jfoenix.controls.JFXPasswordField;
@@ -18,17 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.codec.digest.DigestUtils;
-import pl.Vorpack.app.DatabaseAccess.DatabaseAccess;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.DatabaseAccess.UsersAccess;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * Created by Paweł on 2018-02-01.

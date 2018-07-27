@@ -114,7 +114,7 @@ public class JFXTreeTableColumn<S, T> extends TreeTableColumn<S, T> {
 
     /**
      * @param param tree item
-     * @return the data represented by the tree item
+     * @return the Data represented by the tree item
      */
     public final ObservableValue<T> getComputedValue(CellDataFeatures<S, T> param) {
         Object rowObject = param.getValue().getValue();

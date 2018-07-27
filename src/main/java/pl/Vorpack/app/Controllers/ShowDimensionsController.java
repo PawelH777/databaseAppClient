@@ -20,14 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.Vorpack.app.DatabaseAccess.DimensionsAccess;
-import pl.Vorpack.app.DatabaseAccess.SingleFinishedOrdersAccess;
 import pl.Vorpack.app.DatabaseAccess.SingleOrdersAccess;
-import pl.Vorpack.app.Domain.SingleFinishedOrders;
-import pl.Vorpack.app.Domain.SingleOrders;
 import pl.Vorpack.app.Properties.MainPaneProperty;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Domain.Dimiensions;
-import pl.Vorpack.app.Domain.FinishedOrders;
 import pl.Vorpack.app.GlobalVariables.DimVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
@@ -73,8 +69,6 @@ public class ShowDimensionsController {
     private TextAnimations textAnimations;
     private Dimiensions dimensionObject;
     private DimensionsAccess dimensionsAccess = new DimensionsAccess();
-    private SingleOrdersAccess singleOrdersAccess = new SingleOrdersAccess();
-    private SingleFinishedOrdersAccess singleFinishedOrdersAccess = new SingleFinishedOrdersAccess();
 
     @FXML
     void initialize(){
@@ -125,8 +119,7 @@ public class ShowDimensionsController {
 
     private void getRecords() {
         try{
-            List<Dimiensions> query =
-                    dimensionsAccess.findAllDimensions();
+            List<Dimiensions> query = DimVariables.getDimsFromDatabase();
             ObservableList<Dimiensions> data = FXCollections.observableArrayList(query);
             filteredList = new FilteredList<>(data, p -> true);
         }

@@ -2,6 +2,7 @@ package pl.Vorpack.app.Domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import pl.Vorpack.app.JsonClass.LocalDateDeserializer;
 import pl.Vorpack.app.JsonClass.LocalDateSerializer;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 /**
  * Created by Paweł on 2018-02-03.
  */
-public class Orders {
+public class Orders{
 
     private Long order_id;
     private Client client;
@@ -28,9 +29,10 @@ public class Orders {
 
     private String order_note;
 
-    private Long single_orders_completed;
+    private Long single_orders_finished;
 
     private Long single_orders_unfinished;
+    private Boolean orderFinished;
 
     public Long getOrder_id() {
         return order_id;
@@ -80,12 +82,12 @@ public class Orders {
         this.order_note = order_note;
     }
 
-    public Long getSingle_orders_completed() {
-        return single_orders_completed;
+    public Long getSingle_orders_finished() {
+        return single_orders_finished;
     }
 
-    public void setSingle_orders_completed(Long single_orders_completed) {
-        this.single_orders_completed = single_orders_completed;
+    public void setSingle_orders_finished(Long single_orders_finished) {
+        this.single_orders_finished = single_orders_finished;
     }
 
     public Long getSingle_orders_unfinished() {
@@ -95,30 +97,37 @@ public class Orders {
     public void setSingle_orders_unfinished(Long single_orders_unfinished) {
         this.single_orders_unfinished = single_orders_unfinished;
     }
+    public Boolean getOrderFinished() {
+        return orderFinished;
+    }
 
+    public void setOrderFinished(Boolean orderFinished) {
+        this.orderFinished = orderFinished;
+    }
 
-
-    public Orders(Long order_id, Client client, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date, String order_note,
-                  Long single_orders_completed, Long single_orders_unfinished) {
+    public Orders(Long order_id, Client client, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date,
+                  String order_note, Long single_orders_finished, Long single_orders_unfinished, Boolean orderFinished) {
         this.order_id = order_id;
         this.client = client;
         this.materials = materials;
         this.order_receive_date = order_receive_date;
         this.order_date = order_date;
         this.order_note = order_note;
-        this.single_orders_completed = single_orders_completed;
+        this.single_orders_finished = single_orders_finished;
         this.single_orders_unfinished = single_orders_unfinished;
+        this.orderFinished = orderFinished;
     }
 
     public Orders(Client client, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date, String order_note,
-                  Long single_orders_completed, Long single_orders_unfinished) {
+                  Long single_orders_finished, Long single_orders_unfinished, Boolean orderFinished) {
         this.client = client;
         this.materials = materials;
         this.order_receive_date = order_receive_date;
         this.order_date = order_date;
         this.order_note = order_note;
-        this.single_orders_completed = single_orders_completed;
+        this.single_orders_finished = single_orders_finished;
         this.single_orders_unfinished = single_orders_unfinished;
+        this.orderFinished = orderFinished;
     }
 
     public Orders() {

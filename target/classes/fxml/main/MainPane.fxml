@@ -6,8 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -89,10 +89,18 @@
                <graphic>
                   <FontAwesomeIconView glyphName="CLOSE" size="30.0" />
                </graphic></ToggleButton>
+            <Label fx:id="statusViewer" alignment="CENTER" prefHeight="100.0" prefWidth="213.0" textFill="RED">
+               <font>
+                  <Font size="10.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="15.0" />
+               </VBox.margin>
+            </Label>
          </children>
       </VBox>
    </left>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="mainWindow" stylesheets="@../../styles/Styles.css" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

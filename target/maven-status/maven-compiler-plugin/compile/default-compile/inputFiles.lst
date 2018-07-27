@@ -1,29 +1,46 @@
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\Client.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\TextAnimations.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\ShowDimensionsController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\global_variables\usrVariables.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\AddDimensionController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\AddOrderController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\Properties\mainPaneProperty.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\global_variables\ordVariables.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\AddUsersController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\LoginController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\Main.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\User.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\JsonClass\LocalDateSerializer.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\AddClientController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\global_variables\cliVariables.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\ShowClientsController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\Orders.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\JsonClass\LocalDateDeserializer.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\global_variables\dimVariables.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\infoAlerts.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\ordersStory.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\global_variables\GlobalVariables.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\ShowOrdersController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\MainController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\Dimiensions.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\optionalclass\records.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\domain\LocalDateAttributeConverter.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\ShowUsersController.java
-C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver30\src\main\java\pl\Vorpack\app\controllers\ShowStoryController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowClientsController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowSingleOrdersController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\DatabaseAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowUsersController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\ClientAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\UsersAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\TableValues\SingleOrdersTableValue.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\LocalDateAttributeConverter.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\UsrVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowOrdersController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\SingleOrders.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\User.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\GlobalVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\FinishedOrdersAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\TableValues\UsersTableValue.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\FinishedOrdVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\DimVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\JsonClass\LocalDateDeserializer.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Properties\MainPaneProperty.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\CliVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Alerts\InfoAlerts.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\LoginController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\HelperClassess\AddOrderHashSets.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\DimensionsAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Animations\TextAnimations.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowDimensionsController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\Dimiensions.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\AddClientController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\MainController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Main.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\SingleFinishedOrders.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\Client.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\TableValues\OrdersTableValue.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\SingleFinishedOrdersAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\HelperClassess\AddOrderSuggestionProviders.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\AddUsersController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\FinishedOrders.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\AddDimensionController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Domain\Orders.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\OrdersAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\HelperClassess\AddOrderDimensionValuesInString.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\DatabaseAccess\SingleOrdersAccess.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowFinishedOrdersController.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\GlobalVariables\OrdVariables.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\JsonClass\LocalDateSerializer.java
+C:\Users\Paweł\Desktop\gitDatabaseApp\vorApp_ver40 - new look\src\main\java\pl\Vorpack\app\Controllers\ShowSingleFinishedOrdersController.java

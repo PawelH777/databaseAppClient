@@ -26,10 +26,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeTableColumn;
 
 /**
- * data model that is used in JFXTreeTableView, it's used to implement
+ * Data model that is used in JFXTreeTableView, it's used to implement
  * the grouping feature.
  * <p>
- * <b>Note:</b> the data object used in JFXTreeTableView <b>must</b> extends this class
+ * <b>Note:</b> the Data object used in JFXTreeTableView <b>must</b> extends this class
  *
  * @param <T> is the concrete object of the Tree table
  * @author Shadi Shaheen

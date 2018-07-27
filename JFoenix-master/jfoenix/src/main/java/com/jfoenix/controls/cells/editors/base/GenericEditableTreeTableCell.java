@@ -74,7 +74,7 @@ public class GenericEditableTreeTableCell<S, T> extends JFXTreeTableCell<S, T> {
      * method will perform any validation and conversion required on the value. For text values that normally means this
      * method just commits the edit but for numeric values, for example, it may first parse the given input. <p> The
      * only situation that needs to be treated specially is when the field is losing focus. If you user hits enter to
-     * commit the cell with bad data we can happily cancel the commit and force them to enter a real value. If they
+     * commit the cell with bad Data we can happily cancel the commit and force them to enter a real value. If they
      * click away from the cell though we want to give them their old value back.
      *
      * @param losingFocus true if the reason for the call was because the field is losing focus.
@@ -88,8 +88,8 @@ public class GenericEditableTreeTableCell<S, T> extends JFXTreeTableCell<S, T> {
             commitEdit((T) builder.getValue());
         } catch (Exception ex) {
             //Most of the time we don't mind if there is a parse exception as it
-            //indicates duff user data but in the case where we are losing focus
-            //it means the user has clicked away with bad data in the cell. In that
+            //indicates duff user Data but in the case where we are losing focus
+            //it means the user has clicked away with bad Data in the cell. In that
             //situation we want to just cancel the editing and show them the old
             //value.
             if (losingFocus) {

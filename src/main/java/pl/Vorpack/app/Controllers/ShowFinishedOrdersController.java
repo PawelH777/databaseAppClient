@@ -2,7 +2,6 @@ package pl.Vorpack.app.Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,23 +13,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.DatabaseAccess.FinishedOrdersAccess;
-import pl.Vorpack.app.Domain.Client;
-import pl.Vorpack.app.Domain.Dimiensions;
+import pl.Vorpack.app.DatabaseAccess.OrdersAccess;
 import pl.Vorpack.app.Domain.Orders;
-import pl.Vorpack.app.Domain.FinishedOrders;
 import pl.Vorpack.app.GlobalVariables.CliVariables;
-import pl.Vorpack.app.GlobalVariables.FinishedOrdVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
+import pl.Vorpack.app.TableValues.OrdersDTO;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,44 +56,48 @@ public class ShowFinishedOrdersController {
     @FXML
     private JFXTextField txtSearch;
     @FXML
-    private JFXListView<String> lstOrders;
-    @FXML
     private DatePicker orderDatePicker;
     @FXML
     private JFXComboBox datesCmbBox;
+    @FXML
+    private TableView<OrdersDTO> ordersViewer;
+    @FXML
+    private TableColumn<OrdersDTO, Long> idColumn;
+    @FXML
+    private TableColumn<OrdersDTO, String> firmNameColumn;
+    @FXML
+    private TableColumn<OrdersDTO, LocalDate> orderDateColumn;
+    @FXML
+    private TableColumn<OrdersDTO, LocalDate> orderReceiveDateColumn;
+    @FXML
+    private TableColumn<OrdersDTO, Long> finishedOrdersColumn;
+    @FXML
+    private TableColumn<OrdersDTO, Long> unfinishedOrdersColumn;
+    @FXML
+    private TableColumn<OrdersDTO, BigDecimal> orderMaterialsColumn;
 
-    private FinishedOrdersAccess finishedOrdersAccess = new FinishedOrdersAccess();
+    private OrdersAccess ordersAccess = new OrdersAccess();
 
-    private List<FinishedOrders> results  = new ArrayList<>();
-    private List<String> records = new ArrayList<String>();
-    private List<Object[]> finishedOrdersCollection = new ArrayList<>();
-    private List<FinishedOrders> ord = new ArrayList<>();
-    private List<Client> cli = new ArrayList<>();
-    private List<Dimiensions> dim = new ArrayList<>();
-    private String item;
-    private SortedList<Object []> sortedData;
-    private FilteredList<Object []> filteredList;
+    private List<Orders> ordersCollection = new ArrayList<>();
+    private SortedList<OrdersDTO> sortedData;
+    private FilteredList<OrdersDTO> filteredList;
 
-    private FinishedOrders finishedOrdersObject;
+    private Orders order;
 
-    private List<String> listToView = new ArrayList<>();
-
-    private int gate, dateGate;
+    private int dateGate;
 
     private TextAnimations textAnimations = new TextAnimations(StatusViewer);
 
     @FXML
     private void initialize(){
-        StatusViewer.setOpacity(0);
-        textAnimations = new TextAnimations(StatusViewer);
+        attachValuesToTableColumns();
+        makeStatusBarPulsing();
         OrdVariables.setOrderObject(null);
         CliVariables.setObject(null);
-        changeAccessToButtons();
+        blockAccessToButtons();
         getAllRecords();
         sortedData = new SortedList<>(filteredList);
-        sortGate();
-        listToView = fetchToList(sortedData);
-        lstOrders.setItems(FXCollections.observableArrayList(listToView));
+        ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
         txtSearch.disableProperty().setValue(true);
         orderDatePicker.disableProperty().setValue(true);
 
@@ -110,7 +115,7 @@ public class ShowFinishedOrdersController {
                 "Data stworzenia"
         );
 
-        lstOrders.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+        ordersViewer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             int index = 0;
             if(newValue == null){
                 btnDelete.setDisable(true);
@@ -153,52 +158,26 @@ public class ShowFinishedOrdersController {
         });
     }
 
-    private void changeAccessToButtons() {
+    private void makeStatusBarPulsing() {
+        StatusViewer.setOpacity(0);
+        textAnimations = new TextAnimations(StatusViewer);
+    }
+
+
+    private void attachValuesToTableColumns() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("order_id"));
+        firmNameColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, String>("firmName"));
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, LocalDate>("order_date"));
+        orderReceiveDateColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, LocalDate>("order_receive_date"));
+        finishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("single_orders_completed"));
+        unfinishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("single_orders_unfinished"));
+        orderMaterialsColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, BigDecimal>("materials"));
+    }
+
+    private void blockAccessToButtons() {
         btnRecover.setDisable(true);
         btnModify.setDisable(true);
         btnDelete.setDisable(true);
-    }
-
-    private void sortGate() {
-        if(gate == 1)
-            setComparatorOrderDate();
-        else if(gate == 2)
-            setComparatorReceiveDate();
-        else if(gate == 3)
-            setComparatorFirmName();
-    }
-
-    private void setComparatorFirmName() {
-            sortedData.setComparator((o1, o2) -> {
-            Client clientObject = (Client)o1[1];
-            Client clientObject_2 = (Client)o2[1];
-            String name_1 = clientObject.getFirmName().toLowerCase();
-            String name_2 = clientObject_2.getFirmName().toLowerCase();
-            return name_1.compareTo(name_2);
-        });
-    }
-
-    private void setComparatorReceiveDate() {
-            sortedData.setComparator((o1, o2) -> {
-            FinishedOrders ordersObject = (FinishedOrders)o1[0];
-            FinishedOrders ordersObject_2 = (FinishedOrders)o2[0];
-
-            return ordersObject.getOrder_receive_date().isBefore(ordersObject_2.getOrder_receive_date()) ? -1
-                    : ordersObject_2.getOrder_receive_date().isBefore(ordersObject.getOrder_receive_date()) ? 1
-                    : 0;
-        });
-
-    }
-
-    private void setComparatorOrderDate() {
-            sortedData.setComparator((o1, o2) -> {
-                FinishedOrders ordersObject = (FinishedOrders)o1[0];
-                FinishedOrders ordersObject_2 = (FinishedOrders)o2[0];
-
-            return ordersObject.getOrder_date().isBefore(ordersObject_2.getOrder_date()) ? -1
-                    : ordersObject_2.getOrder_date().isBefore(ordersObject.getOrder_date()) ? 1
-                    : 0;
-        });
     }
 
     private void getRecordsIDColumn(String searchedText, String searchedData) {
@@ -209,19 +188,18 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            FinishedOrders ordersObj = (FinishedOrders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(ordersObj.getOrder_id()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getOrder_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(ordersObj.getOrder_id()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(obj.getOrder_id()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -237,20 +215,18 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            Client cliObj = (Client) obj[1];
-            FinishedOrders ordersObj = (FinishedOrders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(cliObj.getFirmName()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(cliObj.getFirmName()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(obj.getFirmName()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -268,19 +244,18 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            FinishedOrders ordersObj = (FinishedOrders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getMaterials()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
+                if(String.valueOf(obj.getMaterials()).toLowerCase().contains(lowerCaseValue) && searchedData.equals(date))
                     return true;
             }
 
@@ -296,19 +271,18 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            Orders ordersObj = (Orders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(ordersObj.getSingle_orders_completed()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getSingle_orders_completed()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(ordersObj.getSingle_orders_completed()).toLowerCase().contains(lowerCaseValue)
+                if(String.valueOf(obj.getSingle_orders_completed()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
             }
@@ -323,19 +297,18 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            Orders ordersObj = (Orders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(ordersObj.getSingle_orders_unfinished()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getSingle_orders_unfinished()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(ordersObj.getSingle_orders_unfinished()).toLowerCase().contains(lowerCaseValue)
+                if(String.valueOf(obj.getSingle_orders_unfinished()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
             }
@@ -350,14 +323,12 @@ public class ShowFinishedOrdersController {
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null"))
                 return true;
 
-            String lowerCaseValue = searchedData.toLowerCase();
-            FinishedOrders ordersObj = (FinishedOrders) obj[0];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData.equals(date))
                 return true;
@@ -374,30 +345,28 @@ public class ShowFinishedOrdersController {
                 return true;
 
             String lowerCaseValue = searchedText.toLowerCase();
-            FinishedOrders ordersObj = (FinishedOrders) obj[0];
-            Client clientObj = (Client) obj[1];
             String date = null;
 
             if(dateGate == 1)
-                date = String.valueOf(ordersObj.getOrder_date());
+                date = String.valueOf(obj.getOrder_date());
             else if(dateGate == 2)
-                date = String.valueOf(ordersObj.getOrder_receive_date());
+                date = String.valueOf(obj.getOrder_receive_date());
 
             if(searchedData == null || searchedData.isEmpty() || searchedData.equals("null")){
-                if(String.valueOf(ordersObj.getOrder_id()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(obj.getOrder_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(obj.getMaterials()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(clientObj.getFirmName()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(obj.getFirmName()).toLowerCase().contains(lowerCaseValue))
                     return true;
             } else {
-                if(String.valueOf(ordersObj.getOrder_id()).toLowerCase().contains(lowerCaseValue)
+                if(String.valueOf(obj.getOrder_id()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
-                else if(String.valueOf(ordersObj.getMaterials()).toLowerCase().contains(lowerCaseValue)
+                else if(String.valueOf(obj.getMaterials()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
-                else if(String.valueOf(clientObj.getFirmName()).toLowerCase().contains(lowerCaseValue)
+                else if(String.valueOf(obj.getFirmName()).toLowerCase().contains(lowerCaseValue)
                         && searchedData.equals(date))
                     return true;
             }
@@ -406,60 +375,24 @@ public class ShowFinishedOrdersController {
         });
     }
 
-    public void getAllRecords(){
-        Client cliObject;
-        finishedOrdersCollection = new ArrayList<>();
+    private void getAllRecords(){
+        List<OrdersDTO> ordersTableValuesCollection = new ArrayList<>();
+        OrdersDTO ordersDTO;
         try{
-            results = finishedOrdersAccess.findAllFinishedOrders();
+            ordersCollection = OrdVariables.getOrdersFromDatabase();
 
-            for(FinishedOrders o  : results){
-                cliObject = o.getClient();
-                Object[] obj = new Object[]{o, cliObject};
-                finishedOrdersCollection.add(obj);
+            for(Orders o  : ordersCollection){
+                ordersDTO = new OrdersDTO(o.getOrder_id(), o.getClient().getFirmName(),
+                        o.getOrder_date(), o.getOrder_receive_date(), o.getSingle_orders_finished(),
+                        o.getSingle_orders_unfinished(), o.getMaterials());
+                ordersTableValuesCollection.add(ordersDTO);
             }
-            records = fetchToList(finishedOrdersCollection);
-            ObservableList<Object[]> data = FXCollections.observableArrayList(finishedOrdersCollection);
+            ObservableList<OrdersDTO> data = FXCollections.observableArrayList(ordersTableValuesCollection);
             filteredList = new FilteredList<>(data, p -> true);
         }catch (Exception e){
             e.printStackTrace();
             InfoAlerts.generalAlert();
         }
-    }
-
-    private List<String> fetchToList(List<Object[]> obs){
-        List<String> temp_records = new ArrayList<>();
-        ord.clear();
-        cli.clear();
-        for(Object[] o : obs){
-            FinishedOrders orderObject = (FinishedOrders) o[0];
-            ord.add(orderObject);
-            Client clientObject = (Client) o[1];
-            cli.add(clientObject);
-
-            item = "Firma:  " + clientObject.getFirmName() + System.lineSeparator() +
-                    "Data zamówienia:  " + orderObject.getOrder_date() + System.lineSeparator() +
-                    "Data przyjęcia zamówienia:  " + orderObject.getOrder_receive_date() + System.lineSeparator() +
-                    "Ukończono:  " + orderObject.getSingle_orders_completed() + System.lineSeparator() +
-                    "Do ukończenia:  " + orderObject.getSingle_orders_unfinished() + System.lineSeparator() +
-                    "Potrzebne materiały:   " + orderObject.getMaterials();
-            temp_records.add(item);
-        }
-        return temp_records;
-    }
-
-    public void btnFirmNameClicked(MouseEvent mouseEvent) {
-        gate = 3;
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
-    }
-
-    public void btnOrderReceiveDateClicked(MouseEvent mouseEvent) {
-        gate = 2;
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
-    }
-
-    public void btnOrderDateClicked(MouseEvent mouseEvent) {
-        gate = 1;
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
     }
 
     private void getRecordsWithActualConfigure(String searchedText, String searchedData) {
@@ -480,15 +413,13 @@ public class ShowFinishedOrdersController {
                 ||  String.valueOf(columnsCmbBox.getValue()) == null)
             getRecordsDate(searchedData);
         sortedData = new SortedList<>(filteredList);
-        sortGate();
-        listToView = fetchToList(sortedData);
-        lstOrders.setItems(FXCollections.observableArrayList(listToView));
+        ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
     }
 
     public void onBtnModifyClicked(MouseEvent mouseEvent) {
         GlobalVariables.setIsActionCompleted(false);
-        int position = lstOrders.getSelectionModel().getSelectedIndex();
-        FinishedOrdVariables.setOrderObject(ord.get(position));
+        int position = ordersViewer.getSelectionModel().getSelectedIndex();
+        OrdVariables.setOrderObject(ordersCollection.get(position));
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(SHOW_SINGLE_ORDERS_PANE_FXML));
         AnchorPane anchorPane = null;
         try {
@@ -515,10 +446,10 @@ public class ShowFinishedOrdersController {
     }
 
     public void onBtnDeleteClicked(MouseEvent mouseEvent) {
-        int position = lstOrders.getSelectionModel().getSelectedIndex();
-        finishedOrdersObject = ord.get(position);
+        int position = ordersViewer.getSelectionModel().getSelectedIndex();
+        order = ordersCollection.get(position);
         try{
-           finishedOrdersAccess.deleteFinishedOrder(finishedOrdersObject);
+           ordersAccess.deleteOrder(order);
             StatusViewer.setText(InfoAlerts.getStatusWhileRecordIsDeleted());
         }
         catch(Exception e){
@@ -533,10 +464,10 @@ public class ShowFinishedOrdersController {
     }
 
     public void onRecoverButtonClicked(MouseEvent event){
-        int position = lstOrders.getSelectionModel().getSelectedIndex();
-        finishedOrdersObject = ord.get(position);
+        int position = ordersViewer.getSelectionModel().getSelectedIndex();
+        order = ordersCollection.get(position);
         try{
-            finishedOrdersAccess.moveFinishedOrderToOrders(finishedOrdersObject);
+            ordersAccess.changeOrdersStatus(order);
             StatusViewer.setText(InfoAlerts.getStatusWhileRecordIsRecovered());
         }
         catch(Exception e){

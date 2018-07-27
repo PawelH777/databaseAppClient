@@ -101,7 +101,7 @@ public class JFXTimePicker extends ComboBoxBase<LocalTime> {
      **************************************************************************/
 
     /**
-     * the parent node used when showing the data picker content as an overlay,
+     * the parent node used when showing the Data picker content as an overlay,
      * intead of a popup
      */
     private ObjectProperty<StackPane> dialogParent = new SimpleObjectProperty<>(null);
@@ -222,7 +222,7 @@ public class JFXTimePicker extends ComboBoxBase<LocalTime> {
     }
 
     /**
-     * the default color used in the data picker content
+     * the default color used in the Data picker content
      */
     private StyleableObjectProperty<Paint> defaultColor = new SimpleStyleableObjectProperty<>(StyleableProperties.DEFAULT_COLOR,
         JFXTimePicker.this,

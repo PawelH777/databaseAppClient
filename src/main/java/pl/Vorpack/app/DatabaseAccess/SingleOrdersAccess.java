@@ -4,6 +4,7 @@ import pl.Vorpack.app.Domain.Dimiensions;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.Domain.SingleOrders;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
+import pl.Vorpack.app.GlobalVariables.SingleOrdVariables;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -71,7 +72,7 @@ public class SingleOrdersAccess {
         return allSingleOrdersFromDimension;
     }
 
-    public void createSingleOrder(SingleOrders singleOrdersObject){
+    public SingleOrders createSingleOrder(SingleOrders singleOrdersObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI  = GlobalVariables.getSite_name() +  createSingleOrderUri;
@@ -80,7 +81,10 @@ public class SingleOrdersAccess {
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(singleOrdersObject, MediaType.APPLICATION_JSON_TYPE));
+
+        singleOrdersObject = response.readEntity(new GenericType<SingleOrders>(){});
         client.close();
+        return singleOrdersObject;
     }
 
     public void updateSingleOrder(SingleOrders singleOrdersObject){

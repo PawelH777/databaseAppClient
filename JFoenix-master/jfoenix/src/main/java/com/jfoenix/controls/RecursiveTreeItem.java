@@ -39,7 +39,7 @@ import java.util.function.Predicate;
 
 /**
  * RecursiveTreeItem is used along with RecursiveTreeObject
- * to build the data model for the TreeTableView.
+ * to build the Data model for the TreeTableView.
  *
  * @author Shadi Shaheen
  * @version 1.0
@@ -55,7 +55,7 @@ public class RecursiveTreeItem<T extends RecursiveTreeObject<T>> extends TreeIte
     private ObjectProperty<Predicate<TreeItem<T>>> predicate = new SimpleObjectProperty<>((TreeItem<T> t) -> true);
 
     /**
-     * map data value to tree item
+     * map Data value to tree item
      */
     private HashMap<T, TreeItem<T>> itemsMap;
 
@@ -108,7 +108,7 @@ public class RecursiveTreeItem<T extends RecursiveTreeObject<T>> extends TreeIte
     }
 
     /**
-     * creates recursive tree item from a data list
+     * creates recursive tree item from a Data list
      *
      * @param dataList of values
      * @param func     is the callback used to retrieve the children of the current tree item

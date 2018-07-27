@@ -287,7 +287,7 @@ public class JFXTreeTableView<S extends RecursiveTreeObject<S>> extends TreeTabl
 
     /*
      * this method is used to update tree items and set the new root
-     * after grouping the data model
+     * after grouping the Data model
      */
     private void buildGroupedRoot(Map groupedItems, RecursiveTreeItem parent, int groupIndex) {
         boolean setRoot = false;
@@ -351,7 +351,7 @@ public class JFXTreeTableView<S extends RecursiveTreeObject<S>> extends TreeTabl
         }
         // filter the ungrouped root
         ((RecursiveTreeItem) originalRoot).setPredicate(getPredicate());
-        // regroup the data
+        // regroup the Data
         reGroup();
         Platform.runLater(() -> {
             getSelectionModel().select(0);

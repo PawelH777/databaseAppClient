@@ -116,9 +116,7 @@ public class ShowUsersController {
 
     private void getRecords() {
         try{
-            List<User> users = usersAccess.findAllUsers();
-            users.removeIf(u -> u.getLogin().equals("Admin"));
-            List<UsersTableValue> result = changingClass(users);
+            List<UsersTableValue> result = changingClass(UsrVariables.getUsersInDatabase());
             ObservableList<UsersTableValue> data = FXCollections.observableArrayList(result);
             filteredList = new FilteredList<>(data, p -> true);
         }catch(Exception e){

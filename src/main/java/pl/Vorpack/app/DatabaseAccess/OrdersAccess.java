@@ -14,7 +14,9 @@ import java.util.List;
 public class OrdersAccess {
 
     private final String findAllOrdersUri = "/orders";
+    private final String findOrdersWithFinishedUri = "/orders/finished";
     private final String updateOrderUri = "/orders/order/update";
+    private final String changeStatusUri = "/order/change-status";
     private final String createOrderUri = "/orders/createorder";
     private final String deleteOrderUri = "/orders/order/delete";
     private final String findOrdersWithClientUri = "/orders/clients";
@@ -33,6 +35,22 @@ public class OrdersAccess {
 
         response = client
                 .target(URI)
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get();
+
+        List<Orders> allOrdersFromDatabase = response.readEntity(new GenericType<List<Orders>>(){});
+        client.close();
+        return allOrdersFromDatabase;
+    }
+
+    public List<Orders> findOrdersWithFinished(Boolean finished){
+        client =
+                DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
+        URI  = GlobalVariables.getSite_name() +  findOrdersWithFinishedUri;
+
+        response = client
+                .target(URI)
+                .path(String.valueOf(finished))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get();
 
@@ -64,6 +82,20 @@ public class OrdersAccess {
                 .path(String.valueOf(orderObject.getOrder_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.entity(orderObject, MediaType.APPLICATION_JSON_TYPE));
+
+        client.close();
+    }
+
+    public void changeOrdersStatus(Orders orderObject){
+        client =
+                DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
+        URI  = GlobalVariables.getSite_name() + changeStatusUri;
+
+        response = client
+                .target(URI)
+                .path(String.valueOf(orderObject.getOrder_id()))
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(null);
 
         client.close();
     }

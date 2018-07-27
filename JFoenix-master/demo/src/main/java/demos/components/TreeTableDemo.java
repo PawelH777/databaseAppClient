@@ -81,7 +81,7 @@ public class TreeTableDemo extends Application {
                                                                        .getValue().department.set(t.getNewValue()));
 
 
-        // data
+        // Data
         ObservableList<User> users = FXCollections.observableArrayList();
         users.add(new User(COMPUTER_DEPARTMENT, "23", "CD 1"));
         users.add(new User(SALES_DEPARTMENT, "22", "Employee 1"));

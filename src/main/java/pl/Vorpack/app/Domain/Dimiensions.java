@@ -67,4 +67,11 @@ public class Dimiensions {
         weight = d;
     }
 
+    public Dimiensions(long dimension_id, BigDecimal firstDimension, BigDecimal secondDimension, BigDecimal thickness, BigDecimal weight) {
+        this.dimension_id = dimension_id;
+        this.firstDimension = firstDimension;
+        this.secondDimension = secondDimension;
+        this.thickness = thickness;
+        this.weight = weight;
+    }
 }

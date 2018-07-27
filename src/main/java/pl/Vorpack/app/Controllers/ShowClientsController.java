@@ -20,17 +20,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pl.Vorpack.app.DatabaseAccess.ClientAccess;
 import pl.Vorpack.app.DatabaseAccess.OrdersAccess;
-import pl.Vorpack.app.DatabaseAccess.FinishedOrdersAccess;
 import pl.Vorpack.app.Properties.MainPaneProperty;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Domain.Client;
-import pl.Vorpack.app.Domain.Orders;
-import pl.Vorpack.app.Domain.FinishedOrders;
 import pl.Vorpack.app.GlobalVariables.CliVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
+
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by Paweł on 2018-02-21.
@@ -62,8 +59,6 @@ public class ShowClientsController {
     private FilteredList<Client> filteredList;
     private TextAnimations textAnimations;
     private ClientAccess clientAccess = new ClientAccess();
-    private OrdersAccess ordersAccess = new OrdersAccess();
-    private FinishedOrdersAccess finishedOrdersAccess = new FinishedOrdersAccess();
 
     @FXML
     public void initialize(){
@@ -110,7 +105,7 @@ public class ShowClientsController {
 
     private void getRecords() {
         try{
-            ObservableList<Client> data = FXCollections.observableArrayList(clientAccess.findAllClients());
+            ObservableList<Client> data = FXCollections.observableArrayList(CliVariables.getClientsFromDatabase());
             filteredList = new FilteredList<>(data, p -> true);
         }catch(Exception e){
             e.printStackTrace();

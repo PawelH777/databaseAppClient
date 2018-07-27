@@ -191,7 +191,7 @@ public class TreeTableViewController {
     }
 
     /*
-     * data class
+     * Data class
      */
     static final class Person extends RecursiveTreeObject<Person> {
         final StringProperty firstName;

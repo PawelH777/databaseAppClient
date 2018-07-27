@@ -126,7 +126,7 @@ public class JFXDatePickerContent extends VBox {
                 boolean mousePressed = false;
 
                 {
-                    this.getStyleClass().setAll("data-picker-list-cell");
+                    this.getStyleClass().setAll("Data-picker-list-cell");
                     setOnMousePressed(click -> mousePressed = true);
                     setOnMouseEntered(enter -> {
                         if (!mousePressed) {

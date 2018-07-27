@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="320.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.AddOrChangeOrderController">
+   <children>
+      <Label layoutX="65.0" layoutY="168.0" text="Data zamówienia" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="180.0" />
+      <DatePicker fx:id="dateOrder" layoutX="65.0" layoutY="188.0" prefWidth="220.0" promptText="Data zamówienia" style="-fx-font-size: 14;" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="200.0" />
+      <Label layoutX="65.0" layoutY="103.0" text="Data przyjęcia zamówienia" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="100.0" />
+      <DatePicker fx:id="dateCreateOrder" layoutX="65.0" layoutY="123.0" prefWidth="220.0" promptText="Data przyjęcia zamówienia" style="-fx-font-size: 14;" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="120.0" />
+      <JFXTextField fx:id="txtFirmName" labelFloat="true" layoutX="65.0" layoutY="56.0" promptText="Nazwa firmy" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="40.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextArea fx:id="txtNote" labelFloat="true" layoutX="328.0" layoutY="56.0" prefHeight="95.0" prefWidth="208.0" promptText="Uwagi do zamówienia" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="40.0" />
+      <JFXButton fx:id="btnAddOrChangeOrder" layoutX="65.0" layoutY="260.0" onMouseClicked="#addOrChangeOrderButtonClicked" prefHeight="25.0" prefWidth="122.0" text="Dodaj zamówienie" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="65.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

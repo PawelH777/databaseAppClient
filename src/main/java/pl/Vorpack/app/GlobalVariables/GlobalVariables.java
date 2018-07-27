@@ -12,6 +12,8 @@ public class GlobalVariables {
     private static final String site_name = "http://localhost:5000/";
     private static Boolean isActionCompleted = false;
 
+    private static Boolean isCreate = true;
+
     public static Boolean getIsActionCompleted() {
         return isActionCompleted;
     }
@@ -46,5 +48,13 @@ public class GlobalVariables {
 
     public static void setPassword(String password) {
         GlobalVariables.password = password;
+    }
+
+    public static Boolean getIsCreate() {
+        return isCreate;
+    }
+
+    public static void setIsCreate(Boolean isCreate) {
+        GlobalVariables.isCreate = isCreate;
     }
 }
