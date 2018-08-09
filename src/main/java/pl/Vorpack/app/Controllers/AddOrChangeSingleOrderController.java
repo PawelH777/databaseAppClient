@@ -74,7 +74,6 @@ public class AddOrChangeSingleOrderController {
     @FXML
     private JFXCheckBox checkBox;
 
-    private TextAnimations textAnimations = null;
     private Boolean blockAutoFill = false;
     private Boolean blockFiltering = false;
     private SingleOrders singleOrdersObject = new SingleOrders();
@@ -91,10 +90,10 @@ public class AddOrChangeSingleOrderController {
     private ObservableList<Dimiensions> proxyToDimensionFields;
     private FilteredList<Dimiensions> filteredListToDimensionFields;
 
-
+    private int traysCounter = 0;
     @FXML
     public void initialize(){
-        textAnimations = new TextAnimations(statusViewer);
+        TextAnimations textAnimations = new TextAnimations(statusViewer);
         formatFields();
         getAllDimensions();
         attachProviders();
@@ -301,6 +300,8 @@ public class AddOrChangeSingleOrderController {
 
     private void countOverallQuantityOfPieces(){
         try{
+            int QuantityOnTrayValue  = Integer.parseInt(txtQuantityOnTray.textProperty().getValue());
+            traysCounter = QuantityOnTrayValue - singleOrdersObject.getAmount_of_trays().intValue();
             singleOrdersObject.setQuantity_on_tray(BigDecimal.valueOf(Double.valueOf(txtQuantityOnTray.textProperty().getValue())));
         }
         catch(Exception e){
@@ -438,6 +439,10 @@ public class AddOrChangeSingleOrderController {
         return prov_FirstDims;
     }
 
+    public void onMouseClicked(){
+
+    }
+
     public void exitButtonClicked(){
         Stage thisStage = (Stage) anchorPane.getScene().getWindow();
         thisStage.close();
@@ -478,6 +483,9 @@ public class AddOrChangeSingleOrderController {
             createSingleOrder();
         else
             updateSingleOrder();
+
+        Stage thisStage = (Stage) anchorPane.getScene().getWindow();
+        thisStage.close();
     }
 
     private void createSingleOrder(){
@@ -488,6 +496,7 @@ public class AddOrChangeSingleOrderController {
             createTrays();
             updateOrder();
             GlobalVariables.setIsActionCompleted(true);
+            singleOrdersObject.setSingle_active_order_id(null);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -523,7 +532,6 @@ public class AddOrChangeSingleOrderController {
         checkIfConcercDimensionIsInDatabase();
         singleOrdersObject = singleOrdersAccess.createSingleOrder(singleOrdersObject);
     }
-
     private void checkIfConcercDimensionIsInDatabase() {
         boolean findDim = false;
         List<Dimiensions> dims = dimensionsAccess.findDimension(dimensionObject);

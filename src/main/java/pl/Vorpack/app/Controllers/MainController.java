@@ -13,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
@@ -32,6 +34,7 @@ public class MainController {
     private static final String DIMENSIONS_PANE_FXML = "/fxml/dimensions/ShowDimensionsPane.fxml";
     private static final String LOGIN_PANE_FXML = "/fxml/main/LogInPane.fxml";
     private static final String ORDERS_FXML = "/fxml/orders/ShowOrdersPane.fxml";
+    private static final Logger LOG = LoggerFactory.getLogger(MainController.class);
 
     @FXML
     private BorderPane borderPane;
@@ -73,12 +76,20 @@ public class MainController {
         GetFinishedOrders getFinishedOrders = new GetFinishedOrders();
 
         AtomicInteger task = new AtomicInteger(0);
+
         getUsers.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
                 task.incrementAndGet();
                 textInStatusViewer = textInStatusViewer + "userów";
                 setTextAndCheckIfItIsFifthTaskEnded(task, textAnimations);
+            }
+        });
+
+        getUsers.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                LOG.error(event.getSource().getException().toString());
             }
         });
 
@@ -91,12 +102,26 @@ public class MainController {
             }
         });
 
+        getClients.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                LOG.error(event.getSource().getException().toString());
+            }
+        });
+
         getDimensions.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
                 task.incrementAndGet();
                 textInStatusViewer = textInStatusViewer + "wymiarów";
                 setTextAndCheckIfItIsFifthTaskEnded(task, textAnimations);
+            }
+        });
+
+        getDimensions.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                LOG.error(event.getSource().getException().toString());
             }
         });
 
@@ -109,12 +134,26 @@ public class MainController {
             }
         });
 
+        getOrders.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                LOG.error(event.getSource().getException().toString());
+            }
+        });
+
         getFinishedOrders.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
                 task.incrementAndGet();
                 textInStatusViewer = textInStatusViewer + "zakończonych zamówień";
                 setTextAndCheckIfItIsFifthTaskEnded(task, textAnimations);
+            }
+        });
+
+        getFinishedOrders.setOnFailed(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                LOG.error(event.getSource().getException().toString());
             }
         });
 

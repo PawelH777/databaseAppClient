@@ -27,7 +27,7 @@ import pl.Vorpack.app.GlobalVariables.CliVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.TableValues.OrdersDTO;
+import pl.Vorpack.app.Dto.OrdersDTO;
 
 import java.io.IOException;
 import java.math.BigDecimal;

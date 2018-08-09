@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -9,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.ShowSingleOrdersController">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.ShowSingleOrdersController">
    <children>
-      <TableView fx:id="singleOrdersViewer" layoutX="23.0" layoutY="60.0" prefWidth="788.0" style="-fx-font-size: 14;" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+      <TableView fx:id="singleOrdersViewer" layoutX="23.0" layoutY="60.0" prefWidth="788.0" style="-fx-font-size: 14;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
         <columns>
           <TableColumn fx:id="IDColumn" prefWidth="39.0" text="ID" />
             <TableColumn fx:id="dimensionColumn" prefWidth="138.0" text="Wymiar (cm)" />
@@ -58,12 +57,12 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="337.0" text="Ilość jeszcze potrzebnych materiałów do wykonania całego zamówienia - " AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="20.0">
+      <Label layoutX="20.0" layoutY="337.0" text="Ilość jeszcze potrzebnych materiałów do wykonania całego zamówienia - " AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="materialsNumber" layoutX="473.0" layoutY="337.0" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="473.0">
+      <Label fx:id="materialsNumber" layoutX="473.0" layoutY="337.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="473.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -72,13 +71,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <JFXButton fx:id="btnOpen" defaultButton="true" layoutX="860.0" layoutY="567.0" onMouseClicked="#openButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Otwórz widok palet" AnchorPane.bottomAnchor="220.0" AnchorPane.rightAnchor="20.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXTextArea fx:id="commentary" layoutX="521.0" layoutY="542.0" prefHeight="130.0" prefWidth="280.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0" />
-      <JFXButton fx:id="btnChangeComment" layoutX="761.0" layoutY="603.0" onMouseClicked="#changeCommentClicked" prefHeight="25.0" prefWidth="113.0" text="Zmień komentarz" AnchorPane.bottomAnchor="122.0" AnchorPane.rightAnchor="326.0">
+      <JFXButton fx:id="btnOpen" defaultButton="true" layoutX="860.0" layoutY="567.0" onMouseClicked="#openButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Otwórz widok palet" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

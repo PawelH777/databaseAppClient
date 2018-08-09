@@ -1,4 +1,4 @@
-package pl.Vorpack.app.TableValues;
+package pl.Vorpack.app.Dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

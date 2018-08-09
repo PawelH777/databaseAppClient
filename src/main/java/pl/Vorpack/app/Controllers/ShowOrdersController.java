@@ -24,7 +24,7 @@ import pl.Vorpack.app.GlobalVariables.CliVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.TableValues.OrdersDTO;
+import pl.Vorpack.app.Dto.OrdersDTO;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -110,6 +110,7 @@ public class ShowOrdersController {
                 "Data zamówienia",
                 "Data stworzenia"
         );
+        btnToogle.setDisable(true);
         btnEnd.setDisable(true);
         btnDelete.setDisable(true);
         btnModify.setDisable(true);
@@ -369,6 +370,7 @@ public class ShowOrdersController {
     }
 
     private void getAllRecords(){
+        OrdVariables.setOrdersFromDatabase(ordersAccess.findOrdersWithFinished(false));
         List<OrdersDTO> ordersTableValuesCollection = new ArrayList<>();
         OrdersDTO ordersDTO;
         try{
@@ -387,18 +389,6 @@ public class ShowOrdersController {
             e.printStackTrace();
             InfoAlerts.generalAlert();
         }
-    }
-
-    public void btnFirmNameClicked(MouseEvent mouseEvent) {
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
-    }
-
-    public void btnOrderReceiveDateClicked(MouseEvent mouseEvent) {
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
-    }
-
-    public void btnOrderDateClicked(MouseEvent mouseEvent) {
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
     }
 
     private void getRecordsWithActualConfigure(String searchedText, String searchedData) {
@@ -424,11 +414,15 @@ public class ShowOrdersController {
 
     public void onBtnAddClicked(MouseEvent mouseEvent) {
         GlobalVariables.setIsActionCompleted(false);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_OR_CHANGE_ORDER_PANE_FXML));
-        AnchorPane anchorPane = null;
         OrdVariables.setOrderObject(null);
         GlobalVariables.setIsCreate(true);
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_OR_CHANGE_ORDER_PANE_FXML));
+        openNewScene(fxmlLoader);
+    }
+
+    private void openNewScene(FXMLLoader fxmlLoader) {
+        AnchorPane anchorPane = null;
         try {
             anchorPane = fxmlLoader.load();
         } catch (IOException e) {
@@ -462,37 +456,14 @@ public class ShowOrdersController {
         GlobalVariables.setIsCreate(false);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(ADD_OR_CHANGE_ORDER_PANE_FXML));
-        AnchorPane anchorPane = null;
-
-        try {
-            anchorPane = fxmlLoader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Scene scene = new Scene(Objects.requireNonNull(anchorPane));
-        Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(anchorPane.getScene().getWindow());
-        stage.setScene(scene);
-        stage.showAndWait();
-
-        getAllRecords();
-        getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
-
-        if(GlobalVariables.getIsActionCompleted())
-            StatusViewer.setText(InfoAlerts.getStatusWhileRecordChanged());
-        else
-            StatusViewer.setText(InfoAlerts.getStatusWhileRecordIsNotChanged());
-
-        textAnimations.startLabelsPulsing();
+        openNewScene(fxmlLoader);
     }
 
-    public void onBtnToogleClicked(MouseEvent mouseEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(SHOW_SINGLE_ORDERS_PANE_FXML));
-        AnchorPane anchorPane = null;
+    public void onBtnToogleClicked() {
         OrdVariables.setOrderObject(getSelectedItem());
 
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(SHOW_SINGLE_ORDERS_PANE_FXML));
+        AnchorPane anchorPane = null;
         try {
             anchorPane = fxmlLoader.load();
         } catch (IOException e) {
@@ -502,9 +473,11 @@ public class ShowOrdersController {
         assert(anchorPane != null);
         Scene scene = new Scene(anchorPane);
         Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(anchorPane.getScene().getWindow());
         stage.setScene(scene);
+        stage.setTitle("Zamówienia jednostkowe");
+        stage.setMaximized(true);
         stage.showAndWait();
         getAllRecords();
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
@@ -522,7 +495,7 @@ public class ShowOrdersController {
         Client client = getClient(ordersDTO);
         return new Orders(ordersDTO.getOrder_id(), client, ordersDTO.getMaterials(), ordersDTO.getOrder_receive_date(),
                 ordersDTO.getOrder_date(), null, ordersDTO.getSingle_orders_completed(),
-                ordersDTO.getSingle_orders_unfinished(), true);
+                ordersDTO.getSingle_orders_unfinished(), false);
     }
 
     private Client getClient(OrdersDTO ordersDTO) {
@@ -530,7 +503,7 @@ public class ShowOrdersController {
         return access.findClient(ordersDTO.getFirmName()).get(0);
     }
 
-    public void onBtnDeleteClicked(MouseEvent mouseEvent) {
+    public void onBtnDeleteClicked() {
         int position = ordersViewer.getSelectionModel().getSelectedIndex();
         orderObject = ordersCollection.get(position);
         try{
@@ -547,7 +520,7 @@ public class ShowOrdersController {
         textAnimations.startLabelsPulsing();
     }
 
-    public void onEndButtonClicked(MouseEvent mouseEvent){
+    public void onEndButtonClicked(){
         int position = ordersViewer.getSelectionModel().getSelectedIndex();
         orderObject = ordersCollection.get(position);
         try{
@@ -564,7 +537,7 @@ public class ShowOrdersController {
         textAnimations.startLabelsPulsing();
     }
 
-    public void btnRefreshClicked() throws IOException{
+    public void btnRefreshClicked(){
         getAllRecords();
         getRecordsWithActualConfigure(txtSearch.textProperty().getValue(),
                 String.valueOf(orderDatePicker.valueProperty().getValue()));

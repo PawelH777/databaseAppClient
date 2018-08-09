@@ -2,11 +2,9 @@ package pl.Vorpack.app.Domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import pl.Vorpack.app.JsonClass.LocalDateDeserializer;
 import pl.Vorpack.app.JsonClass.LocalDateSerializer;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -32,6 +30,7 @@ public class Orders{
     private Long single_orders_finished;
 
     private Long single_orders_unfinished;
+
     private Boolean orderFinished;
 
     public Long getOrder_id() {

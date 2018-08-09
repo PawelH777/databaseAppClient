@@ -1,9 +1,9 @@
-package pl.Vorpack.app.TableValues;
+package pl.Vorpack.app.Dto;
 
 /**
  * Created by Paweł on 2018-02-22.
  */
-public class UsersTableValue {
+public class UsersDTO {
 
     private long user_id;
 
@@ -45,10 +45,10 @@ public class UsersTableValue {
         this.admin = admin;
     }
 
-    public UsersTableValue() {
+    public UsersDTO() {
     }
 
-    public UsersTableValue(long user_id, String login, String password, String admin) {
+    public UsersDTO(long user_id, String login, String password, String admin) {
         this.user_id = user_id;
         this.login = login;
         this.password = password;

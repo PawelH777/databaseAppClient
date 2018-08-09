@@ -25,7 +25,7 @@ import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.GlobalVariables.UsrVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.TableValues.UsersTableValue;
+import pl.Vorpack.app.Dto.UsersDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,21 +50,21 @@ public class ShowUsersController {
     @FXML
     private JFXTextField txtSearch;
     @FXML
-    private TableView<UsersTableValue> dimTableView;
+    private TableView<UsersDTO> dimTableView;
     @FXML
-    private TableColumn<UsersTableValue, Integer> idColumn;
+    private TableColumn<UsersDTO, Integer> idColumn;
     @FXML
-    private TableColumn<UsersTableValue, String> login;
+    private TableColumn<UsersDTO, String> login;
     @FXML
-    private TableColumn<UsersTableValue, String> password;
+    private TableColumn<UsersDTO, String> password;
     @FXML
-    private TableColumn<UsersTableValue, String> adminYesNo;
+    private TableColumn<UsersDTO, String> adminYesNo;
 
     private MainPaneProperty userProperty = new MainPaneProperty();
     private User userObject = new User();
     private UsersAccess usersAccess = new UsersAccess();
-    private SortedList<UsersTableValue> sortedData;
-    private FilteredList<UsersTableValue> filteredList;
+    private SortedList<UsersDTO> sortedData;
+    private FilteredList<UsersDTO> filteredList;
     private TextAnimations textAnimations;
 
     @FXML
@@ -108,16 +108,16 @@ public class ShowUsersController {
     }
 
     private void attachParametrsToTable() {
-        idColumn.setCellValueFactory( new PropertyValueFactory<UsersTableValue,Integer>("user_id"));
-        login.setCellValueFactory( new PropertyValueFactory<UsersTableValue, String>("login"));
-        password.setCellValueFactory( new PropertyValueFactory<UsersTableValue,String>("password"));
-        adminYesNo.setCellValueFactory( new PropertyValueFactory<UsersTableValue, String>("admin"));
+        idColumn.setCellValueFactory( new PropertyValueFactory<UsersDTO,Integer>("user_id"));
+        login.setCellValueFactory( new PropertyValueFactory<UsersDTO, String>("login"));
+        password.setCellValueFactory( new PropertyValueFactory<UsersDTO,String>("password"));
+        adminYesNo.setCellValueFactory( new PropertyValueFactory<UsersDTO, String>("admin"));
     }
 
     private void getRecords() {
         try{
-            List<UsersTableValue> result = changingClass(UsrVariables.getUsersInDatabase());
-            ObservableList<UsersTableValue> data = FXCollections.observableArrayList(result);
+            List<UsersDTO> result = changingClass(UsrVariables.getUsersInDatabase());
+            ObservableList<UsersDTO> data = FXCollections.observableArrayList(result);
             filteredList = new FilteredList<>(data, p -> true);
         }catch(Exception e){
             e.printStackTrace();
@@ -128,17 +128,17 @@ public class ShowUsersController {
     private void getRecordsWithActualConfigure() {
        if("Wszystkie".equals(columnsCmbBox.getValue()))
         {
-            filteredList.setPredicate(UsersTableValue -> {
+            filteredList.setPredicate(UsersDTO -> {
                 if(txtSearch == null || txtSearch.getText().isEmpty())
                     return true;
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(UsersTableValue.getUser_id()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(UsersDTO.getUser_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(UsersTableValue.getLogin()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(UsersDTO.getLogin()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(UsersTableValue.getPassword()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(UsersDTO.getPassword()).toLowerCase().contains(lowerCaseValue))
                     return true;
-                else if(String.valueOf(UsersTableValue.getAdmin()).toLowerCase().contains(lowerCaseValue))
+                else if(String.valueOf(UsersDTO.getAdmin()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -146,23 +146,23 @@ public class ShowUsersController {
         }
         else if("Identyfikator".equals(columnsCmbBox.getValue()))
         {
-            filteredList.setPredicate(UsersTableValue -> {
+            filteredList.setPredicate(UsersDTO -> {
                 if(txtSearch == null || txtSearch.getText().isEmpty())
                     return true;
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(UsersTableValue.getUser_id()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(UsersDTO.getUser_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
             });
         }
         else if("Login".equals(columnsCmbBox.getValue())){
-            filteredList.setPredicate(UsersTableValue -> {
+            filteredList.setPredicate(UsersDTO -> {
                 if(txtSearch == null || txtSearch.getText().isEmpty())
                     return true;
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(UsersTableValue.getLogin()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(UsersDTO.getLogin()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -170,13 +170,13 @@ public class ShowUsersController {
         }
         else if("Hasło".equals(columnsCmbBox.getValue()))
         {
-            filteredList.setPredicate(UsersTableValue -> {
+            filteredList.setPredicate(UsersDTO -> {
 
                 if(txtSearch == null || txtSearch.getText().isEmpty())
                     return true;
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
-                if(String.valueOf(UsersTableValue.getPassword()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(UsersDTO.getPassword()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -184,14 +184,14 @@ public class ShowUsersController {
             });
         }
         else if("Administrator".equals(columnsCmbBox.getValue())){
-            filteredList.setPredicate(UsersTableValue -> {
+            filteredList.setPredicate(UsersDTO -> {
 
                 if(txtSearch == null || txtSearch.getText().isEmpty())
                     return true;
 
                 String lowerCaseValue = txtSearch.getText().toLowerCase();
 
-                if(String.valueOf(UsersTableValue.getAdmin()).toLowerCase().contains(lowerCaseValue))
+                if(String.valueOf(UsersDTO.getAdmin()).toLowerCase().contains(lowerCaseValue))
                     return true;
 
                 return false;
@@ -274,11 +274,11 @@ public class ShowUsersController {
 
     }
 
-    private List<UsersTableValue> changingClass(List<User> query){
-        List<UsersTableValue> result = new ArrayList<UsersTableValue>();
+    private List<UsersDTO> changingClass(List<User> query){
+        List<UsersDTO> result = new ArrayList<UsersDTO>();
         if(query.size() !=0){
             for(User u : query){
-                UsersTableValue record = new UsersTableValue();
+                UsersDTO record = new UsersDTO();
                 record.setUser_id(u.getUser_id());
                 record.setLogin(u.getLogin());
                 String pass = u.getPassword();
@@ -295,7 +295,7 @@ public class ShowUsersController {
         return result;
     }
 
-    private User changingObjectType(UsersTableValue rec){
+    private User changingObjectType(UsersDTO rec){
         User usr = new User();
         usr.setUser_id(rec.getUser_id());
         usr.setLogin(rec.getLogin());
@@ -309,6 +309,8 @@ public class ShowUsersController {
     }
 
     public void btnRefreshClicked(){
+        UsrVariables.setUsersInDatabase(usersAccess.findAllUsers());
+        UsrVariables.getUsersInDatabase().removeIf(u -> u.getLogin().equals("Admin"));
         getRecords();
         getRecordsWithActualConfigure();
 

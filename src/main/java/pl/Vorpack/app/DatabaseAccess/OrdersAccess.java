@@ -16,7 +16,7 @@ public class OrdersAccess {
     private final String findAllOrdersUri = "/orders";
     private final String findOrdersWithFinishedUri = "/orders/finished";
     private final String updateOrderUri = "/orders/order/update";
-    private final String changeStatusUri = "/order/change-status";
+    private final String changeStatusUri = "/orders/order/change-status";
     private final String createOrderUri = "/orders/createorder";
     private final String deleteOrderUri = "/orders/order/delete";
     private final String findOrdersWithClientUri = "/orders/clients";
@@ -93,9 +93,9 @@ public class OrdersAccess {
 
         response = client
                 .target(URI)
-                .path(String.valueOf(orderObject.getOrder_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .put(null);
+                .put(Entity.entity(orderObject, MediaType.APPLICATION_JSON_TYPE));
+
 
         client.close();
     }
@@ -111,7 +111,6 @@ public class OrdersAccess {
                 .path(String.valueOf(orderObject.getOrder_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .delete();
-
         client.close();
     }
 

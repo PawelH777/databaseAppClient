@@ -1,12 +1,12 @@
-package pl.Vorpack.app.TableValues;
+package pl.Vorpack.app.Dto;
 
 import com.jfoenix.controls.JFXButton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
-public class TraysTableValue {
+public class TraysDTO {
     private Long traysId;
     private String traysName;
-    private FontAwesomeIconView statusIcon;
+    private String statusIcon;
     private JFXButton changeStatusButton;
 
     public Long getTraysId() {
@@ -25,11 +25,11 @@ public class TraysTableValue {
         this.traysName = traysName;
     }
 
-    public FontAwesomeIconView getStatusIcon() {
+    public String getStatusIcon() {
         return statusIcon;
     }
 
-    public void setStatusIcon(FontAwesomeIconView statusIcon) {
+    public void setStatusIcon(String statusIcon) {
         this.statusIcon = statusIcon;
     }
 
@@ -41,10 +41,14 @@ public class TraysTableValue {
         this.changeStatusButton = changeStatusButton;
     }
 
-    public TraysTableValue(Long traysId, String traysName, FontAwesomeIconView statusIcon, JFXButton changeStatusButton) {
+    public TraysDTO(Long traysId, String traysName, String statusIcon, JFXButton changeStatusButton) {
         this.traysId = traysId;
         this.traysName = traysName;
         this.statusIcon = statusIcon;
         this.changeStatusButton = changeStatusButton;
+
+        changeStatusButton.setOnAction(event -> {
+
+        });
     }
 }

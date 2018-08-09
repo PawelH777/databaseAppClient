@@ -94,7 +94,6 @@ public class SingleOrdersAccess {
 
         response = client
                 .target(URI)
-                .path(String.valueOf(singleOrdersObject.getSingle_active_order_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.entity(singleOrdersObject, MediaType.APPLICATION_JSON_TYPE));
         client.close();

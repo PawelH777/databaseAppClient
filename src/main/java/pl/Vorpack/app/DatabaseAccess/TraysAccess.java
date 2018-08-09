@@ -63,16 +63,15 @@ public class TraysAccess {
         client.close();
     }
 
-    public void changeTraysStatus(Long trayId){
+    public void changeTraysStatus(Trays tray){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI  = GlobalVariables.getSite_name() +  changeTraysStatusUri;
 
         response = client
                 .target(URI)
-                .path(String.valueOf(trayId))
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .put(Entity.entity(null, MediaType.APPLICATION_JSON_TYPE));
+                .put(Entity.entity(tray, MediaType.APPLICATION_JSON_TYPE));
         client.close();
     }
 }

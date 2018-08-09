@@ -294,7 +294,8 @@ public class ShowDimensionsController {
         textAnimations.startLabelsPulsing();
     }
 
-    public void btnRefreshClicked() throws IOException{
+    public void btnRefreshClicked(){
+        DimVariables.setDimsFromDatabase(dimensionsAccess.findAllDimensions());
         getRecords();
         getAllResult();
         btnDelete.disableProperty().setValue(true);

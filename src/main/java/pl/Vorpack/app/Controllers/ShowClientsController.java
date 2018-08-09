@@ -230,6 +230,7 @@ public class ShowClientsController {
     }
 
     public void btnRefreshClicked() throws IOException{
+        CliVariables.setClientsFromDatabase(clientAccess.findAllClients());
         getRecords();
         getRecordsWithActualConfigure();
 

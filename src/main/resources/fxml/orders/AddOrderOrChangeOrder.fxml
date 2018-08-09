@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="320.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.AddOrChangeOrderController">
+<AnchorPane fx:id="anchorPane" maxHeight="320.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controllers.AddOrChangeOrderController">
    <children>
       <Label layoutX="65.0" layoutY="168.0" text="Data zamówienia" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="180.0" />
       <DatePicker fx:id="dateOrder" layoutX="65.0" layoutY="188.0" prefWidth="220.0" promptText="Data zamówienia" style="-fx-font-size: 14;" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="200.0" />

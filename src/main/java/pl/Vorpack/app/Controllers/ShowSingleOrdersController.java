@@ -1,7 +1,6 @@
 package pl.Vorpack.app.Controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextArea;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,7 +19,7 @@ import pl.Vorpack.app.Domain.SingleOrders;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.SingleOrdVariables;
-import pl.Vorpack.app.TableValues.SingleOrdersDTO;
+import pl.Vorpack.app.Dto.SingleOrdersDTO;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -31,6 +30,9 @@ public class ShowSingleOrdersController {
 
     private static final String CRUD_SINGLE_ORDER_PANE = "/fxml/orders/AddOrChangeSingleOrders.fxml";
     private static final String TRAYS_PANE = "/fxml/orders/ShowTraysPane.fxml";
+    public static final String ADD_WINDOW_TITLE = "Okno dodawania zamówień jednostkowych";
+    public static final String MODIFY_WINDOW_TITLE = "Okno zmiany zamówienia jednostkowego";
+    public static final String TRAYS_WINDOW_PANE = "Okno palet";
 
     @FXML
     private AnchorPane anchorPane;
@@ -57,8 +59,6 @@ public class ShowSingleOrdersController {
     @FXML
     private TableColumn<SingleOrdersDTO, String> statusColumn;
     @FXML
-    private JFXTextArea commentary;
-    @FXML
     private Label statusLabel;
     @FXML
     private Label materialsNumber;
@@ -70,8 +70,6 @@ public class ShowSingleOrdersController {
     private JFXButton btnDelete;
     @FXML
     private JFXButton btnOpen;
-    @FXML
-    private JFXButton btnChangeComment;
 
 
     private List<SingleOrders> allSingleOrdersFromOrder = new ArrayList<>();
@@ -109,7 +107,6 @@ public class ShowSingleOrdersController {
         btnModifyRecord.setDisable(b);
         btnDelete.setDisable(b);
         btnOpen.setDisable(b);
-        btnChangeComment.setDisable(b);
     }
 
     private void setView(){
@@ -175,10 +172,10 @@ public class ShowSingleOrdersController {
 
     public void addButtonClicked(){
         GlobalVariables.setIsCreate(true);
-        openNewWindow(CRUD_SINGLE_ORDER_PANE);
+        openNewWindow(CRUD_SINGLE_ORDER_PANE, ADD_WINDOW_TITLE);
     }
 
-    private void openNewWindow(String pathToFile) {
+    private void openNewWindow(String pathToFile, String title) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(pathToFile));
         AnchorPane anchorPane = null;
         try {
@@ -190,8 +187,9 @@ public class ShowSingleOrdersController {
         assert(anchorPane != null);
         Scene scene = new Scene(anchorPane);
         Stage stage = new Stage();
-        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(anchorPane.getScene().getWindow());
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.showAndWait();
         setItemsInViewer();
@@ -209,7 +207,7 @@ public class ShowSingleOrdersController {
         setSingleOrdersObject();
         SingleOrdVariables.setSingleOrderObject(singleOrdersObject);
         GlobalVariables.setIsCreate(false);
-        openNewWindow(CRUD_SINGLE_ORDER_PANE);
+        openNewWindow(CRUD_SINGLE_ORDER_PANE, MODIFY_WINDOW_TITLE);
     }
 
     private void setItemsInViewer() {
@@ -226,6 +224,7 @@ public class ShowSingleOrdersController {
     }
 
     public void deleteButtonClicked(){
+        setSingleOrdersObject();
         try{
             singleOrdersAccess.deleteSingleOrder(singleOrdersObject);
             setItemsInViewer();
@@ -237,24 +236,10 @@ public class ShowSingleOrdersController {
         }
     }
 
-    public void changeCommentClicked(){
-        try{
-            singleOrdersObject.setCommentary(commentary.getText());
-            singleOrdersAccess.updateSingleOrder(singleOrdersObject);
-            setItemsInViewer();
-            GlobalVariables.setIsActionCompleted(true);
-
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            InfoAlerts.generalAlert();
-        }
-    }
-
     public void openButtonClicked(){
         setSingleOrdersObject();
         SingleOrdVariables.setSingleOrderObject(singleOrdersObject);
-        openNewWindow(TRAYS_PANE);
+        openNewWindow(TRAYS_PANE, TRAYS_WINDOW_PANE);
     }
 
     public void exitButtonClicked(){

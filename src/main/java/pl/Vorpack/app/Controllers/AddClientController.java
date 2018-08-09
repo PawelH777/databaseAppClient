@@ -35,13 +35,10 @@ public class AddClientController {
     private Label statusLabel;
     private MainPaneProperty cliProperty = new MainPaneProperty();
     private Client object = new Client();
-    private Boolean isModify;
     private ClientAccess clientAccess = new ClientAccess();
 
     @FXML
     public void initialize(){
-
-        isModify = false;
         textFirmName.textProperty().addListener((obs, oldValue, newValue) -> {
             if(!newValue.isEmpty()){
                 cliProperty.setDisableBtn(false);
@@ -54,10 +51,7 @@ public class AddClientController {
         btnProceed.disableProperty().bindBidirectional(cliProperty.disableBtnProperty());
 
         if(CliVariables.getObject() != null){
-            object = CliVariables.getObject();
-            textFirmName.textProperty().setValue(object.getFirmName());
-            btnProceed.setText("Zmień");
-            isModify = true;
+            setUpdateView();
         }
     }
 
@@ -66,20 +60,7 @@ public class AddClientController {
         boolean endGate = false;
         object.setFirmName(textFirmName.getText());
         try{
-            List<Client> existedRecord = clientAccess.findClient(textFirmName.getText());
-
-            if(CliVariables.getObject() == null) {
-                if(existedRecord.size() == 0){
-                    clientAccess.createNewClient(object);
-                    endGate = true;
-                }
-                else
-                    endGate = false;
-            }
-            else if(CliVariables.getObject() != null){
-                clientAccess.updateClient(object);
-                endGate = true;
-            }
+            endGate = persistRecordAndReturnResult(endGate);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -97,5 +78,27 @@ public class AddClientController {
 
     }
 
+    private void setUpdateView() {
+        object = CliVariables.getObject();
+        textFirmName.textProperty().setValue(object.getFirmName());
+        btnProceed.setText("Zmień");
+    }
 
+    private boolean persistRecordAndReturnResult(boolean endGate) {
+        List<Client> existedRecord = clientAccess.findClient(textFirmName.getText());
+
+        if(CliVariables.getObject() == null) {
+            if(existedRecord.size() == 0){
+                clientAccess.createNewClient(object);
+                endGate = true;
+            }
+            else
+                endGate = false;
+        }
+        else {
+            clientAccess.updateClient(object);
+            endGate = true;
+        }
+        return endGate;
+    }
 }

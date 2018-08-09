@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.DatabaseAccess.ClientAccess;
@@ -24,6 +26,8 @@ import java.util.List;
 
 public class AddOrChangeOrderController {
 
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private DatePicker dateOrder;
     @FXML
@@ -58,8 +62,8 @@ public class AddOrChangeOrderController {
         if(!GlobalVariables.getIsCreate()){
             btnAddOrChangeOrder.setText("Zmień zamówienie");
             orderObject = OrdVariables.getOrderObject();
+            setFields();
         }
-
 
         dateCreateOrder.valueProperty().addListener((obs, oldValue, newValue) ->{
             if(newValue.isAfter(dateOrder.getValue())){
@@ -80,6 +84,13 @@ public class AddOrChangeOrderController {
         txtNote.textProperty().addListener((obs, oldValue, newValue)->{
             checkIfOrderFieldsAreEmptyAndChangeAccessToButtons();
         });
+    }
+
+    private void setFields() {
+        txtFirmName.setText(orderObject.getClient().getFirmName());
+        dateCreateOrder.setValue(orderObject.getOrder_receive_date());
+        dateOrder.setValue(orderObject.getOrder_date());
+        txtNote.setText(orderObject.getOrder_note());
     }
 
     private void refreshDateBlockade(LocalDate now) {
@@ -125,6 +136,8 @@ public class AddOrChangeOrderController {
             addNewOrder();
         else
             updateNewOrder();
+        Stage thisStage = (Stage) anchorPane.getScene().getWindow();
+        thisStage.close();
     }
 
     private void addNewOrder(){

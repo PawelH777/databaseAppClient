@@ -56,9 +56,7 @@ public class AddDimensionController {
     private Label statusLabel;
 
     private DimensionsAccess dimensionsAccess = new DimensionsAccess();
-    private Boolean isModify = false;
     private MainPaneProperty dimProperty = new MainPaneProperty();
-    Boolean a = false, b = false, c = false, d = false;
     private Dimiensions object;
     public AddDimensionController() {
         object = new Dimiensions();
@@ -90,7 +88,6 @@ public class AddDimensionController {
             object = DimVariables.getObject();
             setFieldsInForm();
             btnProceed.setText("Zmień");
-            isModify = true;
         }
 
     }
@@ -137,8 +134,7 @@ public class AddDimensionController {
     }
 
 
-    public void btnAddClicked(MouseEvent mouseEvent) throws ParseException {
-
+    public void btnAddClicked() throws ParseException {
         boolean endGate = false;
 
         BigDecimal firstLength = BigDecimal.valueOf(Double.parseDouble(textFirstLength.getText()));
@@ -163,12 +159,7 @@ public class AddDimensionController {
                     endGate = false;
 
             }
-            else if(DimVariables.getObject() != null){
-                object.setFirstDimension(firstLength);
-                object.setSecondDimension(secondLength);
-                object.setThickness(thick);
-                object.setWeight(weight);
-
+            else{
                 dimensionsAccess.updateDimension(object);
                 endGate = true;
             }
@@ -177,7 +168,6 @@ public class AddDimensionController {
             e.printStackTrace();
             InfoAlerts.generalAlert();
         }
-
 
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
