@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Orders{
 
     private Long order_id;
-    private Client client;
+    private Clients clients;
     private BigDecimal materials;
 
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -41,12 +41,12 @@ public class Orders{
         this.order_id = order_id;
     }
 
-    public Client getClient() {
-        return client;
+    public Clients getClients() {
+        return clients;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClients(Clients clients) {
+        this.clients = clients;
     }
 
     public BigDecimal getMaterials() {
@@ -104,10 +104,10 @@ public class Orders{
         this.orderFinished = orderFinished;
     }
 
-    public Orders(Long order_id, Client client, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date,
+    public Orders(Long order_id, Clients clients, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date,
                   String order_note, Long single_orders_finished, Long single_orders_unfinished, Boolean orderFinished) {
         this.order_id = order_id;
-        this.client = client;
+        this.clients = clients;
         this.materials = materials;
         this.order_receive_date = order_receive_date;
         this.order_date = order_date;
@@ -117,9 +117,9 @@ public class Orders{
         this.orderFinished = orderFinished;
     }
 
-    public Orders(Client client, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date, String order_note,
+    public Orders(Clients clients, BigDecimal materials, LocalDate order_receive_date, LocalDate order_date, String order_note,
                   Long single_orders_finished, Long single_orders_unfinished, Boolean orderFinished) {
-        this.client = client;
+        this.clients = clients;
         this.materials = materials;
         this.order_receive_date = order_receive_date;
         this.order_date = order_date;

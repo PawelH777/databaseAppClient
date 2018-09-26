@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TraysAccess {
     private final String findAllUri = "/trays";
-    private final String findAllTraysBySingleOrderUri = "/trays//find-by-single-order";
+    private final String findAllTraysBySingleOrderUri = "/trays/returnDim-by-single-order";
     private final String createTraysBySingleOrderUri = "/trays/create-by-single-order";
     private final String changeTraysStatusUri = "/trays/update";
     private javax.ws.rs.client.Client client =
@@ -35,7 +35,7 @@ public class TraysAccess {
         return allSingleOrdersFromDatabase;
     }
 
-    public List<Trays> findAllTraysBySingleOrder(SingleOrders singleOrder){
+    public List<Trays> findBySingleOrder(SingleOrders singleOrder){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI  = GlobalVariables.getSite_name() +  findAllTraysBySingleOrderUri;
@@ -63,7 +63,7 @@ public class TraysAccess {
         client.close();
     }
 
-    public void changeTraysStatus(Trays tray){
+    public void updateStatus(Trays tray){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI  = GlobalVariables.getSite_name() +  changeTraysStatusUri;

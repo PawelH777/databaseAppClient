@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Objects;
 
-@ViewController(value = "/fxml/ui/ChipView.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/ChipView.Fxml", title = "Material Design Example")
 public class ChipViewController {
     @FXML
     private JFXChipView<MyShape> chipView;

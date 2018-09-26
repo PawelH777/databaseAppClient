@@ -18,7 +18,7 @@ import javafx.scene.control.Label;
 import javax.annotation.PostConstruct;
 import java.util.Objects;
 
-@ViewController(value = "/fxml/SideMenu.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/SideMenu.Fxml", title = "Material Design Example")
 public class SideMenuController {
 
     @FXMLViewFlowContext
@@ -84,7 +84,7 @@ public class SideMenuController {
     private JFXListView<Label> sideList;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

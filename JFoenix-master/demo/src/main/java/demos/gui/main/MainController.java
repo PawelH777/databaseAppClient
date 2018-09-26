@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
 
 import static io.datafx.controller.flow.container.ContainerAnimations.SWIPE_LEFT;
 
-@ViewController(value = "/fxml/Main.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/Main.Fxml", title = "Material Design Example")
 public final class MainController {
 
     @FXMLViewFlowContext
@@ -46,7 +46,7 @@ public final class MainController {
     private JFXPopup toolbarPopup;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() throws Exception {
@@ -69,7 +69,7 @@ public final class MainController {
             }
         });
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ui/popup/MainPopup.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/ui/popup/MainPopup.Fxml"));
         loader.setController(new InputController());
         toolbarPopup = new JFXPopup(loader.load());
 

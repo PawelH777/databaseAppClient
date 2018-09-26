@@ -1,43 +1,43 @@
 package pl.Vorpack.app.DatabaseAccess;
 
-import pl.Vorpack.app.Domain.Client;
+import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClientAccess {
 
+    private final String findAllClients = "/clients";
     private final String searchWithFirmNameUri = "/clients/client/firmname";
     private final String createNewClientUri = "/clients/createclient";
     private final String updateClientUri = "/clients/client/update";
     private final String deleteClientUri = "/clients/client/delete";
 
-    private Client cli = new Client();
+    private Clients cli = new Clients();
     private javax.ws.rs.client.Client client;
     private Response response;
     private String URI;
 
-    public List<Client> findAllClients(){
+    public List<Clients> findAll(){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + "/clients";
+        URI = GlobalVariables.getSite_name() + findAllClients;
 
         response = client
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get();
 
-        List<Client> AllClientsFromDatabase = response.readEntity(new GenericType<List<Client>>(){});
+        List<Clients> allClientsFromDatabase = response.readEntity(new GenericType<List<Clients>>(){});
         client.close();
-        return AllClientsFromDatabase;
+        return allClientsFromDatabase;
     }
 
-    public List<Client> findClient(String firmName){
+    public List<Clients> findByFirmName(String firmName){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         String URI = GlobalVariables.getSite_name() + searchWithFirmNameUri;
@@ -49,12 +49,12 @@ public class ClientAccess {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(cli, MediaType.APPLICATION_JSON_TYPE));
 
-        List<Client> AllClientsFromDatabase = response.readEntity(new GenericType<List<Client>>(){});
+        List<Clients> allClientsFromDatabase = response.readEntity(new GenericType<List<Clients>>(){});
         client.close();
-        return AllClientsFromDatabase;
+        return allClientsFromDatabase;
     }
 
-    public void createNewClient(Client objectToCreate){
+    public void create(Clients objectToCreate){
         client =
             DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + createNewClientUri;
@@ -66,7 +66,7 @@ public class ClientAccess {
         client.close();
     }
 
-    public void updateClient(Client objectToUpdate){
+    public void update(Clients objectToUpdate){
         client =
             DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + updateClientUri;
@@ -79,14 +79,14 @@ public class ClientAccess {
         client.close();
     }
 
-    public void deleteClient(Client clientObject){
+    public void delete(Clients clientsObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + deleteClientUri;
 
         response = client
                 .target(URI)
-                .path(String.valueOf(clientObject.getClient_id()))
+                .path(String.valueOf(clientsObject.getClient_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .delete();
 

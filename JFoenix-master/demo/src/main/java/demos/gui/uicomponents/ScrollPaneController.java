@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/ScrollPane.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/ScrollPane.Fxml", title = "Material Design Example")
 public class ScrollPaneController {
 
     @FXML
@@ -22,7 +22,7 @@ public class ScrollPaneController {
     private JFXScrollPane scroll;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

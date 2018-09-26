@@ -13,7 +13,7 @@ import javafx.scene.layout.StackPane;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 
-@ViewController(value = "/fxml/ui/Popup.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/Popup.Fxml", title = "Material Design Example")
 public final class PopupController {
 
     @FXML
@@ -40,12 +40,12 @@ public final class PopupController {
     private JFXPopup popup;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {
         try {
-            popup = new JFXPopup(FXMLLoader.load(getClass().getResource("/fxml/ui/popup/DemoPopup.fxml")));
+            popup = new JFXPopup(FXMLLoader.load(getClass().getResource("/Fxml/ui/popup/DemoPopup.Fxml")));
         } catch (IOException ioExc) {
             ioExc.printStackTrace();
         }

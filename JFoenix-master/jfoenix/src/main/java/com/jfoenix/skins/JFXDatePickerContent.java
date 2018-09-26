@@ -624,7 +624,7 @@ public class JFXDatePickerContent extends VBox {
     private void updateDayCells() {
         Locale locale = getLocale();
         Chronology chrono = getPrimaryChronology();
-        // get the index of the first day of the month
+        // findByFirmName the index of the first day of the month
         int firstDayOfWeek = WeekFields.of(getLocale()).getFirstDayOfWeek().getValue();
         int firstOfMonthIndex = selectedYearMonth.get().atDay(1).getDayOfWeek().getValue() - firstDayOfWeek;
         firstOfMonthIndex += firstOfMonthIndex < 0 ? daysPerWeek : 0;

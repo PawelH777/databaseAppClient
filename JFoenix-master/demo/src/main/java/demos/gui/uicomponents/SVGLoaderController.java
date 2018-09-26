@@ -30,7 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ViewController(value = "/fxml/ui/SVGLoader.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/SVGLoader.Fxml", title = "Material Design Example")
 public class SVGLoaderController {
 
     private static final String FX_BACKGROUND_INSETS_0 = "-fx-background-insets: 0;";
@@ -51,7 +51,7 @@ public class SVGLoaderController {
     private GlyphDetailViewer glyphDetailViewer;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() throws Exception {

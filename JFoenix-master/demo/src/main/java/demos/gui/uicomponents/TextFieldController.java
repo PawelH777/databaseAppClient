@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/TextField.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/TextField.Fxml", title = "Material Design Example")
 public class TextFieldController {
 
     @FXML
@@ -19,7 +19,7 @@ public class TextFieldController {
     private JFXTextArea jfxTextArea;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

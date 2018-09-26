@@ -103,8 +103,10 @@ public class SingleOrdersDTO {
         this.commentary = commentary;
     }
 
-    public SingleOrdersDTO(String dimension, BigDecimal weight, BigDecimal length_in_mm, BigDecimal quantity_on_tray,
-                           Long amount_of_trays, BigDecimal overall_quantity, BigDecimal metrs, BigDecimal materials, String finished, String commentary) {
+    public SingleOrdersDTO(Long single_active_order_id, String dimension, BigDecimal weight, BigDecimal length_in_mm,
+                           BigDecimal quantity_on_tray, Long amount_of_trays, BigDecimal overall_quantity, BigDecimal metrs,
+                           BigDecimal materials, String finished, String commentary) {
+        this.single_active_order_id = single_active_order_id;
         this.dimension = dimension;
         this.weight = weight;
         this.length_in_mm = length_in_mm;

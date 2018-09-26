@@ -88,7 +88,7 @@ public class JFXScrollPane extends StackPane {
         headerBackground.setBackground(new Background(new BackgroundFill(Color.valueOf("#3949AB"),
                                                                          CornerRadii.EMPTY,
                                                                          Insets.EMPTY)));
-        headerBackground.getStyleClass().add("main-header");
+        headerBackground.getStyleClass().add("Main-header");
         StackPane bgContainer = new StackPane();
         bgContainer.getChildren().setAll(condensedHeaderBackground, headerBackground);
         bgContainer.setMouseTransparent(true);

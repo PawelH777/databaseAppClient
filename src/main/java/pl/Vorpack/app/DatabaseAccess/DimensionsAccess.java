@@ -8,7 +8,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DimensionsAccess {
@@ -35,7 +34,7 @@ public class DimensionsAccess {
         return AllDimensionsFromDatabase;
     }
 
-    public List<Dimiensions> findDimension(Dimiensions object){
+    public List<Dimiensions> find(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + findDimensionUri;
 
@@ -49,7 +48,7 @@ public class DimensionsAccess {
         return AllDimensionsFromDatabase;
     }
 
-    public void createDimension(Dimiensions object){
+    public Dimiensions create(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + createDimensionUri;
 
@@ -58,10 +57,12 @@ public class DimensionsAccess {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .post(Entity.entity(object, MediaType.APPLICATION_JSON_TYPE));
 
+        Dimiensions dim = response.readEntity(new GenericType<Dimiensions>(){});
         client.close();
+        return  dim;
     }
 
-    public void updateDimension(Dimiensions object){
+    public void update(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() +  updateDimensionUri;
 
@@ -74,7 +75,7 @@ public class DimensionsAccess {
         client.close();
     }
 
-    public void deleteDimension(Dimiensions dimensionObject){
+    public void delete(Dimiensions dimensionObject){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + deleteDimensionUri;
 

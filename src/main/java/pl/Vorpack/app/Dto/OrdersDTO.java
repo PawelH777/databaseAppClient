@@ -11,6 +11,7 @@ public class OrdersDTO {
     private Long single_orders_completed;
     private Long single_orders_unfinished;
     private BigDecimal materials;
+    private String orderNote;
 
     public Long getOrder_id() {
         return order_id;
@@ -68,8 +69,16 @@ public class OrdersDTO {
         this.materials = materials;
     }
 
+    public String getOrderNote() {
+        return orderNote;
+    }
+
+    public void setOrderNote(String orderNote) {
+        this.orderNote = orderNote;
+    }
+
     public OrdersDTO(Long order_id, String firmName, LocalDate order_date, LocalDate order_receive_date,
-                     Long single_orders_completed, Long single_orders_unfinished, BigDecimal materials) {
+                     Long single_orders_completed, Long single_orders_unfinished, BigDecimal materials, String orderNote) {
         this.order_id = order_id;
         this.firmName = firmName;
         this.order_date = order_date;
@@ -77,5 +86,6 @@ public class OrdersDTO {
         this.single_orders_completed = single_orders_completed;
         this.single_orders_unfinished = single_orders_unfinished;
         this.materials = materials;
+        this.orderNote = orderNote;
     }
 }

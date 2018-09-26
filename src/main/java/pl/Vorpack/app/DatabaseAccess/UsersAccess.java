@@ -21,7 +21,7 @@ public class UsersAccess {
     private String URI;
     private Response response;
 
-    public List<User> findClientsByLogin(String login){
+    public List<User> findByLogin(String login){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + findClientsByLoginURI;
@@ -35,7 +35,7 @@ public class UsersAccess {
         return  allClientsFromDatabase;
     }
 
-    public void createNewUser(User userObject){
+    public void create(User userObject){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + createNewUserURI;
@@ -46,7 +46,7 @@ public class UsersAccess {
         client.close();
     }
 
-    public void updateUser(User userObject){
+    public void update(User userObject){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + updateUserURI;
@@ -58,7 +58,7 @@ public class UsersAccess {
         client.close();
     }
 
-    public List<User> findAllUsers(){
+    public List<User> findAll(){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + findAllUsersURI;
@@ -72,7 +72,7 @@ public class UsersAccess {
         return allUsersFromDatabase;
     }
 
-    public void deleteUser(User userObject){
+    public void delete(User userObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + deleteUserURI;

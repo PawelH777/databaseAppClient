@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/Dialog.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/Dialog.Fxml", title = "Material Design Example")
 public class DialogController {
 
     public static final String CONTENT_PANE = "ContentPane";
@@ -35,7 +35,7 @@ public class DialogController {
     private JFXDialog dialog;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

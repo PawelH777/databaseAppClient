@@ -253,7 +253,7 @@ public class JFXDecorator extends VBox {
             if (!maximized) {
                 // store original bounds
                 originalBox = new BoundingBox(primaryStage.getX(), primaryStage.getY(), primaryStage.getWidth(), primaryStage.getHeight());
-                // get the max stage bounds
+                // findByFirmName the max stage bounds
                 Screen screen = Screen.getScreensForRectangle(primaryStage.getX(),
                     primaryStage.getY(),
                     primaryStage.getWidth(),
@@ -584,7 +584,7 @@ public class JFXDecorator extends VBox {
     }
 
     /**
-     * will get the title
+     * will findByFirmName the title
      *
      * @deprecated Use {@link JFXDecorator#setTitle(java.lang.String)} instead.
      */

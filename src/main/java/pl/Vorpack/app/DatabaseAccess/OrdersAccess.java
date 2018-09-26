@@ -1,7 +1,6 @@
 package pl.Vorpack.app.DatabaseAccess;
 
-import pl.Vorpack.app.Domain.Client;
-import pl.Vorpack.app.Domain.Dimiensions;
+import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
@@ -86,7 +85,7 @@ public class OrdersAccess {
         client.close();
     }
 
-    public void changeOrdersStatus(Orders orderObject){
+    public Orders changeOrdersStatus(Orders orderObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI  = GlobalVariables.getSite_name() + changeStatusUri;
@@ -96,8 +95,9 @@ public class OrdersAccess {
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.entity(orderObject, MediaType.APPLICATION_JSON_TYPE));
 
-
+        Orders obj = response.readEntity(new GenericType<Orders>(){});
         client.close();
+        return obj;
     }
 
     public void deleteOrder(Orders orderObject){
@@ -114,7 +114,7 @@ public class OrdersAccess {
         client.close();
     }
 
-    public List<Orders> findAllOrdersWithClient(Client clientObject){
+    public List<Orders> findAllOrdersWithClient(Clients clientsObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + findOrdersWithClientUri;
@@ -122,14 +122,14 @@ public class OrdersAccess {
         response = client
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(clientObject, MediaType.APPLICATION_JSON_TYPE));
+                .post(Entity.entity(clientsObject, MediaType.APPLICATION_JSON_TYPE));
 
         List<Orders> allOrdersWithClient = response.readEntity(new GenericType<List<Orders>>(){});
         client.close();
         return allOrdersWithClient;
     }
 
-    public void deleteOrdersWithClient(Client clientObject){
+    public void deleteOrdersWithClient(Clients clientsObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
         URI = GlobalVariables.getSite_name() + deleteOrdersWithClientUri;
@@ -137,7 +137,7 @@ public class OrdersAccess {
         response = client
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(clientObject, MediaType.APPLICATION_JSON_TYPE));
+                .post(Entity.entity(clientsObject, MediaType.APPLICATION_JSON_TYPE));
         client.close();
     }
 

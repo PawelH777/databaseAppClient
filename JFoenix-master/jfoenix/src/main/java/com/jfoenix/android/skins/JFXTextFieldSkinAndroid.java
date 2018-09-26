@@ -437,7 +437,7 @@ public class JFXTextFieldSkinAndroid<T extends TextField & IFXTextInputControl> 
     private void createFloatingLabel() {
         if (((IFXTextInputControl) getSkinnable()).isLabelFloat()) {
             if (promptText == null) {
-                // get the prompt text node or create it
+                // findByFirmName the prompt text node or create it
                 boolean triggerFloatLabel = false;
                 if (textPane.getChildren().get(0) instanceof Text) {
                     promptText = (Text) textPane.getChildren().get(0);

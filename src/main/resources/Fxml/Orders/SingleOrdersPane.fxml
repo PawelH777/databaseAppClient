@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.OrderController.SingleOrderController">
+   <children>
+      <TableView fx:id="singleOrdersViewer" layoutX="23.0" layoutY="60.0" prefWidth="788.0" style="-fx-font-size: 14;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+        <columns>
+          <TableColumn fx:id="IDColumn" prefWidth="39.0" text="ID" />
+            <TableColumn fx:id="dimensionColumn" prefWidth="138.0" text="Wymiar (cm)" />
+            <TableColumn fx:id="weightColumn" prefWidth="102.0" text="Waga (mb)" />
+            <TableColumn fx:id="lengthColumn" prefWidth="94.0" text="Długość " />
+            <TableColumn fx:id="quantityOnTrayColumn" prefWidth="147.0" text="Ilość szt. na palecie" />
+            <TableColumn fx:id="amountOfTraysColumn" prefWidth="106.0" text="Ilość palet" />
+            <TableColumn fx:id="quantityOverallColumn" prefWidth="113.0" text="Ilość szt. razem" />
+            <TableColumn fx:id="metrsColumn" prefWidth="126.0" text="Metry bieżące" />
+            <TableColumn fx:id="materialsColumn" prefWidth="161.0" text="Ilość materiałów" />
+            <TableColumn fx:id="statusColumn" prefWidth="110.0" text="Status" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="btnExit" defaultButton="true" layoutX="873.0" layoutY="26.0" onMouseClicked="#exitButtonClicked" prefWidth="70.0" text="Wyjdź" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnDelete" layoutX="895.0" layoutY="607.0" onMouseClicked="#deleteButtonClicked" prefWidth="100.0" text="Usuń rekord" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label layoutX="60.0" layoutY="24.0" text="Zamówienie nr. " AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnModifyRecord" layoutX="759.0" layoutY="705.0" onMouseClicked="#modifyButtonClicked" prefWidth="100.0" text="Zmień rekord" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="156.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnAdd" layoutX="632.0" layoutY="705.0" onMouseClicked="#addButtonClicked" prefWidth="100.0" text="Dodaj rekord" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="283.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label fx:id="orderNumber" layoutX="196.0" layoutY="20.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="337.0" text="Ilość jeszcze potrzebnych materiałów do wykonania całego zamówienia - " AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="materialsNumber" layoutX="473.0" layoutY="337.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="473.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="statusLabel" layoutX="387.0" layoutY="27.0" prefHeight="17.0" prefWidth="245.0" textFill="RED" AnchorPane.leftAnchor="387.0" AnchorPane.topAnchor="27.0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <JFXButton fx:id="btnOpen" defaultButton="true" layoutX="860.0" layoutY="567.0" onMouseClicked="#openButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Otwórz widok palet" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

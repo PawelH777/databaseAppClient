@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.OrderController.TrayController">
+   <children>
+      <TableView fx:id="traysTable" layoutX="26.0" layoutY="36.0" prefHeight="340.0" prefWidth="451.0" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="103.0" text="Nazwa palety" />
+            <TableColumn fx:id="statusColumn" prefWidth="103.0" text="Status" />
+            <TableColumn fx:id="changeStatusColumn" prefWidth="103.0" text="Zmien status" />
+        </columns>
+      </TableView>
+      <Label fx:id="statusViewer" layoutX="20.0" layoutY="311.0" prefHeight="17.0" prefWidth="410.0" AnchorPane.bottomAnchor="140.0" />
+      <JFXButton fx:id="btnExit" layoutX="334.0" layoutY="21.0" onMouseClicked="#btnExitClicked" text="Wyjdź" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <JFXTextArea fx:id="commentary" layoutX="150.0" layoutY="400.0" prefHeight="100.0" prefWidth="280.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <JFXButton fx:id="btnChangeComment" layoutX="14.0" layoutY="436.0" onMouseClicked="#changeCommentClicked" prefHeight="25.0" prefWidth="113.0" text="Zmień komentarz" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

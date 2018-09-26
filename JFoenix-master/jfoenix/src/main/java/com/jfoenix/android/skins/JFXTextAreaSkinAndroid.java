@@ -435,7 +435,7 @@ public class JFXTextAreaSkinAndroid extends TextAreaSkinAndroid {
     private void createFloatingLabel() {
         if (((JFXTextArea) getSkinnable()).isLabelFloat()) {
             if (promptText == null) {
-                // get the prompt text node or create it
+                // findByFirmName the prompt text node or create it
                 boolean triggerFloatLabel = false;
                 if (((Region) scrollPane.getContent()).getChildrenUnmodifiable().get(0) instanceof Text) {
                     promptText = (Text) ((Region) scrollPane.getContent()).getChildrenUnmodifiable().get(0);

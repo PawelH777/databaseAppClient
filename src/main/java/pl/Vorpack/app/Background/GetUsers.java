@@ -12,7 +12,7 @@ public class GetUsers extends ScheduledService<Void> {
         return new Task<Void>(){
             protected Void call() {
                 UsersAccess usersAccess = new UsersAccess();
-                UsrVariables.setUsersInDatabase(usersAccess.findAllUsers());
+                UsrVariables.setUsersInDatabase(usersAccess.findAll());
                 UsrVariables.getUsersInDatabase().removeIf(u -> u.getLogin().equals("Admin"));
                 return null;
             }

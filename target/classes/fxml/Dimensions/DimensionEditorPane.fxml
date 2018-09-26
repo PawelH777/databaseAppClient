@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.DimensionController.DimensionEditorController">
+   <children>
+      <Label fx:id="mainLabel" style="-fx-text-fill: #3f5aa8;" text="EKRAN WYMIARU">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="230.0" top="20.0" />
+         </VBox.margin>
+      </Label>
+      <HBox maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXTextField fx:id="textFirstLength" labelFloat="true" minHeight="25.0" prefHeight="25.0" prefWidth="140.0" promptText="Pierwszy bok kątownika">
+               <HBox.margin>
+                  <Insets left="210.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </HBox>
+      <HBox minHeight="50.0" prefHeight="50.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXTextField fx:id="textSecondLength" labelFloat="true" prefWidth="140.0" promptText="Drugi bok kątownika">
+               <HBox.margin>
+                  <Insets left="210.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </HBox>
+      <HBox minHeight="50.0" prefHeight="50.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXTextField fx:id="textThick" labelFloat="true" prefWidth="140.0" promptText="Grubość">
+               <HBox.margin>
+                  <Insets left="210.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </HBox>
+      <HBox minHeight="50.0" prefHeight="50.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </VBox.margin>
+         <children>
+            <JFXTextField fx:id="textWeight" labelFloat="true" prefWidth="140.0" promptText="Waga">
+               <HBox.margin>
+                  <Insets left="210.0" top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXTextField>
+         </children>
+      </HBox>
+      <JFXButton fx:id="btnProceed" onMouseClicked="#btnAddClicked" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Dodaj">
+         <VBox.margin>
+            <Insets left="255.0" />
+         </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label fx:id="statusLabel" textFill="RED">
+         <VBox.margin>
+            <Insets left="230.0" top="10.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

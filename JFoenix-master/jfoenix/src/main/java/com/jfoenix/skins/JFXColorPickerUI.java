@@ -519,7 +519,7 @@ class JFXColorPickerUI extends Pane {
         v = (lum <= 0.5) ? (lum * (1.0 + sat)) : (lum + sat - lum * sat);
         m = lum + lum - v;
         sv = (v - m) / v;
-        hue /= 60.0;  //get into range 0..6
+        hue /= 60.0;  //findByFirmName into range 0..6
         sextant = (int) Math.floor(hue);  // int32 rounds up or down.
         fract = hue - sextant;
         vsf = v * sv * fract;

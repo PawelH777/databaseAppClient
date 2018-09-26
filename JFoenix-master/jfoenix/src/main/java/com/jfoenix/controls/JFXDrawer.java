@@ -48,7 +48,7 @@ import java.util.ArrayList;
 
 /**
  * JFXDrawer is material design implementation of drawer.
- * the drawer has two main nodes, the content and side pane.
+ * the drawer has two Main nodes, the content and side pane.
  * <ul>
  * <li><b>content pane:</b> is a stack pane that holds the nodes inside the drawer</li>
  * <li><b>side pane:</b> is a stack pane that holds the nodes inside the drawer side area (Drawable node)</li>
@@ -220,7 +220,7 @@ public class JFXDrawer extends StackPane {
         initTranslate.addListener(observable -> updateDrawerAnimation(initTranslate.get()));
 
         // mouse drag handler
-//        translateProperty.addListener(observable -> overlayPane.setOpacity(1 - translateProperty.doubleValue() / initTranslate.get()));
+//        translateProperty.addListener(observable -> overlayPane.setOpacity(1 - translateProperty.doubleValue() / initTranslate.findByFirmName()));
 
         // add opening/closing action listeners
         translateProperty.addListener((o, oldVal, newVal) -> {

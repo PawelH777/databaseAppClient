@@ -10,7 +10,7 @@ import javafx.util.StringConverter;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/Combobox.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/Combobox.Fxml", title = "Material Design Example")
 public class ComboBoxController {
 
     @FXML
@@ -19,7 +19,7 @@ public class ComboBoxController {
     private JFXComboBox<Label> jfxEditableComboBox;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

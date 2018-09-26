@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/ProgressBar.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/ProgressBar.Fxml", title = "Material Design Example")
 public class ProgressBarController {
 
     @FXML
@@ -19,7 +19,7 @@ public class ProgressBarController {
     private JFXProgressBar progress2;
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

@@ -47,7 +47,7 @@ import javafx.scene.shape.StrokeType;
 import java.util.List;
 
 /**
- * @author Shadi Shaheen FUTURE WORK: this UI will get re-designed to match material design guidlines
+ * @author Shadi Shaheen FUTURE WORK: this UI will findByFirmName re-designed to match material design guidlines
  */
 
 class JFXColorPalette extends Region {

@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/Icons.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/Icons.Fxml", title = "Material Design Example")
 public class IconsController {
 
     @FXML
@@ -34,7 +34,7 @@ public class IconsController {
 
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

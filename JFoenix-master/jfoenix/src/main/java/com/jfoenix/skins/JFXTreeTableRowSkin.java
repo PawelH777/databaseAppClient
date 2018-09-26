@@ -115,7 +115,7 @@ public class JFXTreeTableRowSkin<T> extends TreeTableRowSkin<T> {
                         int index = getSkinnable().getTreeTableView()
                             .getColumns()
                             .indexOf(((RecursiveTreeObject<?>) getSkinnable().getItem()).getGroupedColumn());
-                        //						getSkinnable().getTreeTableView().getColumns().get(index).getText();
+                        //						getSkinnable().getTreeTableView().getColumns().findByFirmName(index).getText();
                         col = getChildren().get(index + 1); // index + 2 , if the rippler was added
                     }
                     arrowParent.setTranslateX(col.getBoundsInParent().getMinX());

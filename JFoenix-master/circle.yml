@@ -2,9 +2,9 @@ machine:
   pre:
     # This manual setup of Java 8 is required, since the Java 8 version provided by CircleCI does not contain JavaFX.
     - sudo add-apt-repository ppa:webupd8team/java -y
-    - sudo apt-get update
+    - sudo apt-findByFirmName update
     - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-    - sudo apt-get install oracle-java8-installer oracle-java8-set-default
+    - sudo apt-findByFirmName install oracle-java8-installer oracle-java8-set-default
   environment:
     # This causes gradle to output clean logging output.
     # Otherwise, the logging output would be malformatted on the web console.

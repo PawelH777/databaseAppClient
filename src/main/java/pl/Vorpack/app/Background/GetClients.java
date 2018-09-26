@@ -11,7 +11,7 @@ public class GetClients extends ScheduledService<Void> {
         return new Task<Void>(){
             protected Void call() {
                 ClientAccess clientsAccess = new ClientAccess();
-                CliVariables.setClientsFromDatabase(clientsAccess.findAllClients());
+                CliVariables.setClientsFromDatabase(clientsAccess.findAll());
                 return null;
             }
         };

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    public static final String LOGIN_PANE_FXML = "/fxml/main/LogInPane.fxml";
+    public static final String LOGIN_PANE_FXML = "/Fxml/Main/LoginPane.fxml";
 
 
     public static void main(String[] args) {

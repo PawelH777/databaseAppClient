@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import javax.annotation.PostConstruct;
 
-@ViewController(value = "/fxml/ui/Spinner.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/Spinner.Fxml", title = "Material Design Example")
 public class SpinnerController {
 
     @FXML

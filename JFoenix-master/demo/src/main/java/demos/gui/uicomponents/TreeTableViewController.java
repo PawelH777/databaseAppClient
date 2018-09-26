@@ -25,7 +25,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.function.Function;
 
-@ViewController(value = "/fxml/ui/TreeTableView.fxml", title = "Material Design Example")
+@ViewController(value = "/Fxml/ui/TreeTableView.Fxml", title = "Material Design Example")
 public class TreeTableViewController {
 
     private static final String PREFIX = "( ";
@@ -70,7 +70,7 @@ public class TreeTableViewController {
     private final Random random = new SecureRandom();
 
     /**
-     * init fxml when loaded.
+     * init Fxml when loaded.
      */
     @PostConstruct
     public void init() {

@@ -80,7 +80,7 @@ public interface EditorNodeBuilder<T> {
     void setValue(T value);
 
     /**
-     * This method is used to get the current value from the editor node
+     * This method is used to findByFirmName the current value from the editor node
      *
      * @return T the value of the editor node
      */

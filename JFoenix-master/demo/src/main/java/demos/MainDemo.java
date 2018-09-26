@@ -62,7 +62,7 @@ public class MainDemo extends Application {
         final ObservableList<String> stylesheets = scene.getStylesheets();
         stylesheets.addAll(MainDemo.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                            MainDemo.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                           MainDemo.class.getResource("/css/jfoenix-main-demo.css").toExternalForm());
+                           MainDemo.class.getResource("/css/jfoenix-Main-demo.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

@@ -33,7 +33,7 @@ task sourcesJar(type: Jar) {
 
 task retroSourcesJar(type: Jar){
 	String str = sourceSets.main.output.classesDir;
-	sourceSets.main.output.classesDir = "$buildDir/retrolambda/main"
+	sourceSets.main.output.classesDir = "$buildDir/retrolambda/Main"
    	group 'Build'
     description 'JFoenix compiled using retro-lambda'
     classifier 'retrolambda'

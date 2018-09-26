@@ -103,7 +103,7 @@ public class JFXSnackbar extends Group {
             return content.prefWidthProperty().get() - actionWidth;
         }, content.prefWidthProperty(), actionContainer.widthProperty(), actionContainer.visibleProperty()));
 
-        //bind the content's height and width from this snackbar allowing the content's dimensions to be set externally
+        //bind the content's height and width from this snackbar allowing the content's Dimensions to be set externally
         content.getStyleClass().add("jfx-snackbar-content");
         //wrap the content in a group so that the content is managed inside its own container
         //but the group is not managed in the snackbarContainer so it does not affect any layout calculations
