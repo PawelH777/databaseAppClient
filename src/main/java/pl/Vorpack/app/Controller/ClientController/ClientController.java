@@ -33,7 +33,7 @@ public class ClientController {
     @FXML
     private Label statusViewer;
     @FXML
-    private JFXComboBox<String> columnsCmbBox;
+    private JFXComboBox<String> filterComboBox;
     @FXML
     private JFXButton btnModify;
     @FXML
@@ -55,7 +55,7 @@ public class ClientController {
 
     @FXML
     public void initialize(){
-        columnsCmbBox.getItems().addAll(
+        filterComboBox.getItems().addAll(
                 ALL,
                 ID,
                 FIRM_NAME
@@ -71,7 +71,7 @@ public class ClientController {
                 setButtonsDisableValue(false);
             }
         });
-        columnsCmbBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+        filterComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             txtSearch.setDisable(false);
             filter(txtSearch.textProperty().getValue());
         });
@@ -119,7 +119,7 @@ public class ClientController {
     }
 
     private void initServices(){
-        clientService = new ClientServiceImpl(columnsCmbBox);
+        clientService = new ClientServiceImpl(filterComboBox);
         commonService = new CommonServiceImpl();
     }
 

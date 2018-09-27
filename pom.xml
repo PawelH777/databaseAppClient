@@ -156,6 +156,12 @@
             <artifactId>jersey-client</artifactId>
             <version>2.26-b03</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
