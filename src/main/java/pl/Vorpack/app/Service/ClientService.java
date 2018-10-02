@@ -1,9 +1,12 @@
 package pl.Vorpack.app.Service;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.transformation.FilteredList;
 import pl.Vorpack.app.Domain.Clients;
 
 public interface ClientService {
+
+    void setJFXComboBox(JFXComboBox<String> comboBox);
 
     FilteredList<Clients>  findAll();
 

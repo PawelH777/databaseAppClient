@@ -27,6 +27,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public void setJFXComboBox(JFXComboBox<String> comboBox){
+        this.columnsCmbBox = comboBox;
+    }
+
+    @Override
     public FilteredList<Clients> findAll() {
         ObservableList<Clients> data = FXCollections.observableArrayList(access.findAll());
         return new FilteredList<>(data, p -> true);

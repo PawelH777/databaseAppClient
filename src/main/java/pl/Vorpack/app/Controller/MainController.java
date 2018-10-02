@@ -15,11 +15,10 @@ import javafx.util.Duration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.Vorpack.app.Animations.TextAnimations;
+import pl.Vorpack.app.Background.*;
 import pl.Vorpack.app.Constans.Path;
 import pl.Vorpack.app.Constans.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
-import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.Background.*;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -59,13 +58,13 @@ public class MainController {
     private TextAnimations textAnimations;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         textAnimations = new TextAnimations(statusViewer);
         statusViewer.setWrapText(true);
         userLabel.setText(GlobalVariables.getName() + System.lineSeparator() + GlobalVariables.getAccess());
         borderPane.setOpacity(0);
         makeFadeInTransition();
-        if(GlobalVariables.getAccess().equals(User.USER)){
+        if (GlobalVariables.getAccess().equals(User.USER)) {
             btnDims.setDisable(true);
             btnClients.setDisable(true);
             btnUsers.setDisable(true);
@@ -97,7 +96,31 @@ public class MainController {
         getFinishedOrders.start();
     }
 
-    private EventHandler<WorkerStateEvent> onSucceded(String downloadContent){
+    public void tabOrderClicked() throws IOException {
+        setCenter(Path.ORDERS_PANE_PATH, MainController.ORDERS);
+    }
+
+    public void tabStoryClicked() throws IOException {
+        setCenter(Path.CLOSED_ORDERS_PANE_PATH, MainController.CLOSED_ORDERS);
+    }
+
+    public void tabUsersClicked() throws IOException {
+        setCenter(Path.USERS_PANE_PATH, MainController.USERS);
+    }
+
+    public void tabClientsClicked() throws IOException {
+        setCenter(Path.CLIENTS_PANE_PATH, MainController.CLIENTS);
+    }
+
+    public void tabDimensionsClicked() throws IOException {
+        setCenter(Path.DIMENSIONS_PANE_PATH, MainController.DIMS);
+    }
+
+    public void tabLogoutClicked() {
+        makeFadeOut();
+    }
+
+    private EventHandler<WorkerStateEvent> onSucceded(String downloadContent) {
         return new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
@@ -108,7 +131,7 @@ public class MainController {
         };
     }
 
-    private EventHandler<WorkerStateEvent> onFailed(){
+    private EventHandler<WorkerStateEvent> onFailed() {
         return new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
@@ -119,57 +142,36 @@ public class MainController {
 
     private void updateTaskProgress(AtomicInteger task, TextAnimations textAnimations) {
         statusViewer.setText(statusViewerText);
-        if(task.get() == 5){
+        if (task.get() == 5) {
             task.set(0);
             statusViewerText = "Pobrano rekordy: ";
             textAnimations.startLabelsPulsing();
-        }
-        else
+        } else
             statusViewerText = statusViewerText + ", ";
     }
 
-    private void fetchStatusViewerAndStartPulsuation(TextAnimations textAnimations) {
-        statusViewer.setText(statusViewerText);
-        textAnimations.startLabelsPulsing();
-    }
-
-    private void setCenter(String fxmlPath, String zakladka){
+    private void setCenter(String fxmlPath, String tab) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent parent = null;
-        try {
-            parent = fxmlLoader.load();
-            borderPane.setCenter(parent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            InfoAlerts.generalAlert();
-        }
+        Parent parent = fxmlLoader.load();
+        borderPane.setCenter(parent);
     }
+//
+//    private void setParameters(FXMLLoader fxmlLoader, String tab) {
+//        switch (tab) {
+//            case MainController.CLIENTS:
+//                ClientController controller = fxmlLoader.<ClientController>getController();
+//                controller.setClientService(new ClientServiceImpl());
+//                controller.setCommonService(new CommonServiceImpl());
+//                controller.txtSearch.setText("dsgsadgasf");
+////                ClientController controller = new ClientController(new ClientServiceImpl(), new CommonServiceImpl());
+////                fxmlLoader.setController(controller);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-    public void tabOrderClicked() {
-        setCenter(Path.ORDERS_PANE_PATH, "ZAMÓWIENIA");
-    }
-
-    public void tabStoryClicked() {
-        setCenter(Path.CLOSED_ORDERS_PANE_PATH, "HISTORIA ZAMÓWIEŃ");
-    }
-
-    public void tabUsersClicked() {
-        setCenter(Path.USERS_PANE_PATH, "UŻYTKOWNICY");
-    }
-
-    public void tabClientsClicked() {
-        setCenter(Path.CLIENTS_PANE_PATH, "KLIENCI");
-    }
-
-    public void tabDimensionsClicked() {
-        setCenter(Path.DIMENSIONS_PANE_PATH, "WYMIARY");
-    }
-
-    public void tabLogoutClicked() {
-        makeFadeOut();
-    }
-
-    private void makeFadeInTransition(){
+    private void makeFadeInTransition() {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(250));
         fadeTransition.setNode(borderPane);
@@ -178,26 +180,26 @@ public class MainController {
         fadeTransition.play();
     }
 
-    private void makeFadeOut(){
+    private void makeFadeOut() {
         FadeTransition fadeTransition = new FadeTransition();
         fadeTransition.setDuration(Duration.millis(250));
         fadeTransition.setNode(borderPane);
         fadeTransition.setFromValue(1);
         fadeTransition.setToValue(0);
-        fadeTransition.setOnFinished(event -> loadNextScene());
+        fadeTransition.setOnFinished(event -> {
+            try {
+                loadNextScene();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         fadeTransition.play();
     }
 
-    private void loadNextScene(){
-        try {
-            Parent mainPane;
-            mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(Path.LOGIN_PANE_PATH));
-            Scene mainScene = new Scene(mainPane);
-            Stage curStage = (Stage) borderPane.getScene().getWindow();
-            curStage.setScene(mainScene);
-        }
-        catch (IOException e) {
-            InfoAlerts.generalAlert();
-        }
+    private void loadNextScene() throws IOException {
+        Parent mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(Path.LOGIN_PANE_PATH));
+        Scene mainScene = new Scene(mainPane);
+        Stage curStage = (Stage) borderPane.getScene().getWindow();
+        curStage.setScene(mainScene);
     }
 }

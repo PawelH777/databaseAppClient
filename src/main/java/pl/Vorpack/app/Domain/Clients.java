@@ -1,5 +1,7 @@
 package pl.Vorpack.app.Domain;
 
+import java.util.Objects;
+
 /**
  * Created by Paweł on 2018-02-03.
  */
@@ -31,5 +33,19 @@ public class Clients {
     }
 
     public Clients() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Clients clients = (Clients) o;
+        return client_id == clients.client_id &&
+                Objects.equals(firmName, clients.firmName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(client_id, firmName);
     }
 }

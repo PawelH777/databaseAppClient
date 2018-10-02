@@ -20,7 +20,7 @@
          <Font size="14.0"/>
       </font>
    </JFXTextField>
-   <JFXComboBox fx:id="columnsCmbBox" labelFloat="true" layoutX="10.0" layoutY="10.0" prefWidth="150.0"
+   <JFXComboBox fx:id="filterComboBox" labelFloat="true" layoutX="10.0" layoutY="10.0" prefWidth="150.0"
                 promptText="Wybierz kolumnę" style="-fx-font-size: 14;" AnchorPane.leftAnchor="197.0"
                 AnchorPane.topAnchor="40.0"/>
    <JFXButton fx:id="btnAdd" layoutX="10.0" layoutY="10.0" onMouseClicked="#onBtnAddClicked" prefWidth="70.0"

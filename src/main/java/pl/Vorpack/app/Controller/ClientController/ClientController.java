@@ -31,27 +31,37 @@ import static pl.Vorpack.app.Constans.ClientColumn.*;
 public class ClientController {
     private static final String CLIENTS_EDITOR = "Edytor klienta";
     @FXML
-    private Label statusViewer;
+    public Label statusViewer = new Label();
     @FXML
-    private JFXComboBox<String> filterComboBox;
+    public JFXComboBox<String> filterComboBox = new JFXComboBox<>();
     @FXML
-    private JFXButton btnModify;
+    public JFXButton btnModify = new JFXButton();
     @FXML
-    private JFXButton btnDelete;
+    public JFXButton btnDelete = new JFXButton();
     @FXML
-    private JFXTextField txtSearch;
+    public JFXTextField txtSearch = new JFXTextField();
     @FXML
-    private TableView<Clients> clientsViewer;
+    public TableView<Clients> clientsViewer = new TableView<>();
     @FXML
-    private TableColumn<Clients, Integer> idColumn;
+    public TableColumn<Clients, Integer> idColumn = new TableColumn<>();
     @FXML
-    private TableColumn<Clients, String> firmName;
+    public TableColumn<Clients, String> firmName = new TableColumn<>();
 
     private SortedList<Clients> sortedData;
     private FilteredList<Clients> filteredClients;
     private TextAnimations textAnimations;
+
     private ClientService clientService;
     private CommonService commonService;
+
+//    public ClientController(){
+//
+//    }
+//
+//    public ClientController(ClientService clientService, CommonService commonService){
+//        this.clientService = clientService;
+//        this.commonService = commonService;
+//    }
 
     @FXML
     public void initialize(){
@@ -61,6 +71,7 @@ public class ClientController {
                 FIRM_NAME
         );
         initServices();
+        clientService.setJFXComboBox(filterComboBox);
         setAnimations();
         assignColumns();
         txtSearch.setDisable(true);
@@ -118,9 +129,17 @@ public class ClientController {
         getClients();
     }
 
+    public void setClientService(ClientService clientService){
+        this.clientService = clientService;
+    }
+
+    public void setCommonService(CommonService commonService){
+        this.commonService = commonService;
+    }
+
     private void initServices(){
-        clientService = new ClientServiceImpl(filterComboBox);
-        commonService = new CommonServiceImpl();
+        setClientService(new ClientServiceImpl(filterComboBox));
+        setCommonService(new CommonServiceImpl());
     }
 
     private void filter(String searchedText){
