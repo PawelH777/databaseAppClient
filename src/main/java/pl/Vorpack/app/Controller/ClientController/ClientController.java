@@ -6,16 +6,17 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
+import pl.Vorpack.app.Constans.ActionConstans;
 import pl.Vorpack.app.Constans.Path;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.GlobalVariables.CliVariables;
-import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Service.ClientService;
 import pl.Vorpack.app.Service.CommonService;
 import pl.Vorpack.app.Service.ServiceImpl.ClientServiceImpl;
@@ -50,18 +51,17 @@ public class ClientController {
     private SortedList<Clients> sortedData;
     private FilteredList<Clients> filteredClients;
     private TextAnimations textAnimations;
+    private StringBuilder actionStatus = new StringBuilder();
 
     private ClientService clientService;
     private CommonService commonService;
+    private InfoAlerts infoAlerts;
 
-//    public ClientController(){
-//
-//    }
-//
-//    public ClientController(ClientService clientService, CommonService commonService){
-//        this.clientService = clientService;
-//        this.commonService = commonService;
-//    }
+    public ClientController(){
+        setClientService(new ClientServiceImpl());
+        setCommonService(new CommonServiceImpl());
+        setInfoAlerts(new InfoAlerts());
+    }
 
     @FXML
     public void initialize(){
@@ -70,7 +70,6 @@ public class ClientController {
                 ID,
                 FIRM_NAME
         );
-        initServices();
         clientService.setJFXComboBox(filterComboBox);
         setAnimations();
         assignColumns();
@@ -91,10 +90,10 @@ public class ClientController {
         });
     }
 
-    public void btnDeleteClicked() {
+    public void onBtnDeleteClicked() {
         try {
             Clients clients = clientsViewer.getSelectionModel().getSelectedItem();
-            Boolean isDelete = InfoAlerts.deleteRecord("Posiadasz powiązane z obiektem niezakończone oraz zakończone zamówienia. By usunąć" +
+            Boolean isDelete = infoAlerts.deleteRecord("Posiadasz powiązane z obiektem niezakończone oraz zakończone zamówienia. By usunąć" +
                     " klienta, program usunie również powiązane z nim obiekty. Jeśli program ma kontynuować pracę, naciśnij " +
                     "OK.");
             if (isDelete) {
@@ -112,20 +111,25 @@ public class ClientController {
     }
 
     public void onBtnAddClicked() throws IOException {
-        GlobalVariables.setIsActionCompleted(false);
-        CliVariables.setObject(null);
-        commonService.openScene(Path.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
+        setUnfinishedStatus();
+        ClientEditorController clientEditorController = new ClientEditorController(actionStatus);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Path.CLIENTS_EDITOR_PANE_PATH));
+        fxmlLoader.setController(clientEditorController);
+        commonService.openScene(CLIENTS_EDITOR, false, fxmlLoader);
         setInfoOnReturn();
     }
 
-    public void btnModifyClicked() throws IOException {
-        GlobalVariables.setIsActionCompleted(false);
-        CliVariables.setObject(clientsViewer.getSelectionModel().getSelectedItem());
-        commonService.openScene(Path.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
+    public void onBtnModifyClicked() throws IOException {
+        setUnfinishedStatus();
+        Clients client = clientsViewer.getSelectionModel().getSelectedItem();
+        ClientEditorController clientEditorController = new ClientEditorController(actionStatus, client);
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Path.CLIENTS_EDITOR_PANE_PATH));
+        fxmlLoader.setController(clientEditorController);
+        commonService.openScene(CLIENTS_EDITOR, false, fxmlLoader);
         setInfoOnReturn();
     }
 
-    public void btnRefreshClicked(){
+    public void onBtnRefreshClicked(){
         getClients();
     }
 
@@ -133,13 +137,17 @@ public class ClientController {
         this.clientService = clientService;
     }
 
+    public void setInfoAlerts(InfoAlerts infoAlerts){
+        this.infoAlerts = infoAlerts;
+    }
+
     public void setCommonService(CommonService commonService){
         this.commonService = commonService;
     }
 
-    private void initServices(){
-        setClientService(new ClientServiceImpl(filterComboBox));
-        setCommonService(new CommonServiceImpl());
+    private void setUnfinishedStatus() {
+        actionStatus.setLength(0);
+        actionStatus.append(ActionConstans.IS_UNFINISHED);
     }
 
     private void filter(String searchedText){
@@ -173,7 +181,7 @@ public class ClientController {
     private void setInfoOnReturn(){
         getClients();
         setButtonsDisableValue(true);
-        if(GlobalVariables.getIsActionCompleted())
+        if(actionStatus.toString().equals(ActionConstans.IS_FINISHED))
             statusViewer.setText(InfoAlerts.getStatusWhileRecordAdded());
         else
             statusViewer.setText(InfoAlerts.getStatusWhileRecordIsNotAdded());

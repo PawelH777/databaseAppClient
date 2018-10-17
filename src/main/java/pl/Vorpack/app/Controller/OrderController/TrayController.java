@@ -50,6 +50,7 @@ public class TrayController {
     private TextAnimations textAnimations;
     private TrayService trayService = new TrayServiceImpl();
     private SingleOrdersService singleOrdersService = new SingleOrdersServiceImpl();
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize(){
@@ -68,7 +69,7 @@ public class TrayController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 
@@ -132,7 +133,7 @@ public class TrayController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 

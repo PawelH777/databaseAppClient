@@ -81,6 +81,7 @@ public class SingleOrderController {
     private SingleOrdersAccess singleOrdersService = new SingleOrdersAccess();
     private TextAnimations textAnimations;
     private CommonService commonService = new CommonServiceImpl();
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize(){
@@ -130,7 +131,7 @@ public class SingleOrderController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 
@@ -197,7 +198,7 @@ public class SingleOrderController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 

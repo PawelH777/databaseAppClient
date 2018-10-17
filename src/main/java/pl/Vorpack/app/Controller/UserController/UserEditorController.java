@@ -51,6 +51,7 @@ public class UserEditorController {
 
     private UserService userService = new UserServiceImpl();
     private Boolean booleanValue;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize(){
@@ -129,7 +130,7 @@ public class UserEditorController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();

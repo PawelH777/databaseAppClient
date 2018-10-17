@@ -103,7 +103,8 @@ public class DimensionEditorController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            InfoAlerts infoAlerts = new InfoAlerts();
+            infoAlerts.generalAlert();
         }
         if(endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();

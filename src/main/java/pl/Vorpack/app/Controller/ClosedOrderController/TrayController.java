@@ -58,7 +58,8 @@ public class TrayController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            InfoAlerts infoAlerts = new InfoAlerts();
+            infoAlerts.generalAlert();
         }
     }
 

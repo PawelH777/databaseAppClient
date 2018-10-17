@@ -62,6 +62,7 @@ public class DimensionController {
     private SortedList<Dimiensions> sortedData;
     private FilteredList<Dimiensions> filteredDims;
     private TextAnimations textAnimations;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize(){
@@ -121,7 +122,7 @@ public class DimensionController {
     public void btnDeleteClicked(){
         try{
             Dimiensions dim = dimsViewer.getSelectionModel().getSelectedItem();
-            Boolean isDelete = InfoAlerts.deleteRecord("Posiadasz powiązane z obiektem niezakończone oraz zakończone zamówienia. By usunąć" +
+            Boolean isDelete = infoAlerts.deleteRecord("Posiadasz powiązane z obiektem niezakończone oraz zakończone zamówienia. By usunąć" +
                     " wymiar, program usunie również powiązane z nim obiekty. Jeśli program ma kontynuować pracę, naciśnij " +
                     "OK.");
             if(isDelete){
@@ -185,7 +186,7 @@ public class DimensionController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 

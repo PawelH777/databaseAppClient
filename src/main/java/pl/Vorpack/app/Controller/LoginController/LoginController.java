@@ -115,7 +115,8 @@ public class LoginController {
             curStage.setScene(mainScene);
             curStage.setMaximized(true);
         } catch (IOException e) {
-            InfoAlerts.viewErrorIfIsNotLoadingNextScene();
+            InfoAlerts infoAlerts = new InfoAlerts();
+            infoAlerts.viewErrorIfIsNotLoadingNextScene();
         }
     }
 }

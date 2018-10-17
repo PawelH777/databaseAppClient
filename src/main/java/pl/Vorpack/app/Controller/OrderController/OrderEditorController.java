@@ -56,6 +56,7 @@ public class OrderEditorController {
     private Long finishedSingleOrdersValue = 0L;
     private Long unfinishedSingleOrdersValue = 0L;
     private BigDecimal sumMaterialsValue = BigDecimal.ZERO;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
 
     @FXML
@@ -150,7 +151,7 @@ public class OrderEditorController {
         }
         catch (Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 
@@ -185,7 +186,7 @@ public class OrderEditorController {
         }
         catch (Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 }

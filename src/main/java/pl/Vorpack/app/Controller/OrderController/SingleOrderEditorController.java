@@ -97,6 +97,7 @@ public class SingleOrderEditorController {
 
     private ObservableList<Dimiensions> proxyToDimensionFields;
     private FilteredList<Dimiensions> filteredDims;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize() {
@@ -409,7 +410,7 @@ public class SingleOrderEditorController {
             singleOrder.setSingle_active_order_id(null);
         } catch (Exception e) {
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 
@@ -420,7 +421,7 @@ public class SingleOrderEditorController {
             GlobalVariables.setIsActionCompleted(true);
         } catch (Exception e) {
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 

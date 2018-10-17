@@ -30,6 +30,7 @@ public class OrdersServiceImpl implements OrdersService {
     private SingleOrdersAccess singleOrdersAccess = new SingleOrdersAccess();
     private JFXComboBox<String> columnsCmbBox;
     private JFXComboBox datesCmbBox;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     public OrdersServiceImpl(JFXComboBox<String> columnsCmbBox, JFXComboBox datesCmbBox) {
         this.columnsCmbBox = columnsCmbBox;
@@ -57,7 +58,7 @@ public class OrdersServiceImpl implements OrdersService {
             orders = new FilteredList<>(data, p -> true);
         } catch (Exception e) {
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
         return orders;
     }
@@ -201,7 +202,7 @@ public class OrdersServiceImpl implements OrdersService {
             return finishedSingleOrders == singleOrders.size();
         } catch (Exception e) {
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
         throw new RuntimeException();
     }

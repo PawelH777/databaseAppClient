@@ -69,7 +69,7 @@ public class InfoAlerts {
         return StatusWhileRecordIsNotDeleted;
     }
 
-    public static void generalAlert(){
+    public void generalAlert(){
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.setTitle("Uwaga!");
         infoAlert.setHeaderText("Błąd aplikacji");
@@ -78,7 +78,7 @@ public class InfoAlerts {
         infoAlert.showAndWait();
     }
 
-    public static Boolean deleteRecord(String message){
+    public Boolean deleteRecord(String message){
         Alert infoAlert = new Alert(Alert.AlertType.CONFIRMATION);
         infoAlert.setTitle("Uwaga!");
         infoAlert.setHeaderText("Wykryto powiązanie z innym obiektem");
@@ -93,7 +93,7 @@ public class InfoAlerts {
         return false;
     }
 
-    public static void viewError(Throwable ex){
+    public void viewError(Throwable ex){
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.getDialogPane().minHeight(Region.USE_PREF_SIZE);
         infoAlert.setTitle("Uwaga!");
@@ -102,7 +102,7 @@ public class InfoAlerts {
         infoAlert.showAndWait();
     }
 
-    public static void viewErrorIfIsNotLoadingNextScene(){
+    public void viewErrorIfIsNotLoadingNextScene(){
         Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
         infoAlert.setTitle("Uwaga!");
         infoAlert.setHeaderText("Pojawił się błąd");

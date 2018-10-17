@@ -62,6 +62,7 @@ public class UserController {
     private SortedList<UsersDTO> sortedData;
     private FilteredList<UsersDTO> filteredUsers;
     private TextAnimations textAnimations;
+    private InfoAlerts infoAlerts = new InfoAlerts();
 
     @FXML
     public void initialize(){
@@ -119,7 +120,7 @@ public class UserController {
             filteredUsers = new FilteredList<>(data, p -> true);
         } catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
     }
 
@@ -141,7 +142,7 @@ public class UserController {
         }
         catch(Exception e){
             e.printStackTrace();
-            InfoAlerts.generalAlert();
+            infoAlerts.generalAlert();
         }
         getUsers();
         setButtonsDisableValue(true);

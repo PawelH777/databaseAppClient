@@ -86,7 +86,7 @@ public class ClosedOrderController {
 
     @FXML
     private void initialize(){
-        attachValuesToTableColumns();
+        assignColumns();
         makeStatusBarPulsing();
         OrdVariables.setOrderObject(null);
         CliVariables.setObject(null);
@@ -107,10 +107,8 @@ public class ClosedOrderController {
         filteredList = ordersService.getOrders(true);
         sortedData = new SortedList<>(filteredList);
         ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
-
         txtSearch.disableProperty().setValue(true);
         orderDatePicker.disableProperty().setValue(true);
-
         ordersViewer.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if(newValue == null){
                 btnDelete.setDisable(true);
@@ -122,15 +120,12 @@ public class ClosedOrderController {
                 btnRecover.setDisable(false);
             }
         }));
-
         orderDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> {
             filter(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
         });
-
         txtSearch.textProperty().addListener((obs, oldValue, newValue) -> {
             filter(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
         });
-
         columnsCmbBox.valueProperty().addListener((obs, oldValue, newValue) ->{
             if(newValue.toString().isEmpty())
                 txtSearch.setDisable(true);
@@ -138,7 +133,6 @@ public class ClosedOrderController {
                 txtSearch.setDisable(false);
             filter(txtSearch.textProperty().getValue(), String.valueOf(orderDatePicker.valueProperty().getValue()));
         });
-
         datesCmbBox.valueProperty().addListener((ObservableValue obs, Object oldValue, Object newValue) ->{
             if(!newValue.toString().isEmpty())
                 orderDatePicker.disableProperty().setValue(false);
@@ -147,14 +141,14 @@ public class ClosedOrderController {
         });
     }
 
-    private void attachValuesToTableColumns() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("order_id"));
-        firmNameColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, String>("firmName"));
-        orderDateColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, LocalDate>("order_date"));
-        orderReceiveDateColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, LocalDate>("order_receive_date"));
-        finishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("single_orders_completed"));
-        unfinishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, Long>("single_orders_unfinished"));
-        orderMaterialsColumn.setCellValueFactory(new PropertyValueFactory<OrdersDTO, BigDecimal>("materials"));
+    private void assignColumns() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("order_id"));
+        firmNameColumn.setCellValueFactory(new PropertyValueFactory<>("firmName"));
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("order_date"));
+        orderReceiveDateColumn.setCellValueFactory(new PropertyValueFactory<>("order_receive_date"));
+        finishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<>("single_orders_completed"));
+        unfinishedOrdersColumn.setCellValueFactory(new PropertyValueFactory<>("single_orders_unfinished"));
+        orderMaterialsColumn.setCellValueFactory(new PropertyValueFactory<>("materials"));
     }
 
     private void makeStatusBarPulsing() {

@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Clients findByFirmName(String firmName) {
-        return access.findByFirmName(firmName) != null ? access.findByFirmName(firmName).get(0) : null;
+        return access.findByFirmName(firmName).size() != 0 ? access.findByFirmName(firmName).get(0) : null;
     }
 
     @Override
