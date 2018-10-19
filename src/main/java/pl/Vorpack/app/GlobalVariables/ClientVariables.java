@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Paweł on 2018-02-21.
  */
-public class CliVariables {
+public class ClientVariables {
     private static Clients object = new Clients();
     private static List<Clients> clientsFromDatabase = new ArrayList<>();
 
@@ -17,14 +17,14 @@ public class CliVariables {
     }
 
     public static void setObject(Clients object) {
-        CliVariables.object = object;
+        ClientVariables.object = object;
     }
 
     public static List<Clients> getClientsFromDatabase() {
         return clientsFromDatabase;
     }
 
-    public static void setClientsFromDatabase(List<Clients> clientsFromDatabase) {
-        CliVariables.clientsFromDatabase = clientsFromDatabase;
+    public static void setClients(List<Clients> clientsFromDatabase) {
+        ClientVariables.clientsFromDatabase = clientsFromDatabase;
     }
 }

@@ -2,15 +2,15 @@ package pl.Vorpack.app.Controller.ClientController;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.Constans.ActionConstans;
 import pl.Vorpack.app.Domain.Clients;
+import pl.Vorpack.app.GlobalVariables.ClientVariables;
+import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Properties.MainPaneProperty;
 import pl.Vorpack.app.Service.ClientService;
 import pl.Vorpack.app.Service.ServiceImpl.ClientServiceImpl;
@@ -33,30 +33,14 @@ public class ClientEditorController {
     @FXML
     public Label statusLabel = new Label();
 
-    private StringBuilder actionStatus;
-    private boolean clientExist = false;
     private Clients client = new Clients();
-
     private MainPaneProperty cliProperty = new MainPaneProperty();
     private ClientService clientService = new ClientServiceImpl();
-
-    public ClientEditorController(StringBuilder ActionStatus) {
-        this.actionStatus = ActionStatus;
-        setClientService(new ClientServiceImpl());
-    }
-
-    public ClientEditorController(StringBuilder ActionStatus, Clients client) {
-        this.actionStatus = ActionStatus;
-        this.client = client;
-        setClientService(new ClientServiceImpl());
-        if(this.client != null)
-            clientExist = true;
-    }
 
     @FXML
     public void initialize() {
         btnProceed.disableProperty().bindBidirectional(cliProperty.disableBtnProperty());
-        if (client != null)
+        if (ClientVariables.getObject() != null)
             setUpdateView();
         firmName.textProperty().addListener((obs, oldValue, newValue) -> {
             if (!newValue.isEmpty())
@@ -64,21 +48,9 @@ public class ClientEditorController {
             else
                 cliProperty.setDisableBtn(true);
         });
-        btnProceed.setOnAction(new EventHandler<ActionEvent>() {
-                                   @Override
-                                   public void handle(ActionEvent event) {
-                                       click();
-                                   }
-                               }
-
-        );
     }
 
-    public void setClientService(ClientService clientService){
-        this.clientService = clientService;
-    }
-
-    private void click() {
+    public void onBtnProceedClicked(MouseEvent mouseEvent) {
         boolean endGate = false;
         client.setFirmName(firmName.textProperty().get());
         try {
@@ -90,21 +62,25 @@ public class ClientEditorController {
         }
         if (endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
-            actionStatus.setLength(0);
-            actionStatus.append(ActionConstans.IS_FINISHED);
+            GlobalVariables.setIsActionCompleted(true);
             thisStage.close();
         } else
             statusLabel.setText("Firma z wpisanymi danymi już istnieje");
     }
 
+    public void setClientService(ClientService clientService){
+        this.clientService = clientService;
+    }
+
     private void setUpdateView() {
+        client = ClientVariables.getObject();
         firmName.textProperty().setValue(client.getFirmName());
         btnProceed.setText("Zmień");
     }
 
     private boolean createOrUpdate() {
         boolean endGate;
-        if (!clientExist) {
+        if (ClientVariables.getObject() == null) {
             if (clientService.findByFirmName(firmName.getText()) == null) {
                 clientService.create(firmName.getText());
                 endGate = true;

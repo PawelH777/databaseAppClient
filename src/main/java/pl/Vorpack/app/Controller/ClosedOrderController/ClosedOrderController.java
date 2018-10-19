@@ -18,7 +18,7 @@ import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Constans.Path;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.Domain.Orders;
-import pl.Vorpack.app.GlobalVariables.CliVariables;
+import pl.Vorpack.app.GlobalVariables.ClientVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
@@ -89,7 +89,7 @@ public class ClosedOrderController {
         assignColumns();
         makeStatusBarPulsing();
         OrdVariables.setOrderObject(null);
-        CliVariables.setObject(null);
+        ClientVariables.setObject(null);
         columnsCmbBox.getItems().addAll(
                 ALL_ITEMS,
                 ID,

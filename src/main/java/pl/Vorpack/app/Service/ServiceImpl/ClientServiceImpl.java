@@ -7,7 +7,7 @@ import javafx.collections.transformation.FilteredList;
 import pl.Vorpack.app.Constans.ClientColumn;
 import pl.Vorpack.app.DatabaseAccess.ClientAccess;
 import pl.Vorpack.app.Domain.Clients;
-import pl.Vorpack.app.GlobalVariables.CliVariables;
+import pl.Vorpack.app.GlobalVariables.ClientVariables;
 import pl.Vorpack.app.Service.ClientService;
 
 import java.util.List;
@@ -16,14 +16,20 @@ import static pl.Vorpack.app.Constans.ClientColumn.ALL;
 
 public class ClientServiceImpl implements ClientService {
 
-    private ClientAccess access = new ClientAccess();
+    private ClientAccess access;
     private JFXComboBox<String> columnsCmbBox;
 
-    public ClientServiceImpl(JFXComboBox<String> columnsCmbBox) {
+    public ClientServiceImpl(JFXComboBox<String> columnsCmbBox,ClientAccess access) {
         this.columnsCmbBox = columnsCmbBox;
+        this.access = access;
     }
 
-    public ClientServiceImpl() {
+    public ClientServiceImpl(ClientAccess access) {
+        this.access = access;
+    }
+
+    public ClientServiceImpl(){
+
     }
 
     @Override
@@ -39,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public FilteredList<Clients> getPreparedData(){
-        ObservableList<Clients> data = FXCollections.observableArrayList(CliVariables.getClientsFromDatabase());
+        ObservableList<Clients> data = FXCollections.observableArrayList(ClientVariables.getClientsFromDatabase());
         return new FilteredList<>(data, p -> true);
     }
 

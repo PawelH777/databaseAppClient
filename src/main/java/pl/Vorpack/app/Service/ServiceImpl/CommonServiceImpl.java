@@ -17,11 +17,6 @@ public class CommonServiceImpl implements CommonService {
         setStage(title, isMaximized, fxmlLoader);
     }
 
-    @Override
-    public void openScene(String title, Boolean isMaximized, FXMLLoader loader) throws IOException {
-        setStage(title, isMaximized, loader);
-    }
-
     private void setStage(String title, Boolean isMaximized, FXMLLoader fxmlLoader) throws IOException {
         Pane pane = fxmlLoader.load();
         Scene scene = new Scene(pane);

@@ -13,7 +13,7 @@ import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Constans.Path;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.Domain.Orders;
-import pl.Vorpack.app.GlobalVariables.CliVariables;
+import pl.Vorpack.app.GlobalVariables.ClientVariables;
 import pl.Vorpack.app.GlobalVariables.OrdVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Alerts.InfoAlerts;
@@ -90,7 +90,7 @@ public class OrderController {
         assignColumns();
         pulseStatusBar();
         OrdVariables.setOrderObject(null);
-        CliVariables.setObject(null);
+        ClientVariables.setObject(null);
         if (GlobalVariables.getAccess().equals(USER))
             btnAdd.setDisable(true);
         columnsCmbBox.getItems().addAll(

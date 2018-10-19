@@ -3,7 +3,7 @@ package pl.Vorpack.app.Background;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import pl.Vorpack.app.DatabaseAccess.ClientAccess;
-import pl.Vorpack.app.GlobalVariables.CliVariables;
+import pl.Vorpack.app.GlobalVariables.ClientVariables;
 
 public class GetClients extends ScheduledService<Void> {
     @Override
@@ -11,7 +11,7 @@ public class GetClients extends ScheduledService<Void> {
         return new Task<Void>(){
             protected Void call() {
                 ClientAccess clientsAccess = new ClientAccess();
-                CliVariables.setClientsFromDatabase(clientsAccess.findAll());
+                ClientVariables.setClients(clientsAccess.findAll());
                 return null;
             }
         };
