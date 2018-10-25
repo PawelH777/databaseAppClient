@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.DatabaseAccess.SingleOrdersAccess;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.Domain.SingleOrders;
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.User.USER;
+import static pl.Vorpack.app.Constans.UserConstans.USER;
 
 public class SingleOrderController {
     private static final String ADD_WINDOW_TITLE = "Okno dodawania zamówień jednostkowych";
@@ -109,7 +109,7 @@ public class SingleOrderController {
 
     public void addButtonClicked() throws IOException {
         GlobalVariables.setIsCreate(true);
-        commonService.openScene(Path.SINGLE_ORDER_EDITOR_PANE_PATH, ADD_WINDOW_TITLE, false);
+        commonService.openScene(PathConstans.SINGLE_ORDER_EDITOR_PANE_PATH, ADD_WINDOW_TITLE, false);
         setReturnedInformation();
     }
 
@@ -118,7 +118,7 @@ public class SingleOrderController {
         setSingleOrdersObject();
         SingleOrdVariables.setSingleOrderObject(singleOrdersObject);
         GlobalVariables.setIsCreate(false);
-        commonService.openScene(Path.SINGLE_ORDER_EDITOR_PANE_PATH, MODIFY_WINDOW_TITLE, false);
+        commonService.openScene(PathConstans.SINGLE_ORDER_EDITOR_PANE_PATH, MODIFY_WINDOW_TITLE, false);
         setReturnedInformation();
     }
 
@@ -138,7 +138,7 @@ public class SingleOrderController {
     public void openButtonClicked() throws IOException {
         setSingleOrdersObject();
         SingleOrdVariables.setSingleOrderObject(singleOrdersObject);
-        commonService.openScene(Path.TRAYS_PANE_PATH, TRAYS_WINDOW_PANE, false);
+        commonService.openScene(PathConstans.TRAYS_PANE_PATH, TRAYS_WINDOW_PANE, false);
         setReturnedInformation();
     }
 

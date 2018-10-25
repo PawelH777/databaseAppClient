@@ -2,41 +2,108 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5953cd29-0af4-4993-9746-f763592f7b62" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/AccessPathsConstans.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/TestSuite.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Background/GetClients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Background/GetClients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JFoenix-master/jfoenix/src/main/java/com/jfoenix/controls/JFXTreeViewPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/JFoenix-master/jfoenix/src/main/java/com/jfoenix/controls/JFXTreeViewPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/ClientColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/ClientColumnConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/DateItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/DateItemConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/DimensionColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/DimensionColumnConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/OrderColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/OrderColumnConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/PathConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/UserConstans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/UserColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/UserColumnConstans.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientEditorController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/LoginController/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/LoginController/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/CliVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/ClientVariables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/CommonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/CommonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderEditorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserEditorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserEditorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/OrdersAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/OrdersAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TraysAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TraysAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Clients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Clients.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/DimensionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/DimensionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/OrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/OrdersService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsEditorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsEditorPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/ClientsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/SingleOrdersService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/SingleOrdersService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/ClosedOrderControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/fxml/Clients/ClientsEditorPane.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/fxml/Clients/ClientsEditorPane.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Background/GetClients$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Background/GetClients$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/ClientColumn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/DateItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/DimensionColumn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/OrderColumn.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/Path.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Constans/UserColumn.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClientController/ClientController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClientController/ClientController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClientController/ClientEditorController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClientController/ClientEditorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClientController/ClientEditorController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/DimensionController/DimensionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/DimensionController/DimensionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/LoginController/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/LoginController/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/MainController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/OrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/OrderController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/GlobalVariables/CliVariables.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/CommonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/CommonService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/OrderEditorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/OrderEditorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/SingleOrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/OrderController/SingleOrderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/UserController/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/UserController/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/UserController/UserEditorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Controller/UserController/UserEditorController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/ClientAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/OrdersAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/TraysAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/DatabaseAccess/UsersAccess.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Domain/Clients.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Domain/Clients.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ClientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ClientService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/DimensionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/DimensionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/OrdersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/OrdersService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/ClientsTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pl/Vorpack/app/Service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Controller/ClosedOrderControllerTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Service/ClientServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/pl/Vorpack/app/Domain/Service/ClientServiceTest.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -115,67 +182,7 @@
     <favorites_list name="vorApp_ver40 - new look" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="456">
-                  <caret line="127" selection-start-line="127" selection-end-line="127" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1014">
-                  <caret line="77" column="78" selection-start-line="77" selection-start-column="75" selection-end-line="77" selection-end-column="78" />
-                  <folding>
-                    <element signature="e#868#869#0" expanded="true" />
-                    <element signature="e#904#905#0" expanded="true" />
-                    <element signature="e#1934#1935#0" expanded="true" />
-                    <element signature="e#1971#1972#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="369">
-                  <caret line="112" column="29" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="729">
-                  <caret line="141" column="58" selection-start-line="141" selection-start-column="43" selection-end-line="141" selection-end-column="58" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -183,8 +190,8 @@
         <option value="XSLT Stylesheet" />
         <option value="JUnit4 Test Class" />
         <option value="FxmlFile" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -209,36 +216,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Orders.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Client.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/TrayServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TraysAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Dto/OrdersDTO.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/DimensionColumn.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/Fxml/Dimensions/DimensionsPane.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/UserColumn.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/Fxml/Users/UsersPane.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/info od Julii Spacjer" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Clients.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/MainController.java" />
-        <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/ClosedOrderControllerTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/TrayController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionEditorController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/LoginController/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/TrayController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderEditorController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderController.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderEditorController.java" />
@@ -249,17 +227,46 @@
         <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/ClientControllerTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsPane.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/CommonService.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/CliVariables.java" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/ClientVariables.java" />
         <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.java" />
         <option value="$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsEditorPane.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientEditorController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java" />
         <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Clients.java" />
         <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/AccessPathsConstans.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TraysAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/UserService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/DimensionService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/OrdersService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Factory/AccessFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/Orders.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccessImpl/TrayAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TrayAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/CommonAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccessImpl/ClientAccessImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/OrdersAccess.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/SingleOrdersService.java" />
+        <option value="$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/TestSuite.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -287,10 +294,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1929" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1098" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -298,6 +305,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -338,17 +346,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vorApp_ver40 - new look" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vorApp_ver40 - new look" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-              <item name="ClientController" type="462c0819:PsiDirectoryNode" />
+              <item name="Service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="vorApp_ver40 - new look" type="b2602c69:ProjectViewProjectNode" />
@@ -364,15 +362,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="Fxml" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vorApp_ver40 - new look" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vorApp_ver40 - new look" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="Fxml" type="462c0819:PsiDirectoryNode" />
-              <item name="Clients" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="vorApp_ver40 - new look" type="b2602c69:ProjectViewProjectNode" />
@@ -404,11 +393,20 @@
               <item name="Domain" type="462c0819:PsiDirectoryNode" />
               <item name="Client" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="vorApp_ver40 - new look" type="b2602c69:ProjectViewProjectNode" />
+              <item name="vorApp_ver40 - new look" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Domain" type="462c0819:PsiDirectoryNode" />
+              <item name="Service" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -438,13 +436,6 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\background" />
-      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources" />
-      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\users" />
-      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\story" />
-      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\orders" />
-    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="pl.Vorpack.app.domain" />
     </key>
@@ -454,6 +445,13 @@
       <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\dimensions" />
       <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\clients" />
       <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\story" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\background" />
+      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources" />
+      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\users" />
+      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\story" />
+      <recent name="C:\Users\Paweł\IdeaProjects\vorApp_ver30\src\main\resources\fxml\orders" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -468,7 +466,211 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.ClientServiceTest">
+  <component name="RunManager" selected="Application.Main">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Main" />
+      <module name="vorApp_ver.3.0" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.DatabaseAccess.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientEditorControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vorApp_ver.3.0" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientEditorControllerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="ClientEditorControllerTest.shouldAdd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vorApp_ver.3.0" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientEditorControllerTest" />
+      <option name="METHOD_NAME" value="shouldAdd" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vorApp_ver.3.0" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.Domain.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Service" />
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Service.ClientServiceTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="ClientServiceTest.shouldFilterAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vorApp_ver.3.0" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.Domain.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Service" />
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Service.ClientServiceTest" />
+      <option name="METHOD_NAME" value="shouldFilterAll" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="TestSuite" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vorApp_ver.3.0" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.Vorpack.app.Domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain" />
+      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.TestSuite" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <module name="vorApp_ver30" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <properties />
+      <listeners />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+      <method>
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
       <module name="" />
       <option name="TESTING_TYPE" value="0" />
@@ -495,151 +697,6 @@
         <option name="INSTRUMENTATION_ENABLED" value="true" />
       </Profilers>
       <method />
-    </configuration>
-    <configuration default="true" type="OdpsJavaConfigurationType" factoryName="MaxCompute Java">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-      <odpsJavaType />
-      <odpsProjectName />
-      <tableName />
-      <tableColumns />
-      <tablePartition />
-      <recordLimit>100</recordLimit>
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Main" />
-      <module name="vorApp_ver.3.0" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.DatabaseAccess.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vorApp_ver.3.0" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientControllerTest" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientControllerTest.shouldRefresh" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vorApp_ver.3.0" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientControllerTest" />
-      <option name="METHOD_NAME" value="shouldRefresh" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientEditorControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vorApp_ver.3.0" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientEditorControllerTest" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientEditorControllerTest.shouldAdd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vorApp_ver.3.0" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.Domain.Controller.Client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Controller.Client" />
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Controller.Client.ClientEditorControllerTest" />
-      <option name="METHOD_NAME" value="shouldAdd" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="vorApp_ver.3.0" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.Vorpack.app.Domain.Service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.Vorpack.app.Domain.Service" />
-      <option name="MAIN_CLASS_NAME" value="pl.Vorpack.app.Domain.Service.ClientServiceTest" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
-      <module name="vorApp_ver30" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
       <option name="filePath" />
@@ -675,38 +732,42 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    <configuration default="true" type="OdpsJavaConfigurationType" factoryName="MaxCompute Java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <odpsJavaType />
+      <odpsProjectName />
+      <tableName />
+      <tableColumns />
+      <tablePartition />
+      <recordLimit>100</recordLimit>
+      <method />
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.ClientControllerTest" />
-      <item itemvalue="JUnit.ClientControllerTest.shouldRefresh" />
       <item itemvalue="JUnit.ClientEditorControllerTest.shouldAdd" />
       <item itemvalue="JUnit.ClientEditorControllerTest" />
       <item itemvalue="JUnit.ClientServiceTest" />
+      <item itemvalue="JUnit.ClientServiceTest.shouldFilterAll" />
+      <item itemvalue="JUnit.TestSuite" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestSuite" />
         <item itemvalue="JUnit.ClientServiceTest" />
+        <item itemvalue="JUnit.ClientServiceTest.shouldFilterAll" />
         <item itemvalue="JUnit.ClientEditorControllerTest.shouldAdd" />
         <item itemvalue="JUnit.ClientEditorControllerTest" />
-        <item itemvalue="JUnit.ClientControllerTest.shouldRefresh" />
-        <item itemvalue="JUnit.ClientControllerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -724,35 +785,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ClientServiceTest - 2018.10.17 at 22h 48m 48s.xml">
+    <history-entry file="ClientServiceTest_shouldFilterAll - 2018.10.20 at 10h 49m 46s.xml">
+      <configuration name="ClientServiceTest.shouldFilterAll" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ClientServiceTest_shouldFilterAll - 2018.10.20 at 10h 50m 00s.xml">
+      <configuration name="ClientServiceTest.shouldFilterAll" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ClientServiceTest_shouldFilterAll - 2018.10.20 at 16h 52m 23s.xml">
+      <configuration name="ClientServiceTest.shouldFilterAll" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="ClientServiceTest - 2018.10.20 at 16h 52m 44s.xml">
       <configuration name="ClientServiceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 22h 49m 17s.xml">
+    <history-entry file="ClientServiceTest - 2018.10.20 at 16h 58m 28s.xml">
       <configuration name="ClientServiceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 22h 50m 24s.xml">
+    <history-entry file="ClientServiceTest - 2018.10.20 at 16h 58m 45s.xml">
       <configuration name="ClientServiceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 23h 01m 14s.xml">
+    <history-entry file="ClientServiceTest - 2018.10.20 at 17h 00m 52s.xml">
       <configuration name="ClientServiceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 23h 01m 53s.xml">
+    <history-entry file="ClientServiceTest - 2018.10.20 at 17h 03m 10s.xml">
       <configuration name="ClientServiceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 23h 02m 39s.xml">
-      <configuration name="ClientServiceTest" configurationId="JUnit" />
+    <history-entry file="TestSuite - 2018.10.21 at 18h 39m 10s.xml">
+      <configuration name="TestSuite" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.17 at 23h 05m 14s.xml">
-      <configuration name="ClientServiceTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.18 at 16h 54m 41s.xml">
-      <configuration name="ClientServiceTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.18 at 17h 03m 51s.xml">
-      <configuration name="ClientServiceTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ClientServiceTest - 2018.10.18 at 17h 04m 27s.xml">
-      <configuration name="ClientServiceTest" configurationId="JUnit" />
+    <history-entry file="TestSuite - 2018.10.22 at 21h 23m 08s.xml">
+      <configuration name="TestSuite" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -765,86 +826,109 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1929" y="-9" width="1938" height="1098" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info id="Nl-Palette" order="0" />
+      <window_info anchor="right" id="Palette" order="2" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32116005" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.31808278" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.25456497" side_tool="true" weight="0.1471536" />
+      <window_info anchor="right" id="Maven Projects" order="8" side_tool="true" weight="0.32995737" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32975295" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49194413" weight="0.34158415" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32760474" />
+      <window_info anchor="right" id="FAQ Robot" order="9" side_tool="true" weight="0.32980332" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Designer" order="5" />
+      <window_info active="true" content_ui="combo" x="-1056" y="176" width="191" height="728" id="Project" order="10" sideWeight="0.83978873" visible="true" weight="0.16944024" />
       <window_info id="Project Explorer" order="1" weight="0.32980332" />
       <window_info id="Job Explorer" order="2" />
-      <window_info id="DB Browser" order="3" />
-      <window_info id="Image Layers" order="4" />
-      <window_info id="Designer" order="5" />
-      <window_info id="UI Designer" order="6" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info id="Favorites" order="8" sideWeight="0.5054466" side_tool="true" weight="0.3075693" />
-      <window_info id="Structure" order="9" sideWeight="0.14772727" side_tool="true" weight="0.22395274" />
-      <window_info content_ui="combo" x="-1056" y="176" width="191" height="728" id="Project" order="10" sideWeight="0.83978873" weight="0.18689582" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946293" weight="0.22019334" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49194413" weight="0.48657358" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.745435" weight="0.17100793" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32116005" />
-      <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Console" order="8" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.3193658" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32975295" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32760474" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.25456497" side_tool="true" weight="0.1471536" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Properties" order="5" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="right" id="Coverage" order="7" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="8" side_tool="true" weight="0.32995737" />
-      <window_info anchor="right" id="FAQ Robot" order="9" side_tool="true" weight="0.32980332" />
+      <window_info id="Structure" order="9" sideWeight="0.14772727" side_tool="true" weight="0.22395274" />
       <window_info anchor="right" id="Ant Build" order="10" weight="0.24886535" />
+      <window_info id="UI Designer" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info id="Favorites" order="8" sideWeight="0.5054466" side_tool="true" weight="0.3075693" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.745435" weight="0.06930693" />
+      <window_info anchor="bottom" id="DB Execution Console" order="7" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946293" weight="0.21895425" />
+      <window_info id="Nl-Palette" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Properties" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="DB Browser" order="3" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="7" side_tool="true" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" x="-1056" y="176" width="191" height="728" id="Project" order="0" sideWeight="0.83978873" visible="true" weight="0.18689582" />
-      <window_info id="Nl-Palette" order="1" />
-      <window_info id="Project Explorer" order="2" weight="0.32980332" />
-      <window_info id="Job Explorer" order="3" />
-      <window_info id="DB Browser" order="4" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Designer" order="6" />
-      <window_info id="UI Designer" order="7" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info id="Favorites" order="9" sideWeight="0.5054466" side_tool="true" weight="0.3075693" />
-      <window_info id="Structure" order="10" sideWeight="0.14772727" side_tool="true" weight="0.22395274" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946293" weight="0.22019334" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49194413" weight="0.04303511" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.745435" visible="true" weight="0.0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32116005" />
-      <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Console" order="8" />
-      <window_info anchor="bottom" id="Messages" order="9" weight="0.3193658" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32975295" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32760474" />
-      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.25456497" side_tool="true" weight="0.1471536" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="DB Execution Console" order="7" />
+      <window_info id="Designer" order="6" />
       <window_info anchor="right" id="Palette" order="2" />
-      <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49194413" weight="0.04303511" />
+      <window_info id="Image Layers" order="5" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="10" weight="0.24886535" />
+      <window_info id="DB Browser" order="4" />
+      <window_info id="UI Designer" order="7" />
+      <window_info id="Project Explorer" order="2" weight="0.32980332" />
       <window_info anchor="right" id="Properties" order="5" />
-      <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="right" id="Coverage" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.32760474" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.25456497" side_tool="true" weight="0.1471536" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32975295" />
+      <window_info id="Nl-Palette" order="1" />
       <window_info anchor="right" id="Maven Projects" order="8" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="FAQ Robot" order="9" side_tool="true" weight="0.32980332" />
-      <window_info anchor="right" id="Ant Build" order="10" weight="0.24886535" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49946293" weight="0.22019334" />
+      <window_info id="Job Explorer" order="3" />
+      <window_info active="true" content_ui="combo" x="-1056" y="176" width="191" height="728" id="Project" order="0" sideWeight="0.83978873" visible="true" weight="0.18689582" />
+      <window_info anchor="bottom" id="Messages" order="9" weight="0.3193658" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32116005" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info id="Structure" order="10" sideWeight="0.14772727" side_tool="true" weight="0.22395274" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Coverage" order="7" side_tool="true" />
+      <window_info id="Favorites" order="9" sideWeight="0.5054466" side_tool="true" weight="0.3075693" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.745435" visible="true" weight="0.0" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java</url>
+          <line>54</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java</url>
+          <line>65</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="10" />
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="((QueryImpl)query).comment" custom="org.hibernate.query.internal.QueryImpl" />
@@ -927,314 +1011,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/Fxml/Orders/OrdersPane.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="13" lean-forward="true" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/util/reflection/BeanPropertySetter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/injection/filter/TerminalMockCandidateFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="40" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/injection/PropertyAndSetterInjection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="88" selection-start-line="88" selection-end-line="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/InjectingAnnotationEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/MockitoAnnotations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="69" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/internal/runners/model/ReflectiveCallable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/internal/runners/statements/RunBefores.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/DefaultInjectionEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/injection/MockInjection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="94" selection-start-line="94" selection-end-line="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-core/2.15.0/mockito-core-2.15.0-sources.jar!/org/mockito/internal/configuration/injection/MockInjectionStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="106" column="38" selection-start-line="106" selection-start-column="38" selection-end-line="106" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="168" column="35" lean-forward="true" selection-start-line="168" selection-start-column="35" selection-end-line="168" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/TrayController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="134" column="32" lean-forward="true" selection-start-line="134" selection-start-column="32" selection-end-line="135" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="143" column="32" lean-forward="true" selection-start-line="143" selection-start-column="32" selection-end-line="143" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="777">
-          <caret line="179" column="30" lean-forward="true" selection-start-line="179" selection-start-column="30" selection-end-line="179" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="204" column="22" selection-start-line="204" selection-start-column="22" selection-end-line="204" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="188" column="22" selection-start-line="188" selection-start-column="22" selection-end-line="188" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="200" column="22" selection-start-line="200" selection-start-column="22" selection-end-line="200" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/SingleOrderEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5111">
-          <caret line="323" lean-forward="true" selection-start-line="323" selection-end-line="323" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="127" column="31" lean-forward="true" selection-start-line="127" selection-start-column="31" selection-end-line="127" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Enums/ActionEnum.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/ActionConstans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="96" column="5" lean-forward="true" selection-start-line="96" selection-start-column="5" selection-end-line="96" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="242" lean-forward="true" selection-start-line="242" selection-end-line="242" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/TrayController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="90" lean-forward="true" selection-start-line="90" selection-end-line="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="79" column="18" lean-forward="true" selection-start-line="79" selection-start-column="18" selection-end-line="79" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Alerts/InfoAlerts.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="25" column="99" lean-forward="true" selection-start-line="25" selection-start-column="99" selection-end-line="25" selection-end-column="99" />
-          <folding>
-            <element signature="e#2078#2079#0" expanded="true" />
-            <element signature="e#2127#2128#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Animations/TextAnimations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-172">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Background/GetDimensions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="8391" column="22" selection-start-line="8391" selection-start-column="22" selection-end-line="8391" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/event/ActionEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="53" column="11" selection-start-line="53" selection-start-column="11" selection-end-line="53" selection-end-column="11" />
-          <folding>
-            <element signature="e#1186#1187#0" expanded="true" />
-            <element signature="e#1215#1216#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="238" column="21" selection-start-line="238" selection-start-column="21" selection-end-line="238" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/CommonService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="90" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/ClientVariables.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="11" column="50" lean-forward="true" selection-start-line="11" selection-start-column="50" selection-end-line="11" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/GlobalVariables/GlobalVariables.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsPane.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="21" column="18" lean-forward="true" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/Fxml/Clients/ClientsEditorPane.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientEditorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-162">
-          <caret line="52" column="60" lean-forward="true" selection-start-line="52" selection-start-column="60" selection-end-line="52" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1249,48 +1029,307 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientEditorControllerTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/ClosedOrderControllerTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/ClientsTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+        <state relative-caret-position="323">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="30" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/ClosedOrderControllerTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/ClientsTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="141" column="58" selection-start-line="141" selection-start-column="43" selection-end-line="141" selection-end-column="58" />
+        <state relative-caret-position="-14">
+          <caret line="91" column="5" lean-forward="true" selection-start-line="91" selection-start-column="5" selection-end-line="91" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Controller/Client/ClientControllerTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="112" column="29" selection-start-line="112" selection-start-column="29" selection-end-line="112" selection-end-column="29" />
+        <state relative-caret-position="-102">
+          <caret line="142" column="43" lean-forward="true" selection-start-line="142" selection-start-column="43" selection-end-line="142" selection-end-column="43" />
+          <folding>
+            <element signature="e#4850#4851#0" expanded="true" />
+            <element signature="e#4900#4901#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_161/javafx-src.zip!/javafx/collections/transformation/FilteredList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="155" column="15" selection-start-line="155" selection-start-column="15" selection-end-line="155" selection-end-column="15" />
+          <folding>
+            <element signature="e#4373#4374#0" expanded="true" />
+            <element signature="e#4400#4401#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Domain/Clients.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="356">
+          <caret line="30" column="53" selection-start-line="30" selection-start-column="53" selection-end-line="30" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/CommonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="90" selection-start-line="6" selection-start-column="90" selection-end-line="6" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionEditorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/PathConstans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Constans/AccessPathsConstans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="32" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Factory/AccessFactory.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/SingleOrderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="71" column="42" selection-start-line="71" selection-start-column="4" selection-end-line="71" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/OrdersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DatabaseAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TrayAccess.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/CommonAccess.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/UsersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/SingleOrdersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/TraysAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/OrdersAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/SingleOrdersService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/TrayService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="13" column="27" lean-forward="true" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ClientService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/TestSuite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="15" lean-forward="true" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/DimensionService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/OrdersService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="13" column="35" lean-forward="true" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/OrderController/OrderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="184" column="67" lean-forward="true" selection-start-line="184" selection-start-column="67" selection-end-line="184" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/UserController/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/CommonServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/DimensionController/DimensionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/DimensionsAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="55" column="12" lean-forward="true" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/TrayServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/SingleOrdersServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="46" selection-start-line="16" selection-start-column="46" selection-end-line="16" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/OrdersServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2244">
+          <caret line="140" column="36" lean-forward="true" selection-start-line="140" selection-start-column="36" selection-end-line="140" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/DimensionServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="952">
+          <caret line="72" column="28" selection-start-line="72" selection-start-column="28" selection-end-line="72" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/DatabaseAccess/ClientAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="61" column="28" lean-forward="true" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClosedOrderController/ClosedOrderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="73">
+          <caret line="170" selection-start-line="170" selection-end-line="170" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Controller/ClientController/ClientEditorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1479">
+          <caret line="89" selection-start-line="89" selection-end-line="89" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1299,24 +1338,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pl/Vorpack/app/Service/ServiceImpl/ClientServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1014">
-          <caret line="77" column="78" selection-start-line="77" selection-start-column="75" selection-end-line="77" selection-end-column="78" />
+        <state relative-caret-position="186">
+          <caret line="54" column="25" lean-forward="true" selection-start-line="54" selection-start-column="25" selection-end-line="54" selection-end-column="25" />
           <folding>
-            <element signature="e#868#869#0" expanded="true" />
-            <element signature="e#904#905#0" expanded="true" />
-            <element signature="e#1934#1935#0" expanded="true" />
-            <element signature="e#1971#1972#0" expanded="true" />
+            <element signature="e#1691#1692#0" expanded="true" />
+            <element signature="e#1728#1729#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/pl/Vorpack/app/Domain/Service/ClientServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="127" selection-start-line="127" selection-end-line="127" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="59">
+          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
         </state>
       </provider>
     </entry>

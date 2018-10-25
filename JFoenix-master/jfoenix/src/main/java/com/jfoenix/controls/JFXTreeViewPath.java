@@ -61,7 +61,7 @@ public class JFXTreeViewPath extends ScrollPane {
         backgroundProperty().addListener(observable -> JFXNodeUtils.updateBackground(getBackground(), clip));
 
         container.getStyleClass().add("buttons-container");
-        container.getChildren().add(new Label("Selection Path..."));
+        container.getChildren().add(new Label("Selection PathConstans..."));
         container.setAlignment(Pos.CENTER_LEFT);
         container.widthProperty().addListener(observable -> setHvalue(getHmax()));
         setContent(container);

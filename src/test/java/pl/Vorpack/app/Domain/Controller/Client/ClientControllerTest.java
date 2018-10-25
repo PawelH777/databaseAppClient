@@ -26,7 +26,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pl.Vorpack.app.Constans.ClientColumn.*;
+import static pl.Vorpack.app.Constans.ClientColumnConstans.*;
 
 @RunWith(JfxRunner.class)
 public class ClientControllerTest {

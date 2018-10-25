@@ -1,26 +1,20 @@
 package pl.Vorpack.app.Service.ServiceImpl;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.transformation.FilteredList;
-import pl.Vorpack.app.Constans.DimensionColumn;
+import pl.Vorpack.app.Constans.DimensionColumnConstans;
 import pl.Vorpack.app.DatabaseAccess.DimensionsAccess;
 import pl.Vorpack.app.Domain.Dimiensions;
 import pl.Vorpack.app.Service.DimensionService;
 
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.OrderColumn.ALL_ITEMS;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.ALL_ITEMS;
 
 public class DimensionServiceImpl implements DimensionService {
 
     private DimensionsAccess dimensionsAccess = new DimensionsAccess();
-    private JFXComboBox<String> columnsCmbBox;
 
     public DimensionServiceImpl() {
-    }
-
-    public DimensionServiceImpl(JFXComboBox<String> columnsCmbBox) {
-        this.columnsCmbBox = columnsCmbBox;
     }
 
     @Override
@@ -63,12 +57,11 @@ public class DimensionServiceImpl implements DimensionService {
     }
 
     @Override
-    public void filter(String searchedText, FilteredList<Dimiensions> dims) {
-        if (columnsCmbBox.getSelectionModel().getSelectedItem() == null ||
-                columnsCmbBox.getSelectionModel().getSelectedItem().equals(ALL_ITEMS))
+    public void filter(String filter, String searchedText, FilteredList<Dimiensions> dims) {
+        if (filter == null || filter.equals(ALL_ITEMS))
             filterByEveryColumn(searchedText, dims);
         else
-            filterByOneColumn(searchedText, dims);
+            filterByOneColumn(filter, searchedText, dims);
     }
 
     private void filterByEveryColumn(String searchedText, FilteredList<Dimiensions> dims) {
@@ -88,12 +81,12 @@ public class DimensionServiceImpl implements DimensionService {
         });
     }
 
-    private void filterByOneColumn(String searchedText, FilteredList<Dimiensions> dims) {
+    private void filterByOneColumn(String filter, String searchedText, FilteredList<Dimiensions> dims) {
         dims.setPredicate(obj -> {
             if (searchedText == null || searchedText.isEmpty())
                 return true;
             String lowerCaseValue = getNonNullLowerCaseValue(searchedText);
-            String filterValue = getFilter(columnsCmbBox.getSelectionModel().getSelectedItem(), obj);
+            String filterValue = getFilter(filter, obj);
             return filterValue.contains(lowerCaseValue);
         });
     }
@@ -107,15 +100,15 @@ public class DimensionServiceImpl implements DimensionService {
 
     private String getFilter(String column, Dimiensions obj) {
         switch (column) {
-            case DimensionColumn.ID:
+            case DimensionColumnConstans.ID:
                 return String.valueOf(obj.getDimension_id()).toLowerCase();
-            case DimensionColumn.FIRST_DIMENSION:
+            case DimensionColumnConstans.FIRST_DIMENSION:
                 return String.valueOf(obj.getFirstDimension()).toLowerCase();
-            case DimensionColumn.SECOND_DIMENSION:
+            case DimensionColumnConstans.SECOND_DIMENSION:
                 return String.valueOf(obj.getFirstDimension()).toLowerCase();
-            case DimensionColumn.THICKNESS:
+            case DimensionColumnConstans.THICKNESS:
                 return String.valueOf(obj.getFirstDimension()).toLowerCase();
-            case DimensionColumn.WEIGHT:
+            case DimensionColumnConstans.WEIGHT:
                 return String.valueOf(obj.getFirstDimension()).toLowerCase();
             default:
                 return "";

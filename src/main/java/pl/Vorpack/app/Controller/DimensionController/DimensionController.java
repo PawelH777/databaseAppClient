@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.Dimiensions;
 import pl.Vorpack.app.GlobalVariables.DimVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
@@ -27,7 +27,7 @@ import pl.Vorpack.app.Service.ServiceImpl.DimensionServiceImpl;
 import java.io.IOException;
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.DimensionColumn.*;
+import static pl.Vorpack.app.Constans.DimensionColumnConstans.*;
 
 /**
  * Created by Paweł on 2018-02-18.
@@ -97,7 +97,7 @@ public class DimensionController {
     public void onBtnAddClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         DimVariables.setObject(null);
-        commonService.openScene(Path.DIMENSION_EDITOR_PANE_PATH, "Edytor wymiaru", false);
+        commonService.openScene(PathConstans.DIMENSION_EDITOR_PANE_PATH, "Edytor wymiaru", false);
         getDims();
         if(GlobalVariables.getIsActionCompleted())
             statusViewer.setText(InfoAlerts.getStatusWhileRecordAdded());
@@ -109,7 +109,7 @@ public class DimensionController {
     public void btnModifyClicked(MouseEvent mouseEvent) throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         DimVariables.setObject(dimsViewer.getSelectionModel().getSelectedItem());
-        commonService.openScene(Path.DIMENSION_EDITOR_PANE_PATH, "Edytor wymiaru", false);
+        commonService.openScene(PathConstans.DIMENSION_EDITOR_PANE_PATH, "Edytor wymiaru", false);
         getDims();
         setButtonsDisableValue(true);
         if(GlobalVariables.getIsActionCompleted())
@@ -148,7 +148,7 @@ public class DimensionController {
     }
 
     private void initServices(){
-        dimensionService = new DimensionServiceImpl(columnsCmbBox);
+        dimensionService = new DimensionServiceImpl();
         commonService = new CommonServiceImpl();
     }
 
@@ -165,7 +165,7 @@ public class DimensionController {
     }
 
     private void filter(String searchedText){
-        dimensionService.filter(searchedText, filteredDims);
+        dimensionService.filter(columnsCmbBox.getSelectionModel().getSelectedItem(), searchedText, filteredDims);
         sortedData = new SortedList<>(filteredDims);
         dimsViewer.setItems(sortedData);
     }

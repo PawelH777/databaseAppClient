@@ -18,7 +18,7 @@ import javafx.util.Duration;
 import org.apache.commons.codec.digest.DigestUtils;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 import pl.Vorpack.app.Service.ServiceImpl.UserServiceImpl;
@@ -26,8 +26,8 @@ import pl.Vorpack.app.Service.UserService;
 
 import java.io.IOException;
 
-import static pl.Vorpack.app.Constans.User.ADMIN;
-import static pl.Vorpack.app.Constans.User.USER;
+import static pl.Vorpack.app.Constans.UserConstans.ADMIN;
+import static pl.Vorpack.app.Constans.UserConstans.USER;
 
 /**
  * Created by Paweł on 2018-02-01.
@@ -109,7 +109,7 @@ public class LoginController {
     private void loadNextScene() {
         try {
             Parent mainPane;
-            mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(Path.MAIN_PANE_PATH));
+            mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(PathConstans.MAIN_PANE_PATH));
             Scene mainScene = new Scene(mainPane);
             Stage curStage = (Stage) borderPane.getScene().getWindow();
             curStage.setScene(mainScene);

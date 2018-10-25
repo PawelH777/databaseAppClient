@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.GlobalVariables.ClientVariables;
@@ -29,10 +29,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static pl.Vorpack.app.Constans.DateItem.ORDER_DATE;
-import static pl.Vorpack.app.Constans.DateItem.RECEIVE_ORDER_DATE;
-import static pl.Vorpack.app.Constans.User.USER;
-import static pl.Vorpack.app.Constans.OrderColumn.*;
+import static pl.Vorpack.app.Constans.DateItemConstans.ORDER_DATE;
+import static pl.Vorpack.app.Constans.DateItemConstans.RECEIVE_ORDER_DATE;
+import static pl.Vorpack.app.Constans.UserConstans.USER;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.*;
 
 /**
  * Created by Paweł on 2018-02-22.
@@ -151,7 +151,7 @@ public class OrderController {
     }
 
     private void initServices() {
-        ordersService = new OrdersServiceImpl(columnsCmbBox, datesCmbBox);
+        ordersService = new OrdersServiceImpl();
         commonService = new CommonServiceImpl();
         clientService = new ClientServiceImpl();
     }
@@ -181,7 +181,8 @@ public class OrderController {
     }
 
     private void filter(String searchedText, String searchedData) {
-        ordersService.filterRecords(searchedText, searchedData);
+        ordersService.filterRecords(columnsCmbBox.getSelectionModel().getSelectedItem(),
+                columnsCmbBox.getSelectionModel().getSelectedItem(), searchedText, searchedData);
         sortedData = new SortedList<>(ordersFilteredList);
         ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
     }
@@ -191,7 +192,7 @@ public class OrderController {
         OrdVariables.setOrderObject(null);
         GlobalVariables.setIsCreate(true);
         String addWindowTitle = "Dodaj zamówienie";
-        commonService.openScene(Path.ORDER_EDITOR_PANE_PATH, addWindowTitle, false);
+        commonService.openScene(PathConstans.ORDER_EDITOR_PANE_PATH, addWindowTitle, false);
         setReturnedInformation();
     }
 
@@ -200,14 +201,14 @@ public class OrderController {
         OrdVariables.setOrderObject(getSelectedItem());
         GlobalVariables.setIsCreate(false);
         String modifyWindowTitle = "Dodaj zamówienie";
-        commonService.openScene(Path.ORDER_EDITOR_PANE_PATH, modifyWindowTitle, false);
+        commonService.openScene(PathConstans.ORDER_EDITOR_PANE_PATH, modifyWindowTitle, false);
         setReturnedInformation();
     }
 
     public void onBtnToggleClicked() throws IOException {
         OrdVariables.setOrderObject(getSelectedItem());
         String toggleWindowTitle = "Zamówienia jednostkowe";
-        commonService.openScene(Path.SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
+        commonService.openScene(PathConstans.SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
         setReturnedInformation();
     }
 

@@ -1,5 +1,7 @@
 package pl.Vorpack.app.DatabaseAccess;
 
+import pl.Vorpack.app.Constans.AccessPathsConstans;
+import pl.Vorpack.app.DatabaseAccess.DatabaseAccess;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
@@ -12,11 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersAccess {
-    private final String findClientsByLoginURI = "/users/user/login";
-    private final String createNewUserURI = "/users/createuser";
-    private final String updateUserURI = "/users/user/update";
-    private final String findAllUsersURI = "/users";
-    private final String deleteUserURI = "/users/user/delete";
     private Client client;
     private String URI;
     private Response response;
@@ -24,7 +21,7 @@ public class UsersAccess {
     public List<User> findByLogin(String login){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + findClientsByLoginURI;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.findClientsByLoginURI;
         response = client
                 .target(URI)
                 .path(login)
@@ -38,7 +35,7 @@ public class UsersAccess {
     public void create(User userObject){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + createNewUserURI;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.createNewUserURI;
         response = client
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON_TYPE)
@@ -49,7 +46,7 @@ public class UsersAccess {
     public void update(User userObject){
         client = DatabaseAccess
                 .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + updateUserURI;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.updateUserURI;
         response =  client
                 .target(URI)
                 .path(String.valueOf(userObject.getUser_id()))
@@ -61,12 +58,11 @@ public class UsersAccess {
     public List<User> findAll(){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + findAllUsersURI;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.findAllUsersURI;
         response = client
                 .target(URI)
                 .request(MediaType.APPLICATION_JSON)
                 .get();
-
         List<User> allUsersFromDatabase = response.readEntity(new GenericType<ArrayList<User>>(){});
         client.close();
         return allUsersFromDatabase;
@@ -75,13 +71,12 @@ public class UsersAccess {
     public void delete(User userObject){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + deleteUserURI;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.deleteUserURI;
         response = client
                 .target(URI)
                 .path(String.valueOf(userObject.getUser_id()))
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .delete();
-
         client.close();
     }
 }

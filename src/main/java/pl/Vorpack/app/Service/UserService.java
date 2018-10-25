@@ -15,5 +15,5 @@ public interface UserService {
 
     void delete(User user);
 
-    void filter(String searchedText, FilteredList<UsersDTO> users);
+    void filter(String filter, String searchedText, FilteredList<UsersDTO> users);
 }

@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.GlobalVariables.ClientVariables;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
@@ -23,7 +23,7 @@ import pl.Vorpack.app.Service.ServiceImpl.CommonServiceImpl;
 
 import java.io.IOException;
 
-import static pl.Vorpack.app.Constans.ClientColumn.*;
+import static pl.Vorpack.app.Constans.ClientColumnConstans.*;
 
 /**
  * Created by Paweł on 2018-02-21.
@@ -68,7 +68,6 @@ public class ClientController {
                 ID,
                 FIRM_NAME
         );
-        clientService.setJFXComboBox(filterComboBox);
         setAnimations();
         assignColumns();
         txtSearch.setDisable(true);
@@ -111,14 +110,14 @@ public class ClientController {
     public void onBtnAddClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         ClientVariables.setObject(null);
-        commonService.openScene(Path.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
+        commonService.openScene(PathConstans.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
         setInfoOnReturn();
     }
 
     public void onBtnModifyClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         ClientVariables.setObject(clientsViewer.getSelectionModel().getSelectedItem());
-        commonService.openScene(Path.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
+        commonService.openScene(PathConstans.CLIENTS_EDITOR_PANE_PATH, CLIENTS_EDITOR, false);
         setInfoOnReturn();
     }
 
@@ -139,7 +138,7 @@ public class ClientController {
     }
 
     private void filter(String searchedText){
-        clientService.filter(searchedText, filteredClients);
+        clientService.filter(filterComboBox.getSelectionModel().getSelectedItem(), searchedText, filteredClients);
         sortedData = new SortedList<>(filteredClients);
         clientsViewer.setItems(sortedData);
     }

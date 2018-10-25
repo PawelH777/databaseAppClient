@@ -1,6 +1,5 @@
 package pl.Vorpack.app.Domain.Service;
 
-import com.jfoenix.controls.JFXComboBox;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,17 +25,15 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static pl.Vorpack.app.Constans.ClientColumn.ALL;
+import static pl.Vorpack.app.Constans.ClientColumnConstans.ALL;
+import static pl.Vorpack.app.Constans.ClientColumnConstans.ID;
 
 @RunWith(JfxRunner.class)
 public class ClientServiceTest {
-    private ClientService clientService;
+    private ClientService clientService = new ClientServiceImpl();
 
     @Mock
     private ClientAccess clientAccess;
-
-    @Mock
-    private JFXComboBox<String> columnsCmbBox;
 
     private Clients expectedClient;
     private List<Clients> clients;
@@ -45,8 +42,8 @@ public class ClientServiceTest {
     @Before
     public void start(){
         MockitoAnnotations.initMocks(this);
-        expectedClient = new Clients("Paweł");
-        Clients secondClient = new Clients("Adam");
+        expectedClient = new Clients(1L, "Paweł");
+        Clients secondClient = new Clients(2L, "Adam");
         clients = new ArrayList<>(Arrays.asList(expectedClient, secondClient));
         data = FXCollections.observableArrayList(clients);
     }
@@ -122,19 +119,74 @@ public class ClientServiceTest {
     }
 
     @Test
+    public void shouldFilterAllAndReturnAll(){
+        //given
+        FilteredList<Clients> actualClients =  new FilteredList<>(data, p -> true);
+
+        //when
+        clientService.filter(ALL, "", actualClients);
+        FilteredList expectedClients =  new FilteredList<>(data, p -> true);
+
+        //then
+        assertEquals(expectedClients.get(0), actualClients.get(0));
+        assertEquals(expectedClients.size(), actualClients.size());
+    }
+
+    @Test
     public void shouldFilterAll(){
         //given
         FilteredList<Clients> actualClients =  new FilteredList<>(data, p -> true);
-        doReturn(ALL).when(columnsCmbBox.getSelectionModel().getSelectedItem());
-        clientService = new ClientServiceImpl(columnsCmbBox, clientAccess);
 
         //when
-        clientService.filter("Pa", actualClients);
+        clientService.filter(ALL, "Pa", actualClients);
         ObservableList<Clients> clientsList =  FXCollections.observableArrayList(Collections.singletonList(expectedClient));
         FilteredList<Clients> expectedClients = new FilteredList<>(clientsList);
 
         //then
         assertEquals(expectedClients.get(0), actualClients.get(0));
         assertEquals(expectedClients.size(), actualClients.size());
+    }
+
+    @Test
+    public void shouldFilterAllAndReturnEmptyList(){
+        //given
+        int expectedClientsSize = 0;
+        FilteredList<Clients> actualClients =  new FilteredList<>(data, p -> true);
+
+        //when
+        clientService.filter(ALL, "z", actualClients);
+
+        //then
+        assertEquals(expectedClientsSize, actualClients.size());
+    }
+
+    @Test
+    public void shouldFilterId(){
+        //given
+        FilteredList<Clients> actualClients =  new FilteredList<>(data, p -> true);
+
+        //when
+        clientService.filter(ID, "1", actualClients);
+        ObservableList<Clients> clientsList =  FXCollections.observableArrayList(Collections.singletonList(expectedClient));
+        FilteredList<Clients> expectedClients = new FilteredList<>(clientsList);
+
+        //then
+        assertEquals(expectedClients.get(0), actualClients.get(0));
+        assertEquals(expectedClients.size(), actualClients.size());
+    }
+
+    @Test
+    public void shouldFilterIdAndReturnEmptyList(){
+        //given
+        int expectedClientsSize = 0;
+        FilteredList<Clients> actualClients =  new FilteredList<>(data, p -> true);
+
+        //when
+        clientService.filter(ID, "0", actualClients);
+        ObservableList<Clients> clientsList =  FXCollections.observableArrayList(Collections.singletonList(expectedClient));
+        FilteredList<Clients> expectedClients = new FilteredList<>(clientsList);
+
+        //then
+        assertEquals(expectedClientsSize, actualClients.size());
     }
 }

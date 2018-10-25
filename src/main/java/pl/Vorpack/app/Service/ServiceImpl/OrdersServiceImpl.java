@@ -1,11 +1,10 @@
 package pl.Vorpack.app.Service.ServiceImpl;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import pl.Vorpack.app.Alerts.InfoAlerts;
-import pl.Vorpack.app.Constans.OrderColumn;
+import pl.Vorpack.app.Constans.OrderColumnConstans;
 import pl.Vorpack.app.DatabaseAccess.OrdersAccess;
 import pl.Vorpack.app.DatabaseAccess.SingleOrdersAccess;
 import pl.Vorpack.app.Domain.Orders;
@@ -18,9 +17,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.DateItem.ORDER_DATE;
-import static pl.Vorpack.app.Constans.DateItem.RECEIVE_ORDER_DATE;
-import static pl.Vorpack.app.Constans.OrderColumn.ALL_ITEMS;
+import static pl.Vorpack.app.Constans.DateItemConstans.ORDER_DATE;
+import static pl.Vorpack.app.Constans.DateItemConstans.RECEIVE_ORDER_DATE;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.ALL_ITEMS;
 
 public class OrdersServiceImpl implements OrdersService {
 
@@ -28,14 +27,7 @@ public class OrdersServiceImpl implements OrdersService {
     private FilteredList<OrdersDTO> orders;
     private OrdersAccess ordersAccess = new OrdersAccess();
     private SingleOrdersAccess singleOrdersAccess = new SingleOrdersAccess();
-    private JFXComboBox<String> columnsCmbBox;
-    private JFXComboBox datesCmbBox;
     private InfoAlerts infoAlerts = new InfoAlerts();
-
-    public OrdersServiceImpl(JFXComboBox<String> columnsCmbBox, JFXComboBox datesCmbBox) {
-        this.columnsCmbBox = columnsCmbBox;
-        this.datesCmbBox = datesCmbBox;
-    }
 
     public OrdersServiceImpl() {
     }
@@ -64,12 +56,11 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void filterRecords(String searchedText, String searchedData) {
-        if (columnsCmbBox.getSelectionModel().getSelectedItem() == null ||
-                columnsCmbBox.getSelectionModel().getSelectedItem().equals(ALL_ITEMS))
-            filterByEveryColumn(searchedText, searchedData);
+    public void filterRecords(String textFilter, String dateFilter, String searchedText, String searchedData) {
+        if (textFilter == null || textFilter.equals(ALL_ITEMS))
+            filterByEveryColumn(dateFilter, searchedText, searchedData);
         else
-            filterByOneColumn(searchedText, searchedData);
+            filterByOneColumn(textFilter, dateFilter, searchedText, searchedData);
     }
 
     @Override
@@ -114,15 +105,19 @@ public class OrdersServiceImpl implements OrdersService {
         ordersAccess.changeOrdersStatus(order);
     }
 
-    private void filterByEveryColumn(String searchedText, String searchedData) {
+    private void filterByEveryColumn(String dateFilter, String searchedText, String searchedData) {
         orders.setPredicate(obj -> {
             if ((searchedText == null || searchedText.isEmpty()) &&
                     (searchedData == null || searchedData.isEmpty() || searchedData.equals("null")))
                 return true;
-            String lowerCaseValue = searchedText.toLowerCase();
+            String lowerCaseValue;
+            if(searchedText == null || searchedText.isEmpty())
+                lowerCaseValue = "";
+            else
+                lowerCaseValue = searchedText.toLowerCase();
             String date = null;
-            if (datesCmbBox.getSelectionModel().getSelectedItem() != null)
-                date = getDate(obj);
+            if (dateFilter != null)
+                date = getDate(dateFilter, obj);
             if (searchedData == null || searchedData.isEmpty() || searchedData.equals(NULL)) {
                 if (String.valueOf(obj.getOrder_id()).toLowerCase().contains(lowerCaseValue))
                     return true;
@@ -142,16 +137,16 @@ public class OrdersServiceImpl implements OrdersService {
         });
     }
 
-    private void filterByOneColumn(String searchedText, String searchedData) {
+    private void filterByOneColumn(String textFilter, String dateFilter, String searchedText, String searchedData) {
         orders.setPredicate(obj -> {
             if ((searchedText == null || searchedText.isEmpty()) &&
                     (searchedData == null || searchedData.isEmpty() || searchedData.equals(NULL)))
                 return true;
             String lowerCaseValue = getNonNullLowerCaseValue(searchedText);
             String date = null;
-            if (datesCmbBox.getSelectionModel().getSelectedItem() != null)
-                date = getDate(obj);
-            String filterValue = getFilter(columnsCmbBox.getSelectionModel().getSelectedItem(), obj);
+            if (dateFilter != null)
+                date = getDate(dateFilter, obj);
+            String filterValue = getFilter(textFilter, obj);
             if (searchedData == null || searchedData.isEmpty() || searchedData.equals(NULL)) {
                 return filterValue.contains(lowerCaseValue);
             } else {
@@ -160,10 +155,10 @@ public class OrdersServiceImpl implements OrdersService {
         });
     }
 
-    private String getDate(OrdersDTO obj) {
-        if (datesCmbBox.getSelectionModel().getSelectedItem().equals(ORDER_DATE))
+    private String getDate(String dateFilter, OrdersDTO obj) {
+        if (dateFilter.equals(ORDER_DATE))
             return String.valueOf(obj.getOrder_date());
-        else if (datesCmbBox.getSelectionModel().getSelectedItem().equals(RECEIVE_ORDER_DATE))
+        else if (dateFilter.equals(RECEIVE_ORDER_DATE))
             return String.valueOf(obj.getOrder_receive_date());
         throw new RuntimeException();
     }
@@ -177,15 +172,15 @@ public class OrdersServiceImpl implements OrdersService {
 
     private String getFilter(String column, OrdersDTO obj) {
         switch (column) {
-            case OrderColumn.ID:
+            case OrderColumnConstans.ID:
                 return String.valueOf(obj.getOrder_id()).toLowerCase();
-            case OrderColumn.FIRM_NAME:
+            case OrderColumnConstans.FIRM_NAME:
                 return String.valueOf(obj.getFirmName()).toLowerCase();
-            case OrderColumn.MATERIALS:
+            case OrderColumnConstans.MATERIALS:
                 return String.valueOf(obj.getMaterials()).toLowerCase();
-            case OrderColumn.FINISHED_TASKS:
+            case OrderColumnConstans.FINISHED_TASKS:
                 return String.valueOf(obj.getSingle_orders_completed()).toLowerCase();
-            case OrderColumn.UNFINISHED_TASKS:
+            case OrderColumnConstans.UNFINISHED_TASKS:
                 return String.valueOf(obj.getSingle_orders_unfinished()).toLowerCase();
             default:
                 return "";

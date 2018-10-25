@@ -42,7 +42,7 @@ public class ClientEditorControllerTest extends ApplicationTest {
 //        doReturn(null).when(clientServiceSpy).findByFirmName(anyString());
 //        doReturn(null).when(clientServiceSpy).create(anyString());
 //        controller.setClientService(clientServiceSpy);
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Path.CLIENTS_EDITOR_PANE_PATH));
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(PathConstans.CLIENTS_EDITOR_PANE_PATH));
 //        fxmlLoader.setController(controller);
 //        Pane pane = fxmlLoader.load();
 //        Scene scene = new Scene(pane);

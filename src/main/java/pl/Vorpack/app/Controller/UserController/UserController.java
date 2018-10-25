@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.Dto.UsersDTO;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static pl.Vorpack.app.Constans.UserColumn.*;
+import static pl.Vorpack.app.Constans.UserColumnConstans.*;
 
 /**
  * Created by Paweł on 2018-02-22.
@@ -102,7 +102,7 @@ public class UserController {
     }
 
     private void initServices(){
-        userService = new UserServiceImpl(columnsCmbBox);
+        userService = new UserServiceImpl();
         commonService = new CommonServiceImpl();
     }
 
@@ -130,7 +130,7 @@ public class UserController {
     }
 
     private void filter(String searchedText){
-        userService.filter(searchedText, filteredUsers);
+        userService.filter(columnsCmbBox.getSelectionModel().getSelectedItem(), searchedText, filteredUsers);
         sortedData = new SortedList<>(filteredUsers);
         usersViewer.setItems(sortedData);
     }
@@ -151,7 +151,7 @@ public class UserController {
     public void onBtnAddClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         UsrVariables.setObject(null);
-        commonService.openScene(Path.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
+        commonService.openScene(PathConstans.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
         getUsers();
         if(GlobalVariables.getIsActionCompleted())
             statusViewer.setText(InfoAlerts.getStatusWhileRecordAdded());
@@ -164,7 +164,7 @@ public class UserController {
         GlobalVariables.setIsActionCompleted(false);
         user = changingObjectType(usersViewer.getSelectionModel().getSelectedItem());
         UsrVariables.setObject(user);
-        commonService.openScene(Path.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
+        commonService.openScene(PathConstans.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
         getUsers();
         setButtonsDisableValue(true);
         if(GlobalVariables.getIsActionCompleted())

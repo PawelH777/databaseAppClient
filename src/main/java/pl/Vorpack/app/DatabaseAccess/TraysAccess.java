@@ -1,5 +1,7 @@
 package pl.Vorpack.app.DatabaseAccess;
 
+import pl.Vorpack.app.Constans.AccessPathsConstans;
+import pl.Vorpack.app.DatabaseAccess.DatabaseAccess;
 import pl.Vorpack.app.Domain.SingleOrders;
 import pl.Vorpack.app.Domain.Trays;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
@@ -11,10 +13,6 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class TraysAccess {
-    private final String findAllUri = "/trays";
-    private final String findAllTraysBySingleOrderUri = "/trays/returnDim-by-single-order";
-    private final String createTraysBySingleOrderUri = "/trays/create-by-single-order";
-    private final String changeTraysStatusUri = "/trays/update";
     private javax.ws.rs.client.Client client =
             DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
     private Response response;
@@ -23,7 +21,7 @@ public class TraysAccess {
     public List<Trays> findAll(){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI  = GlobalVariables.getSite_name() +  findAllUri;
+        URI  = GlobalVariables.getSite_name() +  AccessPathsConstans.findAllUri;
 
         response = client
                 .target(URI)
@@ -38,7 +36,7 @@ public class TraysAccess {
     public List<Trays> findBySingleOrder(SingleOrders singleOrder){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI  = GlobalVariables.getSite_name() +  findAllTraysBySingleOrderUri;
+        URI  = GlobalVariables.getSite_name() +  AccessPathsConstans.findAllTraysBySingleOrderUri;
 
         response = client
                 .target(URI)
@@ -53,7 +51,7 @@ public class TraysAccess {
     public void createTraysBySingleOrder(SingleOrders singleOrder){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI  = GlobalVariables.getSite_name() +  createTraysBySingleOrderUri;
+        URI  = GlobalVariables.getSite_name() +  AccessPathsConstans.createTraysBySingleOrderUri;
 
         response = client
                 .target(URI)
@@ -66,7 +64,7 @@ public class TraysAccess {
     public void updateStatus(Trays tray){
         client =
                 DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI  = GlobalVariables.getSite_name() +  changeTraysStatusUri;
+        URI  = GlobalVariables.getSite_name() +  AccessPathsConstans.changeTraysStatusUri;
 
         response = client
                 .target(URI)

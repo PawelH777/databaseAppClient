@@ -138,6 +138,6 @@ public class UserEditorController {
             thisStage.close();
         }
         else
-            statusLabel.setText("User z tym loginem już istnieje");
+            statusLabel.setText("UserConstans z tym loginem już istnieje");
     }
 }

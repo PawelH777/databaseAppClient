@@ -12,7 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.DatabaseAccess.SingleOrdersAccess;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.Domain.SingleOrders;
@@ -97,7 +97,7 @@ public class SingleOrderController {
     public void openButtonClicked() throws IOException {
         setSingleOrdersObject();
         SingleOrdVariables.setSingleOrderObject(singleOrdersObject);
-        commonService.openScene(Path.CLOSED_TRAYS_PANE_PATH, TRAYS_WINDOW_PANE, false);
+        commonService.openScene(PathConstans.CLOSED_TRAYS_PANE_PATH, TRAYS_WINDOW_PANE, false);
         setReturnedInformation();
     }
 

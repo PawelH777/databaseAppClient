@@ -1,10 +1,9 @@
 package pl.Vorpack.app.Service.ServiceImpl;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import pl.Vorpack.app.Constans.UserColumn;
+import pl.Vorpack.app.Constans.UserColumnConstans;
 import pl.Vorpack.app.DatabaseAccess.UsersAccess;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.Dto.UsersDTO;
@@ -12,18 +11,13 @@ import pl.Vorpack.app.Service.UserService;
 
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.UserColumn.ALL;
+import static pl.Vorpack.app.Constans.UserColumnConstans.ALL;
 
 public class UserServiceImpl implements UserService {
 
     private UsersAccess usersAccess = new UsersAccess();
-    private JFXComboBox<String> columnsCmbBox;
 
     public UserServiceImpl() {
-    }
-
-    public UserServiceImpl(JFXComboBox<String> columnsCmbBox) {
-        this.columnsCmbBox = columnsCmbBox;
     }
 
     @Override
@@ -56,12 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void filter(String searchedText, FilteredList<UsersDTO> users) {
-        if (columnsCmbBox.getSelectionModel().getSelectedItem() == null ||
-                columnsCmbBox.getSelectionModel().getSelectedItem().equals(ALL))
+    public void filter(String filter, String searchedText, FilteredList<UsersDTO> users) {
+        if (filter == null || filter.equals(ALL))
             filterByEveryColumn(searchedText, users);
         else
-            filterByOneColumn(searchedText, users);
+            filterByOneColumn(filter, searchedText, users);
     }
 
     private void filterByEveryColumn(String searchedText, FilteredList<UsersDTO> users) {
@@ -79,12 +72,12 @@ public class UserServiceImpl implements UserService {
         });
     }
 
-    private void filterByOneColumn(String searchedText, FilteredList<UsersDTO> clients) {
+    private void filterByOneColumn(String filter, String searchedText, FilteredList<UsersDTO> clients) {
         clients.setPredicate(obj -> {
             if (searchedText == null || searchedText.isEmpty())
                 return true;
             String lowerCaseValue = getNonNullLowerCaseValue(searchedText);
-            String filterValue = getFilter(columnsCmbBox.getSelectionModel().getSelectedItem(), obj);
+            String filterValue = getFilter(filter, obj);
             return filterValue.contains(lowerCaseValue);
         });
     }
@@ -98,13 +91,13 @@ public class UserServiceImpl implements UserService {
 
     private String getFilter(String column, UsersDTO obj) {
         switch (column) {
-            case UserColumn.ID:
+            case UserColumnConstans.ID:
                 return String.valueOf(obj.getUser_id()).toLowerCase();
-            case UserColumn.LOGIN:
+            case UserColumnConstans.LOGIN:
                 return String.valueOf(obj.getLogin()).toLowerCase();
-            case UserColumn.PASSWORD:
+            case UserColumnConstans.PASSWORD:
                 return String.valueOf(obj.getPassword()).toLowerCase();
-            case UserColumn.ADMINISTRATOR:
+            case UserColumnConstans.ADMINISTRATOR:
                 return String.valueOf(obj.getAdmin()).toLowerCase();
             default:
                 return "";

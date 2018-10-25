@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.User.USER;
+import static pl.Vorpack.app.Constans.UserConstans.USER;
 
 
 public class OrderEditorController {

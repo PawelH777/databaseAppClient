@@ -15,7 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import pl.Vorpack.app.Animations.TextAnimations;
-import pl.Vorpack.app.Constans.Path;
+import pl.Vorpack.app.Constans.PathConstans;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.Domain.Orders;
 import pl.Vorpack.app.GlobalVariables.ClientVariables;
@@ -34,12 +34,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static pl.Vorpack.app.Constans.DateItem.ORDER_DATE;
-import static pl.Vorpack.app.Constans.DateItem.RECEIVE_ORDER_DATE;
-import static pl.Vorpack.app.Constans.User.USER;
-import static pl.Vorpack.app.Constans.OrderColumn.*;
-import static pl.Vorpack.app.Constans.OrderColumn.MATERIALS;
-import static pl.Vorpack.app.Constans.OrderColumn.UNFINISHED_TASKS;
+import static pl.Vorpack.app.Constans.DateItemConstans.ORDER_DATE;
+import static pl.Vorpack.app.Constans.DateItemConstans.RECEIVE_ORDER_DATE;
+import static pl.Vorpack.app.Constans.UserConstans.USER;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.*;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.MATERIALS;
+import static pl.Vorpack.app.Constans.OrderColumnConstans.UNFINISHED_TASKS;
 
 /**
  * Created by Paweł on 2018-03-01.
@@ -162,13 +162,14 @@ public class ClosedOrderController {
     }
 
     private void initServices(){
-        ordersService = new OrdersServiceImpl(columnsCmbBox, datesCmbBox);
+        ordersService = new OrdersServiceImpl();
         clientService = new ClientServiceImpl();
         commonService = new CommonServiceImpl();
     }
 
     private void filter(String searchedText, String searchedData) {
-        ordersService.filterRecords(searchedText, searchedData);
+        ordersService.filterRecords(columnsCmbBox.getSelectionModel().getSelectedItem().toString(),
+                datesCmbBox.getSelectionModel().getSelectedItem().toString(), searchedText, searchedData);
         sortedData = new SortedList<>(filteredList);
         ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
     }
@@ -211,7 +212,7 @@ public class ClosedOrderController {
     public void onToggleButtonClicked() throws IOException {
         OrdVariables.setOrderObject(getSelectedItem());
         String toggleWindowTitle = "Zamówienia jednostkowe";
-        commonService.openScene(Path.CLOSED_SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
+        commonService.openScene(PathConstans.CLOSED_SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
         setReturnedInformation();
     }
 

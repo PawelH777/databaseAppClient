@@ -1,6 +1,6 @@
 package pl.Vorpack.app.Constans;
 
-public class Path {
+public class PathConstans {
 
     public static final String CLIENTS_EDITOR_PANE_PATH = "/Fxml/Clients/ClientsEditorPane.fxml";
 

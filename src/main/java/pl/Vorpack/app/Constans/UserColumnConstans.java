@@ -1,6 +1,6 @@
 package pl.Vorpack.app.Constans;
 
-public class UserColumn {
+public class UserColumnConstans {
 
     public static final String ALL = "Wszystkie";
     public static final String ID = "Identyfikator";

@@ -28,6 +28,11 @@ public class Clients {
         this.firmName = firmName;
     }
 
+    public Clients(long client_id, String firmName) {
+        this.client_id = client_id;
+        this.firmName = firmName;
+    }
+
     public Clients(String firmName) {
         this.firmName = firmName;
     }

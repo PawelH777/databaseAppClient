@@ -1,5 +1,6 @@
 package pl.Vorpack.app.DatabaseAccess;
 
+import pl.Vorpack.app.Constans.AccessPathsConstans;
 import pl.Vorpack.app.Domain.Dimiensions;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
@@ -11,19 +12,13 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 public class DimensionsAccess {
-
-    private final String findDimensionsUri = "/dims";
-    private final String findDimensionUri = "/dims/dim/find";
-    private final String createDimensionUri = "/dims/createdim";
-    private final String updateDimensionUri = "/dims/dim/update";
-    private final String deleteDimensionUri = "/dims/dim/delete";
     private Client client;
     private String URI;
     private Response response;
 
     public List<Dimiensions> findAllDimensions(){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + findDimensionsUri;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.findDimensionsUri;
 
         response = client
                 .target(URI)
@@ -36,7 +31,7 @@ public class DimensionsAccess {
 
     public List<Dimiensions> find(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + findDimensionUri;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.findDimensionUri;
 
         response = client
                 .target(URI)
@@ -50,7 +45,7 @@ public class DimensionsAccess {
 
     public Dimiensions create(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + createDimensionUri;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.createDimensionUri;
 
         response = client
                 .target(URI)
@@ -64,7 +59,7 @@ public class DimensionsAccess {
 
     public void update(Dimiensions object){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() +  updateDimensionUri;
+        URI = GlobalVariables.getSite_name() +  AccessPathsConstans.updateDimensionUri;
 
         response = client
                 .target(URI)
@@ -77,7 +72,7 @@ public class DimensionsAccess {
 
     public void delete(Dimiensions dimensionObject){
         client = DatabaseAccess.accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
-        URI = GlobalVariables.getSite_name() + deleteDimensionUri;
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.deleteDimensionUri;
 
         response = client
                 .target(URI)

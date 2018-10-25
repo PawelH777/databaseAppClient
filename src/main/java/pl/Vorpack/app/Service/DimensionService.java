@@ -6,10 +6,10 @@ import pl.Vorpack.app.Domain.Dimiensions;
 import java.util.List;
 
 public interface DimensionService {
-
     Dimiensions find(Dimiensions dim);
 
     List<Dimiensions> findAll();
+
     Dimiensions returnDim(Dimiensions dimension);
 
     void create(Dimiensions dim);
@@ -18,5 +18,5 @@ public interface DimensionService {
 
     void delete(Dimiensions dim);
 
-    void filter(String searchedText, FilteredList<Dimiensions> dims);
+    void filter(String filter, String searchedText, FilteredList<Dimiensions> dims);
 }

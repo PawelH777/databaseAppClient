@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Background.*;
-import pl.Vorpack.app.Constans.Path;
-import pl.Vorpack.app.Constans.User;
+import pl.Vorpack.app.Constans.PathConstans;
+import pl.Vorpack.app.Constans.UserConstans;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class MainController {
         userLabel.setText(GlobalVariables.getName() + System.lineSeparator() + GlobalVariables.getAccess());
         borderPane.setOpacity(0);
         makeFadeInTransition();
-        if (GlobalVariables.getAccess().equals(User.USER)) {
+        if (GlobalVariables.getAccess().equals(UserConstans.USER)) {
             btnDims.setDisable(true);
             btnClients.setDisable(true);
             btnUsers.setDisable(true);
@@ -97,23 +97,23 @@ public class MainController {
     }
 
     public void tabOrderClicked() throws IOException {
-        setCenter(Path.ORDERS_PANE_PATH, MainController.ORDERS);
+        setCenter(PathConstans.ORDERS_PANE_PATH, MainController.ORDERS);
     }
 
     public void tabStoryClicked() throws IOException {
-        setCenter(Path.CLOSED_ORDERS_PANE_PATH, MainController.CLOSED_ORDERS);
+        setCenter(PathConstans.CLOSED_ORDERS_PANE_PATH, MainController.CLOSED_ORDERS);
     }
 
     public void tabUsersClicked() throws IOException {
-        setCenter(Path.USERS_PANE_PATH, MainController.USERS);
+        setCenter(PathConstans.USERS_PANE_PATH, MainController.USERS);
     }
 
     public void tabClientsClicked() throws IOException {
-        setCenter(Path.CLIENTS_PANE_PATH, MainController.CLIENTS);
+        setCenter(PathConstans.CLIENTS_PANE_PATH, MainController.CLIENTS);
     }
 
     public void tabDimensionsClicked() throws IOException {
-        setCenter(Path.DIMENSIONS_PANE_PATH, MainController.DIMS);
+        setCenter(PathConstans.DIMENSIONS_PANE_PATH, MainController.DIMS);
     }
 
     public void tabLogoutClicked() {
@@ -197,7 +197,7 @@ public class MainController {
     }
 
     private void loadNextScene() throws IOException {
-        Parent mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(Path.LOGIN_PANE_PATH));
+        Parent mainPane = (BorderPane) FXMLLoader.load(getClass().getResource(PathConstans.LOGIN_PANE_PATH));
         Scene mainScene = new Scene(mainPane);
         Stage curStage = (Stage) borderPane.getScene().getWindow();
         curStage.setScene(mainScene);

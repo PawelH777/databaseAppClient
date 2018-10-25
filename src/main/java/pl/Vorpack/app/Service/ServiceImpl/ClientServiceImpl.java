@@ -1,10 +1,9 @@
 package pl.Vorpack.app.Service.ServiceImpl;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import pl.Vorpack.app.Constans.ClientColumn;
+import pl.Vorpack.app.Constans.ClientColumnConstans;
 import pl.Vorpack.app.DatabaseAccess.ClientAccess;
 import pl.Vorpack.app.Domain.Clients;
 import pl.Vorpack.app.GlobalVariables.ClientVariables;
@@ -12,17 +11,11 @@ import pl.Vorpack.app.Service.ClientService;
 
 import java.util.List;
 
-import static pl.Vorpack.app.Constans.ClientColumn.ALL;
+import static pl.Vorpack.app.Constans.ClientColumnConstans.ALL;
 
 public class ClientServiceImpl implements ClientService {
 
-    private ClientAccess access;
-    private JFXComboBox<String> columnsCmbBox;
-
-    public ClientServiceImpl(JFXComboBox<String> columnsCmbBox,ClientAccess access) {
-        this.columnsCmbBox = columnsCmbBox;
-        this.access = access;
-    }
+    private ClientAccess access = new ClientAccess();
 
     public ClientServiceImpl(ClientAccess access) {
         this.access = access;
@@ -30,11 +23,6 @@ public class ClientServiceImpl implements ClientService {
 
     public ClientServiceImpl(){
 
-    }
-
-    @Override
-    public void setJFXComboBox(JFXComboBox<String> comboBox){
-        this.columnsCmbBox = comboBox;
     }
 
     @Override
@@ -73,12 +61,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void filter(String searchedText, FilteredList<Clients> clients) {
-        if (columnsCmbBox.getSelectionModel().getSelectedItem() == null ||
-                columnsCmbBox.getSelectionModel().getSelectedItem().equals(ALL))
+    public void filter(String filter, String searchedText, FilteredList<Clients> clients) {
+        if (filter == null || filter.equals(ALL))
             filterByEveryColumn(searchedText, clients);
         else
-            filterByOneColumn(searchedText, clients);
+            filterByOneColumn(filter, searchedText, clients);
     }
 
     private void filterByEveryColumn(String searchedText, FilteredList<Clients> clients) {
@@ -92,12 +79,12 @@ public class ClientServiceImpl implements ClientService {
         });
     }
 
-    private void filterByOneColumn(String searchedText, FilteredList<Clients> clients) {
+    private void filterByOneColumn(String filter, String searchedText, FilteredList<Clients> clients) {
         clients.setPredicate(obj -> {
             if (searchedText == null || searchedText.isEmpty())
                 return true;
             String lowerCaseValue = getNonNullLowerCaseValue(searchedText);
-            String filterValue = getFilter(columnsCmbBox.getSelectionModel().getSelectedItem(), obj);
+            String filterValue = getFilter(filter, obj);
             return filterValue.contains(lowerCaseValue);
         });
     }
@@ -111,9 +98,9 @@ public class ClientServiceImpl implements ClientService {
 
     private String getFilter(String column, Clients obj) {
         switch (column) {
-            case ClientColumn.ID:
+            case ClientColumnConstans.ID:
                 return String.valueOf(obj.getClient_id()).toLowerCase();
-            case ClientColumn.FIRM_NAME:
+            case ClientColumnConstans.FIRM_NAME:
                 return String.valueOf(obj.getFirmName()).toLowerCase();
             default:
                 return "";
