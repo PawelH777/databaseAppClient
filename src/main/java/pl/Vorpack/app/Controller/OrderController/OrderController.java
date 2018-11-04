@@ -181,8 +181,17 @@ public class OrderController {
     }
 
     private void filter(String searchedText, String searchedData) {
-        ordersService.filterRecords(columnsCmbBox.getSelectionModel().getSelectedItem(),
-                columnsCmbBox.getSelectionModel().getSelectedItem(), searchedText, searchedData);
+        String columnsCmbBoxValue;
+        String datesCmbBoxValue;
+        if(columnsCmbBox.getSelectionModel().getSelectedItem() == null)
+            columnsCmbBoxValue = "";
+        else
+            columnsCmbBoxValue = columnsCmbBox.getSelectionModel().getSelectedItem().toString();
+        if (datesCmbBox.getSelectionModel().getSelectedItem() == null)
+            datesCmbBoxValue = "";
+        else
+            datesCmbBoxValue = datesCmbBox.getSelectionModel().getSelectedItem().toString();
+        ordersService.filterRecords(columnsCmbBoxValue,datesCmbBoxValue, searchedText, searchedData);
         sortedData = new SortedList<>(ordersFilteredList);
         ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
     }
@@ -240,7 +249,9 @@ public class OrderController {
     }
 
     public void onEndButtonClicked() {
-        ordersService.updateOrder(getSelectedItem());
+        Orders order = getSelectedItem();
+        order.setOrderFinished(true);
+        ordersService.updateOrder(order);
         getOrderRecords();
         textAnimations.startLabelsPulsing();
     }

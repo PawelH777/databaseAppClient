@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class UsrVariables {
 
-    private static User object = new User();
+    private static Long id;
     private static List<User> usersInDatabase = new ArrayList<>();
 
-    public static User getObject() {
-        return object;
+    public static Long getId() {
+        return id;
     }
 
-    public static void setObject(User object) {
-        UsrVariables.object = object;
+    public static void setId(Long id) {
+        UsrVariables.id = id;
     }
 
     public static List<User> getUsersInDatabase() {

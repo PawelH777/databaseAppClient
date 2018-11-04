@@ -22,24 +22,29 @@ import pl.Vorpack.app.Service.UserService;
 public class UserEditorController {
     private static final String YES = "Tak";
     private static final String NO = "Nie";
+    private static final String PASSWORD = "*****";
+    private static final String PATTERN = "\\b.*[a-zA-Z].*\\b";
     @FXML
     private VBox vBox;
     @FXML
     private Label errorStatus;
     @FXML
-    private JFXTextField login = new JFXTextField(){
+    private JFXTextField login = new JFXTextField() {
         @Override
-        public void paste(){}
+        public void paste() {
+        }
     };
     @FXML
-    private JFXPasswordField password = new JFXPasswordField(){
+    private JFXPasswordField password = new JFXPasswordField() {
         @Override
-        public void paste(){}
+        public void paste() {
+        }
     };
     @FXML
-    private JFXPasswordField repeatPassword = new JFXPasswordField(){
+    private JFXPasswordField repeatPassword = new JFXPasswordField() {
         @Override
-        public void paste(){}
+        public void paste() {
+        }
     };
     @FXML
     private JFXComboBox<String> cmbAdminYesNo;
@@ -50,11 +55,14 @@ public class UserEditorController {
     private Label statusLabel;
 
     private UserService userService = new UserServiceImpl();
+    private User user = new User();
     private Boolean booleanValue;
     private InfoAlerts infoAlerts = new InfoAlerts();
+    private int eventCounter = 0;
+    private boolean isFirstLoop = true;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         cmbAdminYesNo.getItems().addAll(
                 YES,
                 NO
@@ -64,6 +72,11 @@ public class UserEditorController {
             checkIfFieldsAreNotEmpty();
         });
         password.textProperty().addListener((obs, oldValue, newValue) -> {
+            eventCounter++;
+            int loopsNumberWhenUserFirstTimeWriteNewPassword = 2;
+            if (eventCounter == loopsNumberWhenUserFirstTimeWriteNewPassword) {
+                isFirstLoop = false;
+            }
             checkIfFieldsAreNotEmpty();
         });
         repeatPassword.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -72,12 +85,12 @@ public class UserEditorController {
         cmbAdminYesNo.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             checkIfFieldsAreNotEmpty();
         });
-        if(UsrVariables.getObject() != null){
-            User user = UsrVariables.getObject();
+        if (UsrVariables.getId() != null) {
+            user = userService.findById(UsrVariables.getId());
             login.textProperty().setValue(user.getLogin());
-            password.textProperty().setValue(user.getPassword());
-            repeatPassword.textProperty().setValue(user.getPassword());
-            if(user.isAdmin())
+            password.textProperty().setValue(PASSWORD);
+            repeatPassword.textProperty().setValue(PASSWORD);
+            if (user.isAdmin())
                 cmbAdminYesNo.setValue(YES);
             else
                 cmbAdminYesNo.setValue(NO);
@@ -85,59 +98,55 @@ public class UserEditorController {
         }
     }
 
-    private void checkIfFieldsAreNotEmpty() {
-        if(!login.textProperty().getValue().isEmpty() && !password.textProperty().getValue().isEmpty()
-                && !repeatPassword.textProperty().getValue().isEmpty()
-                && cmbAdminYesNo.getSelectionModel().getSelectedItem() != null){
-            if(password.textProperty().getValue().equals(repeatPassword.textProperty().getValue())){
-                errorStatus.setText("Hasła pasują do siebie");
-                btnProceed.setDisable(false);
-            }
-            else{
-                errorStatus.setText("Hasła nie pasują do siebie");
-                btnProceed.setDisable(true);
-            }
-        }
-        else
-            btnProceed.setDisable(true);
-    }
-
     public void btnAddClicked() {
         boolean endGate = false;
-        if(cmbAdminYesNo.getValue().equals(YES))
+        if (cmbAdminYesNo.getValue().equals(YES))
             booleanValue = true;
-        else if(cmbAdminYesNo.getValue().equals(NO))
+        else if (cmbAdminYesNo.getValue().equals(NO))
             booleanValue = false;
-        try{
-            User user =
-                    userService.findByLogin(login.getText());
+        try {
+            boolean isLoginExist = userService.findByLogin(login.getText()) != null;
             String hashedPass = DigestUtils.sha1Hex(password.textProperty().getValue());
-            if (UsrVariables.getObject() == null ) {
-                if(user == null){
-                    user = new User(login.textProperty().getValue(), hashedPass, booleanValue);
-                    userService.create(user);
-                    endGate = true;
-                }
-            }
-            else {
-                user = UsrVariables.getObject();
+            if (user == null && !isLoginExist) {
+                user = new User(login.textProperty().getValue(), hashedPass, booleanValue);
+                userService.create(user);
+                endGate = true;
+            } else if(user != null){
                 user.setLogin(login.textProperty().getValue());
-                user.setPassword(hashedPass);
+                if (!isFirstLoop) {
+                    user.setPassword(hashedPass);
+                }
                 user.setAdmin(booleanValue);
                 userService.update(user);
                 endGate = true;
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             infoAlerts.generalAlert();
         }
-        if(endGate) {
+        if (endGate) {
             Stage thisStage = (Stage) vBox.getScene().getWindow();
             GlobalVariables.setIsActionCompleted(true);
             thisStage.close();
-        }
-        else
-            statusLabel.setText("UserConstans z tym loginem już istnieje");
+        } else
+            statusLabel.setText("User z tym loginem już istnieje");
+    }
+
+    private void checkIfFieldsAreNotEmpty() {
+        String passwordValue = password.textProperty().getValue();
+        String repeatPasswordValue = repeatPassword.textProperty().getValue();
+        String loginValue = login.textProperty().getValue();
+        String selectedItemValue = cmbAdminYesNo.getSelectionModel().getSelectedItem();
+        if (!loginValue.isEmpty() && !passwordValue.isEmpty() && !repeatPasswordValue.isEmpty() && selectedItemValue != null) {
+            if ((passwordValue.equals(repeatPasswordValue) && passwordValue.matches(PATTERN)) || (isFirstLoop &&
+                    UsrVariables.getId() != null)) {
+                errorStatus.setText("Hasła pasują do siebie");
+                btnProceed.setDisable(false);
+            } else {
+                errorStatus.setText("Hasła nie pasują do siebie");
+                btnProceed.setDisable(true);
+            }
+        } else
+            btnProceed.setDisable(true);
     }
 }

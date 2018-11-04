@@ -35,6 +35,9 @@ import static pl.Vorpack.app.Constans.UserColumnConstans.*;
  * Created by Paweł on 2018-02-22.
  */
 public class UserController {
+    private static final String PASSWORD = "******";
+    private static final String ADMIN = "Tak";
+    public static final String USER = "Nie";
     @FXML
     private JFXComboBox<String> columnsCmbBox;
     @FXML
@@ -70,7 +73,6 @@ public class UserController {
                 ALL,
                 ID,
                 LOGIN,
-                PASSWORD,
                 ADMINISTRATOR
         );
         initServices();
@@ -150,7 +152,7 @@ public class UserController {
 
     public void onBtnAddClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
-        UsrVariables.setObject(null);
+        UsrVariables.setId(null);
         commonService.openScene(PathConstans.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
         getUsers();
         if(GlobalVariables.getIsActionCompleted())
@@ -163,7 +165,7 @@ public class UserController {
     public void btnModifyClicked() throws IOException {
         GlobalVariables.setIsActionCompleted(false);
         user = changingObjectType(usersViewer.getSelectionModel().getSelectedItem());
-        UsrVariables.setObject(user);
+        UsrVariables.setId(user.getUser_id());
         commonService.openScene(PathConstans.USER_EDITOR_PANE_PATH, "Edytor użytkownika", false);
         getUsers();
         setButtonsDisableValue(true);
@@ -181,12 +183,11 @@ public class UserController {
                 UsersDTO record = new UsersDTO();
                 record.setUser_id(u.getUser_id());
                 record.setLogin(u.getLogin());
-                String pass = u.getPassword();
-                record.setPassword(pass);
+                record.setPassword(PASSWORD);
                 if(u.isAdmin())
-                    record.setAdmin("Tak");
+                    record.setAdmin(ADMIN);
                 else if(!u.isAdmin())
-                    record.setAdmin("Nie");
+                    record.setAdmin(USER);
                 result.add(record);
             }
         }
@@ -199,9 +200,9 @@ public class UserController {
         usr.setUser_id(rec.getUser_id());
         usr.setLogin(rec.getLogin());
         usr.setPassword(rec.getPassword());
-        if(Objects.equals(rec.getAdmin(), "Tak"))
+        if(Objects.equals(rec.getAdmin(), ADMIN))
             usr.setAdmin(true);
-        else if(Objects.equals(rec.getAdmin(), "Nie"))
+        else if(Objects.equals(rec.getAdmin(), USER))
             usr.setAdmin(false);
         return usr;
     }

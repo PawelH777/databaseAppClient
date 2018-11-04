@@ -5,6 +5,8 @@ import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.Dto.UsersDTO;
 
 public interface UserService {
+    User findById(Long id);
+
     User findByLogin(String login);
 
     FilteredList<User> findAll();

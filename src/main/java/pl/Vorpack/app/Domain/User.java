@@ -52,7 +52,6 @@ public class User {
     }
 
     public User(String a, String b, boolean c){
-
         login = a;
         password = b;
         admin = c;

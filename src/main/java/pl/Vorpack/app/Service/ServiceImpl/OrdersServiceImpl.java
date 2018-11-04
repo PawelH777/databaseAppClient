@@ -160,7 +160,7 @@ public class OrdersServiceImpl implements OrdersService {
             return String.valueOf(obj.getOrder_date());
         else if (dateFilter.equals(RECEIVE_ORDER_DATE))
             return String.valueOf(obj.getOrder_receive_date());
-        throw new RuntimeException();
+        return NULL;
     }
 
     private String getNonNullLowerCaseValue(String string) {

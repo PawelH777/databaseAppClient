@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findById(Long id){
+        return usersAccess.findById(id);
+    }
+
+    @Override
     public User findByLogin(String login){
         List<User> users = usersAccess.findByLogin(login);
         return !users.isEmpty() ? users.get(0) : null;
@@ -66,8 +71,6 @@ public class UserServiceImpl implements UserService {
                 return true;
             if (String.valueOf(obj.getLogin()).toLowerCase().contains(lowerCaseValue))
                 return true;
-            if (String.valueOf(obj.getPassword()).toLowerCase().contains(lowerCaseValue))
-                return true;
             else return String.valueOf(obj.getAdmin()).toLowerCase().contains(lowerCaseValue);
         });
     }
@@ -83,10 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String getNonNullLowerCaseValue(String string) {
-        if (string == null)
-            return "";
-
-        return string.toLowerCase();
+        return string != null ? string.toLowerCase() : "";
     }
 
     private String getFilter(String column, UsersDTO obj) {
@@ -95,8 +95,6 @@ public class UserServiceImpl implements UserService {
                 return String.valueOf(obj.getUser_id()).toLowerCase();
             case UserColumnConstans.LOGIN:
                 return String.valueOf(obj.getLogin()).toLowerCase();
-            case UserColumnConstans.PASSWORD:
-                return String.valueOf(obj.getPassword()).toLowerCase();
             case UserColumnConstans.ADMINISTRATOR:
                 return String.valueOf(obj.getAdmin()).toLowerCase();
             default:

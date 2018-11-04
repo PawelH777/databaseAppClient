@@ -32,6 +32,7 @@ public class SingleOrderController {
     private static final String TRAYS_WINDOW_PANE = "Okno palet";
     private static final String CLOSED = "Ukończono";
     private static final String IN_PROGRESS = "Nieukończono";
+    private static final String CONNECTOR = " x ";
 
     @FXML
     private AnchorPane anchorPane;
@@ -144,8 +145,8 @@ public class SingleOrderController {
         String fullDimensionValueAsString;
         String status;
         for(SingleOrders record : allSingleOrdersFromOrder){
-            fullDimensionValueAsString = record.getDimension().getFirstDimension() + "x" + record.getDimension().getSecondDimension()
-                    + "x" + record.getDimension().getThickness();
+            fullDimensionValueAsString = record.getDimension().getFirstDimension() + CONNECTOR + record.getDimension().getSecondDimension()
+                    + CONNECTOR + record.getDimension().getThickness();
             if(record.getFinished())
                 status = CLOSED;
             else

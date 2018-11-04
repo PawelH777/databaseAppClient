@@ -1,7 +1,6 @@
 package pl.Vorpack.app.DatabaseAccess;
 
 import pl.Vorpack.app.Constans.AccessPathsConstans;
-import pl.Vorpack.app.DatabaseAccess.DatabaseAccess;
 import pl.Vorpack.app.Domain.User;
 import pl.Vorpack.app.GlobalVariables.GlobalVariables;
 
@@ -17,6 +16,20 @@ public class UsersAccess {
     private Client client;
     private String URI;
     private Response response;
+
+    public User findById(Long id){
+        client = DatabaseAccess
+                .accessToDatabase(GlobalVariables.getName(), GlobalVariables.getPassword());
+        URI = GlobalVariables.getSite_name() + AccessPathsConstans.findAllUsersURI;
+        response = client
+                .target(URI)
+                .path(id.toString())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        User user = response.readEntity(new GenericType<User>(){});
+        client.close();
+        return user;
+    }
 
     public List<User> findByLogin(String login){
         client = DatabaseAccess

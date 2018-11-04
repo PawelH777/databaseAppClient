@@ -141,6 +141,51 @@ public class ClosedOrderController {
         });
     }
 
+    public void onRefreshButtonClicked(MouseEvent mouseEvent) {
+        getOrders();
+        filter(txtSearch.textProperty().getValue(),
+                String.valueOf(orderDatePicker.valueProperty().getValue()));
+        btnDelete.disableProperty().setValue(true);
+        btnRecover.disableProperty().setValue(true);
+    }
+
+    public void onDeleteButtonClicked(MouseEvent mouseEvent) {
+        ordersService.deleteOrder(getSelectedItem());
+        getOrders();
+        textAnimations.startLabelsPulsing();
+    }
+
+    public void onRecoverButtonClicked(){
+        Orders order = getSelectedItem();
+        order.setOrderFinished(false);
+        try{
+            ordersService.updateOrder(order);
+            statusViewer.setText(InfoAlerts.getStatusWhileRecordIsRecovered());
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            statusViewer.setText(InfoAlerts.getStatusWhileRecordIsNotRecovered());
+        }
+        getOrders();
+        filter(txtSearch.textProperty().getValue(),
+                String.valueOf(orderDatePicker.valueProperty().getValue()));
+
+        textAnimations.startLabelsPulsing();
+    }
+
+    public void onToggleButtonClicked() throws IOException {
+        OrdVariables.setOrderObject(getSelectedItem());
+        String toggleWindowTitle = "Zamówienia jednostkowe";
+        commonService.openScene(PathConstans.CLOSED_SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
+        setReturnedInformation();
+    }
+
+    private void initServices() {
+        ordersService = new OrdersServiceImpl();
+        clientService = new ClientServiceImpl();
+        commonService = new CommonServiceImpl();
+    }
+
     private void assignColumns() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("order_id"));
         firmNameColumn.setCellValueFactory(new PropertyValueFactory<>("firmName"));
@@ -161,34 +206,20 @@ public class ClosedOrderController {
         btnDelete.setDisable(true);
     }
 
-    private void initServices(){
-        ordersService = new OrdersServiceImpl();
-        clientService = new ClientServiceImpl();
-        commonService = new CommonServiceImpl();
-    }
-
     private void filter(String searchedText, String searchedData) {
-        ordersService.filterRecords(columnsCmbBox.getSelectionModel().getSelectedItem().toString(),
-                datesCmbBox.getSelectionModel().getSelectedItem().toString(), searchedText, searchedData);
+        String columnsCmbBoxValue;
+        String datesCmbBoxValue;
+        if(columnsCmbBox.getSelectionModel().getSelectedItem() == null)
+            columnsCmbBoxValue = "";
+        else
+            columnsCmbBoxValue = columnsCmbBox.getSelectionModel().getSelectedItem().toString();
+        if (datesCmbBox.getSelectionModel().getSelectedItem() == null)
+            datesCmbBoxValue = "";
+        else
+            datesCmbBoxValue = datesCmbBox.getSelectionModel().getSelectedItem().toString();
+        ordersService.filterRecords(columnsCmbBoxValue, datesCmbBoxValue, searchedText, searchedData);
         sortedData = new SortedList<>(filteredList);
         ordersViewer.setItems(FXCollections.observableArrayList(sortedData));
-    }
-
-    public void onRecoverButtonClicked(){
-        Orders order = getSelectedItem();
-        try{
-            ordersService.changeOrdersStatus(order);
-            statusViewer.setText(InfoAlerts.getStatusWhileRecordIsRecovered());
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            statusViewer.setText(InfoAlerts.getStatusWhileRecordIsNotRecovered());
-        }
-        getOrders();
-        filter(txtSearch.textProperty().getValue(),
-                String.valueOf(orderDatePicker.valueProperty().getValue()));
-
-        textAnimations.startLabelsPulsing();
     }
 
     private void getOrders(){
@@ -209,13 +240,6 @@ public class ClosedOrderController {
         return clientService.findByFirmName(ordersDTO.getFirmName());
     }
 
-    public void onToggleButtonClicked() throws IOException {
-        OrdVariables.setOrderObject(getSelectedItem());
-        String toggleWindowTitle = "Zamówienia jednostkowe";
-        commonService.openScene(PathConstans.CLOSED_SINGLE_ORDERS_PANE_PATH, toggleWindowTitle, true);
-        setReturnedInformation();
-    }
-
     private void setReturnedInformation() {
         getOrders();
 
@@ -224,20 +248,6 @@ public class ClosedOrderController {
         else
             statusViewer.setText(InfoAlerts.getStatusWhileRecordIsNotAdded());
 
-        textAnimations.startLabelsPulsing();
-    }
-
-    public void onRefreshButtonClicked(MouseEvent mouseEvent) {
-        getOrders();
-        filter(txtSearch.textProperty().getValue(),
-                String.valueOf(orderDatePicker.valueProperty().getValue()));
-        btnDelete.disableProperty().setValue(true);
-        btnRecover.disableProperty().setValue(true);
-    }
-
-    public void onDeleteButtonClicked(MouseEvent mouseEvent) {
-        ordersService.deleteOrder(getSelectedItem());
-        getOrders();
         textAnimations.startLabelsPulsing();
     }
 }
