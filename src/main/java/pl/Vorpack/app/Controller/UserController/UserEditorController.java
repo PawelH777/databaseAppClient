@@ -24,6 +24,10 @@ public class UserEditorController {
     private static final String NO = "Nie";
     private static final String PASSWORD = "*****";
     private static final String PATTERN = "\\b.*[a-zA-Z].*\\b";
+    private static final String PASSWORD_CONFIRM_TEXT = "Hasła pasują do siebie";
+    private static final String PASSWORD_ERROR_TEXT = "Hasła nie pasują do siebie";
+    private static final String LOGIN_EXIST_ERROR = "User z tym loginem już istnieje";
+    private static final String PROCEED_BTN_TEXT_CHANGE = "Zmień";
     @FXML
     private VBox vBox;
     @FXML
@@ -94,7 +98,7 @@ public class UserEditorController {
                 cmbAdminYesNo.setValue(YES);
             else
                 cmbAdminYesNo.setValue(NO);
-            btnProceed.setText("Zmień");
+            btnProceed.setText(PROCEED_BTN_TEXT_CHANGE);
         }
     }
 
@@ -129,7 +133,7 @@ public class UserEditorController {
             GlobalVariables.setIsActionCompleted(true);
             thisStage.close();
         } else
-            statusLabel.setText("User z tym loginem już istnieje");
+            statusLabel.setText(LOGIN_EXIST_ERROR);
     }
 
     private void checkIfFieldsAreNotEmpty() {
@@ -140,10 +144,10 @@ public class UserEditorController {
         if (!loginValue.isEmpty() && !passwordValue.isEmpty() && !repeatPasswordValue.isEmpty() && selectedItemValue != null) {
             if ((passwordValue.equals(repeatPasswordValue) && passwordValue.matches(PATTERN)) || (isFirstLoop &&
                     UsrVariables.getId() != null)) {
-                errorStatus.setText("Hasła pasują do siebie");
+                errorStatus.setText(PASSWORD_CONFIRM_TEXT);
                 btnProceed.setDisable(false);
             } else {
-                errorStatus.setText("Hasła nie pasują do siebie");
+                errorStatus.setText(PASSWORD_ERROR_TEXT);
                 btnProceed.setDisable(true);
             }
         } else
