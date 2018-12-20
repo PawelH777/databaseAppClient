@@ -9,6 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Domain.SingleOrders;
 import pl.Vorpack.app.Domain.Trays;
@@ -24,7 +25,8 @@ import java.util.List;
 
 public class TrayController {
 
-
+    @FXML
+    public JFXButton btnExit;
     @FXML
     private TableView<TraysDTO> traysTable;
     @FXML
@@ -49,6 +51,8 @@ public class TrayController {
     }
 
     public void exitButtonClicked(MouseEvent mouseEvent) {
+        Stage thisStage = (Stage) commentary.getScene().getWindow();
+        thisStage.close();
     }
 
     public void changeCommentButtonClicked(MouseEvent mouseEvent) {

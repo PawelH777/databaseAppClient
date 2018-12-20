@@ -47,6 +47,8 @@ import static pl.Vorpack.app.Constans.OrderColumnConstans.UNFINISHED_TASKS;
 public class ClosedOrderController {
 
     @FXML
+    public JFXButton btnToogle;
+    @FXML
     private JFXComboBox columnsCmbBox;
     @FXML
     private Label statusViewer;
@@ -113,11 +115,13 @@ public class ClosedOrderController {
             if(newValue == null){
                 btnDelete.setDisable(true);
                 btnRecover.setDisable(true);
+                btnToogle.setDisable(true);
             }
             else{
                 if(!GlobalVariables.getAccess().equals(USER))
                     btnDelete.setDisable(false);
                 btnRecover.setDisable(false);
+                btnToogle.setDisable(false);
             }
         }));
         orderDatePicker.valueProperty().addListener((obs, oldValue, newValue) -> {

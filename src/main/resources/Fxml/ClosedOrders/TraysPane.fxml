@@ -18,7 +18,7 @@
       </TableView>
       <Label fx:id="statusViewer" layoutX="20.0" layoutY="311.0" prefHeight="17.0" prefWidth="410.0" AnchorPane.bottomAnchor="20.0" />
       <JFXButton fx:id="btnExit" layoutX="334.0" layoutY="21.0" onMouseClicked="#exitButtonClicked" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Wyjdź" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
-      <JFXTextArea fx:id="commentary" layoutX="202.0" layoutY="405.0" prefHeight="100.0" prefWidth="293.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0" />
+      <JFXTextArea fx:id="commentary" layoutX="202.0" layoutY="405.0" prefHeight="100.0" prefWidth="293.0" style="-fx-border-style: solid;" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0" />
       <JFXButton fx:id="btnChangeComment" layoutX="14.0" layoutY="436.0" onMouseClicked="#changeCommentButtonClicked" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #FFEBCC; -fx-border-style: solid;" text="Zmień komentarz" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />

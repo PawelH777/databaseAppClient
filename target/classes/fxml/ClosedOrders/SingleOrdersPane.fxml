@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="565.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.ClosedOrderController.SingleOrderController">
+<AnchorPane fx:id="anchorPane" prefHeight="565.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.ClosedOrderController.SingleOrderController">
    <children>
       <TableView fx:id="singleOrdersViewer" layoutX="23.0" layoutY="60.0" prefWidth="788.0" style="-fx-font-size: 14;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
         <columns>
@@ -24,7 +24,7 @@
             <TableColumn fx:id="statusColumn" prefWidth="110.0" text="Status" />
         </columns>
       </TableView>
-      <JFXButton fx:id="btnExit" defaultButton="true" layoutX="873.0" layoutY="26.0" onMouseClicked="#exitButtonClicked" prefWidth="70.0" text="Wyjdź" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <JFXButton fx:id="btnExit" defaultButton="true" layoutX="873.0" layoutY="26.0" onMouseClicked="#exitButtonClicked" prefWidth="70.0" style="-fx-border-style: solid; -fx-background-color: #FFEBCC;" text="Wyjdź" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -46,7 +46,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <JFXButton fx:id="btnOpen" defaultButton="true" layoutX="860.0" layoutY="567.0" onMouseClicked="#openButtonClicked" prefHeight="31.0" prefWidth="196.0" text="Otwórz widok palet" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <JFXButton fx:id="btnOpen" defaultButton="true" layoutX="860.0" layoutY="567.0" onMouseClicked="#openButtonClicked" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Otwórz widok palet" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

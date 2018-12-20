@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import pl.Vorpack.app.Alerts.InfoAlerts;
 import pl.Vorpack.app.Animations.TextAnimations;
 import pl.Vorpack.app.Data.TraysStatus;
@@ -74,7 +75,8 @@ public class TrayController {
     }
 
     public void btnExitClicked(){
-
+        Stage thisStage = (Stage) commentary.getScene().getWindow();
+        thisStage.close();
     }
 
     private void attachValuesToColumns(){

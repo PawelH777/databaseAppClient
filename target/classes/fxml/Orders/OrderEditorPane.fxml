@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="320.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.OrderController.OrderEditorController">
+<AnchorPane fx:id="anchorPane" maxHeight="320.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.191" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.Vorpack.app.Controller.OrderController.OrderEditorController">
    <children>
       <Label layoutX="65.0" layoutY="168.0" text="Data zamówienia" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="180.0" />
       <DatePicker fx:id="dateOrder" layoutX="65.0" layoutY="188.0" prefWidth="220.0" promptText="Data zamówienia" style="-fx-font-size: 14;" AnchorPane.leftAnchor="65.0" AnchorPane.topAnchor="200.0" />
@@ -21,7 +21,7 @@
          </font>
       </JFXTextField>
       <JFXTextArea fx:id="txtNote" labelFloat="true" layoutX="328.0" layoutY="56.0" prefHeight="95.0" prefWidth="208.0" promptText="Uwagi do zamówienia" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="40.0" />
-      <JFXButton fx:id="btnAddOrChangeOrder" layoutX="65.0" layoutY="260.0" onMouseClicked="#addOrChangeOrderButtonClicked" prefHeight="25.0" prefWidth="122.0" text="Dodaj zamówienie" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="65.0">
+      <JFXButton fx:id="btnAddOrChangeOrder" layoutX="65.0" layoutY="260.0" onMouseClicked="#addOrChangeOrderButtonClicked" prefHeight="25.0" prefWidth="122.0" style="-fx-background-color: #CCE0FF; -fx-border-style: solid;" text="Dodaj zamówienie" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="65.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
